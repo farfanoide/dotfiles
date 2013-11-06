@@ -1,0 +1,13 @@
+# ~/.tmuxinator/simulador.yml
+# you can make as many tabs as you wish...
+
+project_name: pymulator
+project_root: ~/Develop/src/simuladorHDD/
+tabs:
+  - editor:
+      layout: main-vertical
+      panes:
+        - clear ; gs
+        - clear ; ll 
+        - 
+ 

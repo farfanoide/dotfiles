@@ -1,0 +1,14 @@
+[core]
+	fileMode = false
+	excludesfile = /Users/farfan/.gitignore_global
+	autocrlf = input
+[color]
+	ui = always
+[user]
+	name = Ivan Karl
+	email = ivan6258@gmail.com
+[apply]
+	whitespace = nowarn
+[push]
+	default = simple
+
