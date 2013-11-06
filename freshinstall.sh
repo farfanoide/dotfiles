@@ -14,10 +14,27 @@ echo "Installing shell stuff:"
 echo "*-----------------------------------------------------------------------------*"
 brew install bash bash-completion zsh zsh-syntax-highlighting zsh-completions reattach-to-user-namespace tmux tree
 
-echo "Adding zsh to /etc/shells so we can set it as default later"
+echo "Adding zsh to /etc/shells and setting it as default: "
 echo "*-----------------------------------------------------------------------------*"
 echo `which zsh` | sudo tee -a /etc/shells
+chsh -s `which zsh`
 
+
+
+echo "Downloading your config files: "
+echo "*-----------------------------------------------------------------------------*"
+
+git clone https://bitbucket.org/farfanoide/dots 'dotfiles'
+
+if [[ -d dotfiles ]]; then
+    cd dotfiles
+    git submodule update --init
+    echo "Overwriting all your configuration files, muahaha!!!"
+    ./link.sh
+fi
+
+/usr/bin/env zsh
+source ~/.zshrc
 # alternative would be sudo bash -c "echo `which zsh` >> /etc/shells"
 # curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
 
@@ -71,22 +88,12 @@ echo "*-------------------------------------------------------------------------
 
 brew install rbenv rbenv-gem-rehash ruby-build
 
-echo "Installing python dev stuff: "
-echo "*-----------------------------------------------------------------------------*"
+# echo "Installing python dev stuff: "
+# echo "*-----------------------------------------------------------------------------*"
 
-brew install python
-pip install --upgrade setuptools
-pip install --upgrade pip
-pip install virtualenvwrapper pygments powerline
+# brew install python
+# pip install --upgrade setuptools
+# pip install --upgrade pip
+# pip install virtualenvwrapper pygments powerline
 
-echo "Downloading your config files: "
-echo "*-----------------------------------------------------------------------------*"
-
-git clone https://farfanoide@bitbucket.org/farfanoide/dots.git 'dotfiles'
-
-if [[ -d dotfiles ]]; then
-    cd dotfiles
-    git submodule update --init
-    echo "Overwriting all your configuration files, muahaha!!!"
-    ./link.sh
-fi
+echo "fuck you very mucho!"
