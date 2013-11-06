@@ -12,8 +12,8 @@ brew install git
 
 echo "Installing shell stuff:"
 echo "*-----------------------------------------------------------------------------*"
-brew install bash bash-completion zsh zsh-syntax-highlighting zsh-completions reattach-to-user-namespace tmux tree
-
+# brew install bash bash-completion zsh zsh-syntax-highlighting zsh-completions reattach-to-user-namespace tmux tree
+brew install zsh
 echo "Adding zsh to /etc/shells and setting it as default: "
 echo "*-----------------------------------------------------------------------------*"
 echo `which zsh` | sudo tee -a /etc/shells
@@ -33,8 +33,7 @@ if [[ -d dotfiles ]]; then
     ./link.sh
 fi
 
-/usr/bin/env zsh
-source ~/.zshrc
+
 # alternative would be sudo bash -c "echo `which zsh` >> /etc/shells"
 # curl -L https://github.com/robbyrussell/oh-my-zsh/raw/master/tools/install.sh | sh
 
@@ -97,3 +96,5 @@ brew install rbenv rbenv-gem-rehash ruby-build
 # pip install virtualenvwrapper pygments powerline
 
 echo "fuck you very mucho!"
+/usr/bin/env zsh
+source ~/.zshrc
