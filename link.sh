@@ -22,7 +22,7 @@ for name in *; do
       if [[ ! -d $bckpdir ]]; then
         mkdir $bckpdir
       fi
-      echo -e "$Y >> Backing $target up to $bckpdir"
+      echo -e "$B >> Backing $target up to $bckpdir"
       cp -r $target $bckpdir
       echo -e "$R >> Removing $target"
       rm $target

@@ -18,7 +18,8 @@ echo "Adding zsh to /etc/shells and setting it as default: "
 echo "*-----------------------------------------------------------------------------*"
 echo `which zsh` | sudo tee -a /etc/shells
 chsh -s `which zsh`
-
+#restart shell
+#exec $SHELL -l
 
 
 echo "Downloading your config files: "

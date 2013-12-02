@@ -1,7 +1,12 @@
+" Auto-reload vimrc on save
 autocmd! bufwritepost .vimrc source %
-execute pathogen#infect()
+
+filetype off
+call pathogen#infect()
 filetype plugin indent on
+set nocompatible
 set background=dark
+
 
 " make backspace work like most other apps
 set backspace=2
@@ -13,14 +18,14 @@ set wildmode:longest
 set smartindent
 set autoindent
 
-" Spaces instead of tabs
-set softtabstop=4
-"set tabstop=4
-set shiftwidth=4
+set list
+set listchars=tab:▸\ ,extends:❯,precedes:❮
 
-" make "tab" insert indents instead of tabs at the beginning of a line
-set smarttab
+" Spaces instead of tabs
 set expandtab
+set softtabstop=2
+"set tabstop=4
+set shiftwidth=2
 
 " Make vim more useful
 set nocompatible
@@ -38,22 +43,17 @@ set encoding=utf-8 nobomb
 let mapleader=","
 " Don’t add empty newlines at the end of files
 set binary
-set fileformats=dos,unix,mac
-
+"set fileformats=dos,unix,mac
+set noswapfile
+set nobackup
 " set backupdir=~/.vim/backups
 " set directory=~/.vim/swaps
-" if exists("&undodir")
-"  set undodir=~/.vim/undo
-" endif
 
-" Uncomment below to prevent 'tilde backup files' (eg. myfile.txt~) from being created
-set nobackup
+" Tell Vim to use an undo file
+if exists("&undodir")
+ set undodir=~/.vim/undo
+endif
 
-" Uncomment below to disable 'swap files' (eg. .myfile.txt.swp) from being created
-set noswapfile
-
-" Enable line numbers
-set number
 " Enable syntax highlighting
 syntax on
 " Highlight current line
@@ -85,11 +85,14 @@ set shortmess=atI
 set showmode
 " Show the filename in the window titlebar
 set title
-"if exists("&relativenumber")
-  " Use relative line numbers
-"  set relativenumber
-"  au BufReadPost * set relativenumber
-"endif
+" Use relative line numbers
+if exists("&relativenumber")
+ set relativenumber
+ au BufReadPost * set relativenumber
+endif
+" and normal numbers
+set number
+"
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
@@ -102,6 +105,7 @@ function! StripWhitespace ()
 	call setreg('/', old_query)
 endfunction
 noremap <leader>ss :call StripWhitespace ()<CR>
+
 " OmniCompletion
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
@@ -116,3 +120,14 @@ set laststatus=2
 " colours)
 set t_Co=256
 colorscheme xoria256
+
+" Remove second status bar when using powerline
+set noshowmode
+
+" RagTag mappings
+let g:ragtag_global_maps = 1 
+
+
+" Personal Mappings
+" Ctrl+A -> select all
+:map <c-a> ggVG
