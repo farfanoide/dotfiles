@@ -1,0 +1,36 @@
+# ~/.tmuxinator/all.yml
+
+name: infomedica
+root: ~/Dropbox/Sites/infomedica
+
+# Optional tmux socket
+# socket_name: foo
+
+# Runs before everything. Use it to start daemons etc.
+pre: if [[ $(mysql.server status) =~ "ERROR"* ]]; then  mysql.server start ; fi
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+windows:
+  - frontend:
+      layout: main-vertical
+      panes:
+        - 
+        - cd infomedica-app ; ./symfony cc
+        - cd infomedica-app/apps/frontend/modules
+  - log:
+      - tail -F infomedica-app/log/frontend_dev.log
+  - mysql:
+      panes:
+        - mysql -uroot -pfarfa infomedica
+  - prestador: 
+      layout: main-vertical
+      panes:
+        - cd infomedica-app/apps/prestador/modules
+        - tail -F infomedica-app/log/prestador_dev.log
+  - assets:
+    - cd ~/Dropbox/compartidas/latinmanagers/
