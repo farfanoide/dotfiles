@@ -12,7 +12,8 @@ Y="\033[0;33m"
 
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
-skip=("README.md", "freshinstall.sh", "backups", "itermcolors", ".gitmodules", ".git", ".gitmodules", "osx_setup.sh", $0, $*)
+skip=("README.md", "tools", "backups", $0, $*)
+echo ${skip[*]}
 bckpdir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
 for name in *; do
   if [[ ! ${skip[*]} =~ $name ]]; then
@@ -22,7 +23,7 @@ for name in *; do
       if [[ ! -d $bckpdir ]]; then
         mkdir $bckpdir
       fi
-      echo -e "$B >> Backing $target up to $bckpdir"
+      echo -e "$B >> Backing up $target to $bckpdir"
       cp -r $target $bckpdir
       echo -e "$R >> Removing $target"
       rm $target
