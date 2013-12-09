@@ -5,10 +5,10 @@ empty   = "☆"
 battery = "🔋"
 plug    = "⚡"
  
-  star_count = 5 
+star_count = 5 
 per_star = 100/star_count
  
-v= Hash.new()
+v = Hash.new()
  
 ARGF.each do |a|
   if a.start_with? "Currently"

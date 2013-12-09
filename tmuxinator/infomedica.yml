@@ -26,7 +26,7 @@ windows:
       - tail -F infomedica-app/log/frontend_dev.log
   - mysql:
       panes:
-        - mysql -uroot -pfarfa infomedica
+        - mysql -uroot -p infomedica
   - prestador: 
       layout: main-vertical
       panes:
@@ -34,3 +34,4 @@ windows:
         - tail -F infomedica-app/log/prestador_dev.log
   - assets:
     - cd ~/Dropbox/compartidas/latinmanagers/
+    - cd public_html/
