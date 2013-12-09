@@ -6,3 +6,5 @@ nbproject/
 *.sublime-workspace
 *.pyc
 *.iml
+*.swp
+.svn
