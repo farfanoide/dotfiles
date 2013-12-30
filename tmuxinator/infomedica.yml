@@ -1,7 +1,7 @@
-# ~/.tmuxinator/all.yml
+# ~/.tmuxinator/docpik.yml
 
 name: infomedica
-root: ~/Dropbox/Sites/infomedica
+root: ~/Develop/sites/docpik
 
 # Optional tmux socket
 # socket_name: foo
@@ -23,15 +23,17 @@ windows:
         - cd infomedica-app ; ./symfony cc
         - cd infomedica-app/apps/frontend/modules
   - log:
-      - tail -F infomedica-app/log/frontend_dev.log
+      - ctail -F infomedica-app/log/frontend_dev.log
   - mysql:
       panes:
-        - mysql -uroot -p infomedica
+        - mysql -uroot -p docpik
   - prestador: 
       layout: main-vertical
       panes:
         - cd infomedica-app/apps/prestador/modules
-        - tail -F infomedica-app/log/prestador_dev.log
+        - ctail -F infomedica-app/log/prestador_dev.log
   - assets:
-    - cd ~/Dropbox/compartidas/latinmanagers/
-    - cd public_html/
+    layout: main-vertical
+    panes:
+      - cd ~/Dropbox/compartidas/latinmanagers/
+      - cd public_html/

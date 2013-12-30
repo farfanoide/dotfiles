@@ -26,7 +26,7 @@ windows:
         - bundle exec rails c
         - bundle exec rails db
   - server: bundle exec rails s
-  - logs: tail -F log/development.log
+  - logs: ctail -F log/development.log
   - assets:
       layout: main-vertical
       panes:

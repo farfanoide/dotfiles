@@ -31,17 +31,6 @@ DISABLE_AUTO_TITLE="true"
 # Uncomment following line if you want red dots to be displayed while waiting for completion
 COMPLETION_WAITING_DOTS="true"
 
-# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
-# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-plugins=(farfan gem rails3 rbenv vagrant heroku npm osx pip postgres svn symfony brew tmux tmuxinator git git-flow bundler)
-
-# fix this shite!
-# virtualenv virtualenvwrapper
-
-
-source $ZSH/oh-my-zsh.sh
-
 # Disable auto-correct
 unsetopt correct_all
 
@@ -59,15 +48,21 @@ PATH="/usr/local/sbin:$PATH"
 PATH="/usr/local/share/npm/bin:${PATH}"
 
 # python modules
-PATH="/usr/local/share/python:${PATH}"
-
-# python -> virtualenv(wrapper)
-export WORKON_HOME="$HOME/.virtualenvs"
-source /usr/local/share/python/virtualenvwrapper.sh
-export PROJECT_HOME=$HOME/Dropbox/Sites
+# PATH="/usr/local/share/python:${PATH}"
 
 # Pear Packages
 PATH="$(brew --prefix php54)/bin:$PATH"
 
 # rbenv initialization
 eval "$(rbenv init -)"
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+plugins=(farfan gem rails rbenv vagrant heroku npm osx pip postgres svn symfony brew tmux tmuxinator git git-flow bundler)
+
+# fix this shite!
+# virtualenv virtualenvwrapper
+
+
+source $ZSH/oh-my-zsh.sh
+

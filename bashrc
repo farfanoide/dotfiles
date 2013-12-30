@@ -206,28 +206,29 @@ PATH="/usr/local/sbin:${PATH}"
 export PATH=$PATH":/Users/${USER}/.bin"
 
 # python modules
-#PATH="/usr/local/share/python:${PATH}"
-# python -> virtualenv(wrapper)
-export WORKON_HOME="$HOME/.virtualenvs"
-source /usr/local/share/python/virtualenvwrapper.sh
-export PROJECT_HOME=$HOME/Dropbox/Sites
+# PATH="/usr/local/share/python:${PATH}"
+# # python -> virtualenv(wrapper)
+# export WORKON_HOME="$HOME/.virtualenvs"
+# source /usr/local/share/python/virtualenvwrapper.sh
+# export PROJECT_HOME=$HOME/Dropbox/Sites
 
 
 # add npm bin folder to PATH
 export PATH="/usr/local/share/npm/bin:${PATH}"
-export PATH
+# export PATH
 
 # requires brew install most
-export MANPAGER="/usr/local/bin/most -s"
+# export MANPAGER="/usr/local/bin/most -s"
 
-export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 
 export EDITOR=vim
 # add coldfusion
 # export PATH="/Applications/Utilities/ColdFusion10/cfusion/bin:${PATH}"
-
+if which rbenv ; then
+  eval "$(rbenv init -)"
+fi
 PS1="$GREEN_BOLD{\h}$BLUE_BOLD [\W]$GREEN_BOLD\$(parse_git_branch)\$(parse_svn_branch) $RED_BOLD-> $BASH_WHITE";
 alias mf="mdfind"
 alias infcc='cd ~/Dropbox/Sites/infomedica/infomedica-app/ ; s cc ; cd -'
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
-alias v="vagrant "
