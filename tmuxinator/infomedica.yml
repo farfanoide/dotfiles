@@ -33,7 +33,7 @@ windows:
         - cd infomedica-app/apps/prestador/modules
         - ctail -F infomedica-app/log/prestador_dev.log
   - assets:
-    layout: main-vertical
-    panes:
-      - cd ~/Dropbox/compartidas/latinmanagers/
-      - cd public_html/
+      layout: main-vertical
+      panes:
+        - cd public_html/
+        - cd ~/Dropbox/compartidas/latinmanagers/
