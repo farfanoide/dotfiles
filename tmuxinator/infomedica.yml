@@ -19,7 +19,7 @@ windows:
   - frontend:
       layout: main-vertical
       panes:
-        - 
+        - git status -bs 
         - cd infomedica-app ; ./symfony cc
         - cd infomedica-app/apps/frontend/modules
   - log:

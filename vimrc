@@ -7,7 +7,6 @@ filetype plugin indent on
 set nocompatible
 set background=dark
 
-
 " make backspace work like most other apps
 set backspace=2
 
@@ -15,11 +14,6 @@ set backspace=2
 set wildmenu
 set wildmode:longest
 
-set smartindent
-set autoindent
-
-set list
-set listchars=tab:▸\ ,extends:❯,precedes:❮
 
 " Spaces instead of tabs
 set expandtab
@@ -27,7 +21,18 @@ set softtabstop=2
 "set tabstop=4
 set shiftwidth=2
 
+" Indentation
+set autoindent
+set smartindent
+
+set list
+" set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
+set listchars=tab:❯\ ,extends:❯,precedes:❮,trail:-
+
 " Make vim more useful
+" Use by default system wide clipboard
+set clipboard=unnamed
+
 set nocompatible
 " Enhance command-line completion
 set wildmenu
@@ -44,8 +49,11 @@ let mapleader=","
 " Don’t add empty newlines at the end of files
 set binary
 "set fileformats=dos,unix,mac
+
+" Disable backups and swap files
 set noswapfile
 set nobackup
+set nowritebackup
 " set backupdir=~/.vim/backups
 " set directory=~/.vim/swaps
 
@@ -57,7 +65,7 @@ endif
 " Enable syntax highlighting
 syntax on
 " Highlight current line
-"set cursorline
+set cursorline
 " Show “invisible” characters
 " set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
 "set list
@@ -109,8 +117,16 @@ noremap <leader>ss :call StripWhitespace ()<CR>
 " OmniCompletion
 filetype plugin on
 set omnifunc=syntaxcomplete#Complete
+
+" Rails AutoCompletion (test)
+let g:rubycomplete_buffer_loading = 1
+let g:rubycomplete_rails = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+
 " Powerline stuff:
-set guifont=Source\ Code\ Pro\ for\ Powerline:h14
+set guifont=Ubuntu\ Mono\ derivative\ Powerline:h16
 set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 
 " Always show statusline
@@ -119,7 +135,9 @@ set laststatus=2
 " " Use 256 colours (Use this setting only if your terminal supports 256
 " colours)
 set t_Co=256
-colorscheme xoria256
+" colorscheme xoria256
+" colorscheme mustang
+colorscheme seoul256
 
 " Remove second status bar when using powerline
 set noshowmode
@@ -131,3 +149,20 @@ let g:ragtag_global_maps = 1
 " Personal Mappings
 " Ctrl+A -> select all
 :map <c-a> ggVG
+
+" Move faster between tabs
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
+
+" Code Block indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Faster save
+nnoremap <leader>w :w!<CR>
+
+
+
+" some testing
+" hi SpecialKey ctermbg=55 guifg=#649A9A
+" let g:user_emmet_leader_key='<C-Z>'

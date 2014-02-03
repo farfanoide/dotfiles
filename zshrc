@@ -20,7 +20,7 @@ ZSH_THEME="cloud"
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -54,7 +54,7 @@ PATH="/usr/local/share/npm/bin:${PATH}"
 PATH="$(brew --prefix php54)/bin:$PATH"
 
 # rbenv initialization
-eval "$(rbenv init -)"
+# eval "$(rbenv init -)"
 # Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
