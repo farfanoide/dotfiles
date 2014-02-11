@@ -25,9 +25,12 @@ set shiftwidth=2
 set autoindent
 set smartindent
 
+" Text Preferences
+set nowrap
+
 set list
 " set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
-set listchars=tab:❯\ ,extends:❯,precedes:❮,trail:-
+set listchars=tab:❯\ ,extends:❯,precedes:❮,trail:.
 
 " Make vim more useful
 " Use by default system wide clipboard
@@ -68,7 +71,7 @@ syntax on
 set cursorline
 " Show “invisible” characters
 " set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-"set list
+
 " Highlight searches
 set hlsearch
 " Ignore case of searches
@@ -93,13 +96,14 @@ set shortmess=atI
 set showmode
 " Show the filename in the window titlebar
 set title
-" Use relative line numbers
+
+" Use normal numbers
+set number
+" and relative line numbers
 if exists("&relativenumber")
  set relativenumber
  au BufReadPost * set relativenumber
 endif
-" and normal numbers
-set number
 "
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
@@ -121,7 +125,7 @@ set omnifunc=syntaxcomplete#Complete
 " Rails AutoCompletion (test)
 let g:rubycomplete_buffer_loading = 1
 let g:rubycomplete_rails = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1 
+" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
@@ -138,18 +142,24 @@ set t_Co=256
 " colorscheme xoria256
 " colorscheme mustang
 colorscheme seoul256
+" colorscheme monokai
 
 " Remove second status bar when using powerline
 set noshowmode
-
-" RagTag mappings
-let g:ragtag_global_maps = 1 
-
 
 " Personal Mappings
 " Ctrl+A -> select all
 :map <c-a> ggVG
 
+" NERDTree mappings and options
+map <Leader>c :NERDTreeToggle<CR>
+map <Leader>r :NERDTreeFind<CR>
+" Open NERDTree in new windows by default
+" autocmd VimEnter * NERDTree
+" autocmd VimEnter * wincmd p
+let g:nerdtree_tabs_open_on_console_startup=1
+" let g:nerdtree_tabs_open_on_gui_startup=1
+let g:nerdtree_tabs_focus_on_files=1
 " Move faster between tabs
 map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
@@ -161,8 +171,10 @@ vnoremap > >gv
 " Faster save
 nnoremap <leader>w :w!<CR>
 
-
+" Break by word at end of line when :wrap=true
+set linebreak
 
 " some testing
-" hi SpecialKey ctermbg=55 guifg=#649A9A
+" let g:SuperTabDefaultCompletionType = ""
+" hi SpecialKey ctermbg=66 guifg=#649A9A
 " let g:user_emmet_leader_key='<C-Z>'

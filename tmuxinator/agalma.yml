@@ -20,8 +20,9 @@ root: ~/Develop/src/agalma
 
 windows:
   - editor:
-      layout: main-vertical
+      layout: main-horizontal
       panes:
+        - vim
         - git status -bs
         - bundle exec rails c
   - db:
