@@ -1,7 +1,7 @@
 # ~/.tmuxinator/misc.yml
 
 name: misc
-root: ~/
+root: /Users/farfan
 
 # Optional tmux socket
 # socket_name: foo

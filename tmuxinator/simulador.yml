@@ -1,7 +1,7 @@
 # ~/.tmuxinator/simulador.yml
 
 name: simulador
-root: ~/Develop/src/simuladorHDD/
+root: /Users/farfan/Develop/src/simuladorHDD/
 
 # Optional tmux socket
 # socket_name: foo
@@ -10,7 +10,7 @@ root: ~/Develop/src/simuladorHDD/
 # pre: workon kivy ; cd ~/Develop/apps/Kivy.app/Contents/Resources/kivy ; git pull ; make
 
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
-pre_window: workon simuladorHDD 
+pre_window: workon simuladorHDD
 
 # Pass command line options to tmux. Useful for specifying a different tmux.conf.
 # tmux_options: -f ~/.tmux.mac.conf
@@ -23,4 +23,4 @@ windows:
       layout: main-vertical
       panes:
         - ls
-        - 
+        -

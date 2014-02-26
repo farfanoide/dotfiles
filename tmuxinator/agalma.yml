@@ -1,7 +1,7 @@
 # ~/.tmuxinator/agalma.yml
 
 name: agalma
-root: ~/Develop/src/agalma
+root: /Users/farfan/Develop/src/agalma
 
 # Optional tmux socket
 # socket_name: foo
@@ -23,6 +23,8 @@ windows:
       layout: main-horizontal
       panes:
         - vim
+  - general:
+      panes:
         - git status -bs
         - bundle exec rails c
   - db:

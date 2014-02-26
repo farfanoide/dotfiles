@@ -1,7 +1,7 @@
 # ~/.tmuxinator/docpik.yml
 
 name: infomedica
-root: ~/Develop/sites/docpik
+root: /Users/farfan/Develop/sites/docpik
 
 # Optional tmux socket
 # socket_name: foo
@@ -16,18 +16,19 @@ pre: if [[ $(mysql.server status) =~ "ERROR"* ]]; then  mysql.server start ; fi
 # tmux_options: -f ~/.tmux.mac.conf
 
 windows:
+  - editor:
+    - vim
   - frontend:
       layout: main-vertical
       panes:
-        - git status -bs 
+        - git status -bs
         - cd infomedica-app ; ./symfony cc
         - cd infomedica-app/apps/frontend/modules
+  - mysql:
+    - mysql -uroot -p docpik
   - log:
       - ctail -F infomedica-app/log/frontend_dev.log
-  - mysql:
-      panes:
-        - mysql -uroot -p docpik
-  - prestador: 
+  - prestador:
       layout: main-vertical
       panes:
         - cd infomedica-app/apps/prestador/modules

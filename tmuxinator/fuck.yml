@@ -1,7 +1,7 @@
 # ~/.tmuxinator/fuck.yml
 
 name: fuck
-root: ~/Dropbox/compartidas/Facultad/
+root: /Users/farfan/Dropbox/compartidas/Facultad/
 
 # Optional tmux socket
 # socket_name: foo
