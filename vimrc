@@ -110,8 +110,6 @@ set cursorline
 " Remove second status bar when using powerline
 set noshowmode
 
-" Show commands as you type them
-set showcmd
 
 " Powerline stuff:
 set guifont=Ubuntu\ Mono\ derivative\ Powerline:h15
@@ -191,9 +189,6 @@ set noerrorbells
 set nostartofline
 " Don’t show the intro message when starting vim
 set shortmess=atI
-" Show the filename in the window titlebar
-set title
-
 " Use normal numbers
 set number
 " and relative line numbers
@@ -201,7 +196,9 @@ if exists("&relativenumber")
   set relativenumber
   au BufReadPost * set relativenumber
 endif
-"
+
+" Show commands as you type them
+set showcmd
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
@@ -214,6 +211,12 @@ set ignorecase
 set incsearch
 " Map SPACE to remove search highlighting
 nmap <SPACE> <SPACE>:nohlsearch<CR>
+
+" Windows Tabs:
+" Show the filename in the window titlebar
+set title
+set splitbelow
+set splitright
 
 " AutoCommands:
 " Auto-reload vimrc on save
