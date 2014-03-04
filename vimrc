@@ -65,6 +65,10 @@ Bundle 'shawncplus/phpcomplete.vim'
 
 " Markdown
 Bundle 'tpope/vim-markdown'
+
+" Tmux Conf
+Bundle 'tejr/vim-tmux'
+
 " File system
 "
 " Fuzzy file/buffer/mru finder
@@ -81,7 +85,7 @@ map <Leader>r :NERDTreeFind<CR>
 Bundle 'jistr/vim-nerdtree-tabs'
 " Replace previous options with yet another plugn:
 let g:nerdtree_tabs_open_on_console_startup=0
-" let g:nerdtree_tabs_open_on_gui_startup=1
+let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_focus_on_files=1
 
 " Hide nerdtree's window scrollbar on macvim
@@ -95,7 +99,10 @@ Bundle 'baskerville/bubblegum'
 
 " Eye Candy
 syntax on
-colorscheme facebook
+
+" Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256
+colorscheme bubblegum
 
 " Highlight current line
 set cursorline
@@ -121,10 +128,9 @@ set ttimeoutlen=50
 " Dont show toolbar on gui
 set guioptions-=T
 
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-colorscheme bubblegum
-
+" OR ELSE just the 81st column of wide lines...
+highlight ColorColumn ctermbg=magenta
+call matchadd('ColorColumn', '\%81v', 100)
 
 " Editor:
 " make backspace work like most other apps
@@ -205,8 +211,6 @@ set ignorecase
 set incsearch
 " Map SPACE to remove search highlighting
 nmap <SPACE> <SPACE>:nohlsearch<CR>
-
-
 
 " AutoCommands:
 " Auto-reload vimrc on save
