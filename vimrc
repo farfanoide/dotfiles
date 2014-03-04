@@ -142,6 +142,9 @@ set nowrap
 set showbreak=⇇
 set linebreak
 
+" Trailing whitespaces
+Bundle 'csexton/trailertrash.vim'
+map <Leader>tw :Trim<CR>
 
 set list
 " set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
@@ -238,7 +241,13 @@ function! s:RemoveCM()
   call setpos('.', l:save_cursor)
 endfunction
 command! -range=% RemoveCM call <SID>RemoveCM()
-:map <leader>ww :RemoveCM<cr>
+" :map <leader>ww :RemoveCM<cr>
+
+function! Delegate(command)
+  let l:save_cursor = getpos(".")
+  execute a:command
+  call setpos('.', l:save_cursor)
+endfunction
 
 Bundle 'godlygeek/tabular'
 :map <leader>t :tabularize<cr>
