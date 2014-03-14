@@ -51,7 +51,7 @@ PATH="/usr/local/share/npm/bin:${PATH}"
 # PATH="/usr/local/share/python:${PATH}"
 
 # Pear Packages
-PATH="$(brew --prefix php54)/bin:$PATH"
+PATH="$(brew --prefix php55)/bin:$PATH"
 
 # rbenv initialization
 # eval "$(rbenv init -)"

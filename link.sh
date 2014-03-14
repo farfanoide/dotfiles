@@ -12,8 +12,7 @@ Y="\033[0;33m"
 
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
-skip=("README.md", "tools", "backups", $0, $*)
-echo ${skip[*]}
+skip=("README.md", "tools", "backups", "sshconfig", $0, $*)
 bckpdir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
 for name in *; do
   if [[ ! ${skip[*]} =~ $name ]]; then
