@@ -87,3 +87,8 @@ Host nestier
   HostName CQ40.local
   User fernan
   Port 22
+
+Host tomate
+  HostName tomate.local
+  User francisco
+  Port 22

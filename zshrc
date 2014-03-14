@@ -66,3 +66,4 @@ plugins=(farfan gem rails rbenv vagrant heroku npm osx pip postgres svn symfony 
 
 source $ZSH/oh-my-zsh.sh
 
+PATH="$HOME/.bin:$PATH"
