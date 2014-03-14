@@ -9,6 +9,8 @@ R="\033[0;31m"
 B="\033[0;34m"
 Y="\033[0;33m"
 
+echo -e "$G Updating Submodules"
+git submodule update --init
 
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
@@ -34,3 +36,5 @@ for name in *; do
     echo -e "$Y >> Skipping ${name}"
   fi
 done
+echo "All done."
+echo "Enjoy the Ride!"
