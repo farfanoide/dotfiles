@@ -14,16 +14,20 @@ Bundle 'gmarik/vundle'
 
 " General:
 Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-eunuch'
 
-" Editing Plugins:
-Bundle 'tpope/vim-commentary'
+" Editing Plugins: ----------------------------------------
+Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-surround'
 Bundle 'jiangmiao/auto-pairs'
 Bundle 'mattn/emmet-vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'terryma/vim-multiple-cursors'
 
-" Snippets:
+" Debugging: -----------------------------------------------
+Bundle 'joonty/vim-xdebug.git'
+
+" Snippets: -----------------------------------------------
 Bundle 'ervandew/supertab'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -32,20 +36,23 @@ Bundle "honza/vim-snippets"
 
 " Tags:
 Bundle 'majutsushi/tagbar'
-map <leader>s :TagbarToggle<CR>
+map <leader>s :TagbarOpenAutoClose<CR>
 
 " CSM:
 Bundle 'tpope/vim-fugitive'
 
 
-" Languages:
+" Languages: ----------------------------------------------
 "
-" Preprocessors:
+" Preprocessors: ------------------------------------------
 Bundle 'groenewege/vim-less'
 Bundle 'cakebaker/scss-syntax.vim'
 Bundle 'kchmck/vim-coffee-script'
 
-" Ruby:
+" syntax check
+Bundle 'scrooloose/syntastic'
+
+" Ruby: ---------------------------------------------------
 Bundle 'tpope/rbenv-ctags'
 " TODO: http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
 " TODO: https://github.com/tpope/gem-ctags
@@ -60,16 +67,17 @@ autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
 autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
-" PHP
+" PHP: ----------------------------------------------------
 Bundle 'shawncplus/phpcomplete.vim'
+Bundle 'vim-scripts/symfony.vim'
 
-" Markdown
+" Markdown: -----------------------------------------------
 Bundle 'tpope/vim-markdown'
 
-" Tmux Conf
+" Tmux Conf: ----------------------------------------------
 Bundle 'tejr/vim-tmux'
 
-" File system
+" File System: --------------------------------------------
 "
 " Fuzzy file/buffer/mru finder
 Bundle 'kien/ctrlp.vim'
@@ -91,7 +99,7 @@ let g:nerdtree_tabs_focus_on_files=1
 " Hide nerdtree's window scrollbar on macvim
 set guioptions-=L
 
-" Themes
+" Themes: -------------------------------------------------
 Bundle 'junegunn/seoul256.vim'
 Bundle 'farfanoide/vim-facebook'
 Bundle 'w0ng/vim-hybrid'
@@ -120,6 +128,7 @@ if !has("gui_running")
   let g:airline#extensions#tabline#enabled = 1
   let g:airline#extensions#tabline#left_sep = ' '
   let g:airline#extensions#tabline#right_sep = ' '
+  let g:ariline#extensions#bufferline#bufferline_separator = ' '
 endif
 " Fix delay after exiting insert mode
 set ttimeoutlen=50
@@ -127,8 +136,8 @@ set ttimeoutlen=50
 set guioptions-=T
 
 " OR ELSE just the 81st column of wide lines...
-highlight ColorColumn ctermbg=magenta
-call matchadd('ColorColumn', '\%81v', 100)
+highlight ColorColumn ctermbg=white ctermfg=red
+call matchadd('ColorColumn', '\%120v', 100)
 
 " Editor:
 " make backspace work like most other apps
@@ -140,10 +149,13 @@ set nowrap
 set showbreak=⇇
 set linebreak
 
+" History
+Bundle 'sjl/gundo.vim.git'
 " Trailing whitespaces
 Bundle 'csexton/trailertrash.vim'
 map <Leader>tw :Trim<CR>
 
+Bundle 'Yggdroot/indentLine'
 set list
 " set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
 set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:.
@@ -159,8 +171,6 @@ set wildmenu
 set esckeys
 " Optimize for fast terminal connections
 set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
 " Use UTF-8 without BOM
 set encoding=utf-8 nobomb
 " Don’t add empty newlines at the end of files
@@ -199,6 +209,8 @@ endif
 
 " Show commands as you type them
 set showcmd
+
+
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
 
@@ -209,6 +221,8 @@ set hlsearch
 set ignorecase
 " Highlight dynamically as pattern is typed
 set incsearch
+" Add the g flag to search/replace by default
+set gdefault
 " Map SPACE to remove search highlighting
 nmap <SPACE> <SPACE>:nohlsearch<CR>
 
@@ -238,13 +252,28 @@ endfunction
 command! -range=% IndentBuffer call <SID>IndentBuffer()
 :map <leader>i :IndentBuffer<cr>
 
-function! s:RemoveCM()
+" format php doc as html
+fun! s:FormatPhpAsHtml()
+  let l:save_cursor = getpos(".")
+  silent! execute 'setfiletype html'
+  silent! execute 'normal! ggVG='
+  silent! execute 'setfiletype php'
+  call setpos('.', l:save_cursor)
+endf
+command! -range=% FormatPhpAsHtml call <SID>FormatPhpAsHtml()
+:map <leader>fh :FormatPhpAsHtml<cr>
+
+function! s:RemoveCR()
   let l:save_cursor = getpos(".")
   silent! execute '%s/\r//g'
   call setpos('.', l:save_cursor)
 endfunction
-command! -range=% RemoveCM call <SID>RemoveCM()
-" :map <leader>ww :RemoveCM<cr>
+command! -range=% RemoveCR call <SID>RemoveCR()
+" :map <leader>ww :RemoveCR<cr>
+" TODO: create mapping to trim and remove carriage returns
+" if has("Trim")
+"   :map <leader>ca :call RemoveCR<CR>
+" endif
 
 function! Delegate(command)
   let l:save_cursor = getpos(".")
@@ -253,7 +282,7 @@ function! Delegate(command)
 endfunction
 
 Bundle 'godlygeek/tabular'
-:map <leader>t :tabularize<cr>
+:map <leader>t :Tabularize<cr>
 
 " faster commands
 map ; :
@@ -265,6 +294,10 @@ nnoremap <leader>tn :tabnew<cr>
 " move faster between tabs
 map <leader>n <esc>:tabprevious<cr>
 map <leader>m <esc>:tabnext<cr>
+
+" faster selections in visual mode
+vnoremap J 6j
+vnoremap K 6k
 
 " Block code indentation
 vnoremap < <gv
@@ -297,3 +330,6 @@ command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
 " any plugis should be before this
 filetype plugin indent on     " required
+
+" dont comment out next line
+autocmd FileType * setlocal formatoptions-=o formatoptions-=r
