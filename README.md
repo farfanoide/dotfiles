@@ -2,7 +2,7 @@
 
 You might find something useful here, or not
 
-# Installation
+----[ Installation: ]----------------------------------
 
 	# clone the repo
 	> git clone https://github.com/farfanoide/dotfiles
@@ -13,4 +13,7 @@ You might find something useful here, or not
 	# this will make symbolic links to your home folder, deleting any previous config files in there
 	> ./link.sh
 
-by Farfanoide
+----[ This is how it works: ]-------------------------- 
+![link.sh](http://cl.ly/image/1x0Y472n0K0Z/link.png)
+
+--------------------------------------[ by Farfanoide ]--------
