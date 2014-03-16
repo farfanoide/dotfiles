@@ -328,6 +328,9 @@ function! SetTabSize(size)
 endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
+" Pascal Compile
+:map <Leader>b :!fpc %<CR>
+
 " any plugis should be before this
 filetype plugin indent on     " required
 

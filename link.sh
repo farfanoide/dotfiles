@@ -24,7 +24,7 @@ for name in *; do
       if [[ ! -d $bckpdir ]]; then
         mkdir $bckpdir
       fi
-      echo -e "$B >> Backing up $target to $bckpdir"
+      echo -e "$B >> Backing up $target to $bckpdir/.$name"
       cp -r $target $bckpdir
       echo -e "$R >> Removing $target"
       rm $target
