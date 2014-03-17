@@ -242,19 +242,10 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " Mappings:
 " ctrl+a -> select all
-:map <c-a> ggVG
-
-" format entire document
-function! s:IndentBuffer()
-  let l:save_cursor = getpos(".")
-  silent! execute 'normal! ggVG='
-  call setpos('.', l:save_cursor)
-endfunction
-command! -range=% IndentBuffer call <SID>IndentBuffer()
-:map <leader>i :IndentBuffer<cr>
+map <c-a> ggVG
 
 " format as html
-fun! s:FormatAsHtml()
+function! s:FormatAsHtml()
   let l:save_cursor = getpos(".")
   let l:file_type = &filetype
   silent! execute 'setfiletype html'
@@ -263,7 +254,7 @@ fun! s:FormatAsHtml()
   call setpos('.', l:save_cursor)
 endf
 command! -range=% FormatAsHtml call <SID>FormatAsHtml()
-:map <Leader>fh :FormatAsHtml<CR>
+map <Leader>fh :FormatAsHtml<CR>
 
 function! s:RemoveCR()
   let l:save_cursor = getpos(".")
@@ -271,10 +262,10 @@ function! s:RemoveCR()
   call setpos('.', l:save_cursor)
 endfunction
 command! -range=% RemoveCR call <SID>RemoveCR()
-" :map <leader>ww :RemoveCR<cr>
+" map <leader>ww :RemoveCR<cr>
 " TODO: create mapping to trim and remove carriage returns
 " if has("Trim")
-"   :map <leader>ca :call RemoveCR<CR>
+"   map <leader>ca :call RemoveCR<CR>
 " endif
 
 function! Delegate(command)
@@ -284,7 +275,7 @@ function! Delegate(command)
 endfunction
 
 Bundle 'godlygeek/tabular'
-:map <leader>t :Tabularize<cr>
+map <leader>t :Tabularize<cr>
 
 " faster commands
 map ; :
@@ -298,17 +289,15 @@ map <leader>n <esc>:tabprevious<cr>
 map <leader>m <esc>:tabnext<cr>
 
 " faster selections in visual mode
-vnoremap J 6j
-vnoremap K 6k
+let g:multi_line_jump=6
+execute "vnoremap J ".g:multi_line_jump."j"
+execute "vnoremap K ".g:multi_line_jump."k"
 
-" Block code indentation
-vnoremap < <gv
-vnoremap > >gv
-
-" Paste and Indent
-nnoremap <esc>p p'[v']=
-nnoremap <esc>P P'[v']=
-
+function! SetMultiLineJump(jump_size)
+  execute "vnoremap J ".a:jump_size."j"
+  execute "vnoremap K ".a:jump_size."k"
+endfunction
+command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
 " PDF auto conversion
 Bundle 'rhysd/open-pdf.vim'
 let g:pdf_convert_on_edit=1
@@ -323,6 +312,23 @@ execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
 set expandtab
 
+" Block code indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Paste and Indent
+nnoremap <esc>p p'[v']=
+nnoremap <esc>P P'[v']=
+
+" Indent entire document
+function! s:IndentBuffer()
+  let l:save_cursor = getpos(".")
+  silent! execute 'normal! ggVG='
+  call setpos('.', l:save_cursor)
+endfunction
+command! -range=% IndentBuffer call <SID>IndentBuffer()
+map <leader>i :IndentBuffer<cr>
+
 function! SetTabSize(size)
   execute "set tabstop=".a:size
   execute "set shiftwidth=".a:size
@@ -331,7 +337,8 @@ endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
 " Pascal Compile
-:map <Leader>b :!fpc %<CR>
+" TODO: make it filetype-aware
+map <Leader>b :!fpc %<CR>
 
 " any plugis should be before this
 filetype plugin indent on     " required
