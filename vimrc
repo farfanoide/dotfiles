@@ -23,6 +23,7 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'mattn/emmet-vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'matchit.zip'
 
 " Debugging: -----------------------------------------------
 Bundle 'joonty/vim-xdebug.git'
@@ -252,16 +253,17 @@ endfunction
 command! -range=% IndentBuffer call <SID>IndentBuffer()
 :map <leader>i :IndentBuffer<cr>
 
-" format php doc as html
-fun! s:FormatPhpAsHtml()
+" format as html
+fun! s:FormatAsHtml()
   let l:save_cursor = getpos(".")
+  let l:file_type = &filetype
   silent! execute 'setfiletype html'
   silent! execute 'normal! ggVG='
-  silent! execute 'setfiletype php'
+  silent! execute 'setfiletype ' . l:file_type
   call setpos('.', l:save_cursor)
 endf
-command! -range=% FormatPhpAsHtml call <SID>FormatPhpAsHtml()
-:map <leader>fh :FormatPhpAsHtml<cr>
+command! -range=% FormatAsHtml call <SID>FormatAsHtml()
+:map <Leader>fh :FormatAsHtml<CR>
 
 function! s:RemoveCR()
   let l:save_cursor = getpos(".")

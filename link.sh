@@ -22,18 +22,18 @@ for name in *; do
 
     if [ -a $target ]; then
       if [[ ! -d $bckpdir ]]; then
-        mkdir $bckpdir
+        mkdir -p $bckpdir
       fi
-      echo -e "$B >> Backing up $target to $bckpdir/.$name"
+      echo -e "$B [+] Backing up $target to $bckpdir/.$name"
       cp -r $target $bckpdir
-      echo -e "$R >> Removing $target"
+      echo -e "$R [-] Removing $target"
       rm $target
     fi
 
     ln -s "$PWD/$name" "$target"
-    echo -e "$G >> Linked $PWD/$name to $target"
+    echo -e "$G [>] Linked $PWD/$name to $target"
   else
-    echo -e "$Y >> Skipping ${name}"
+    echo -e "$Y [~] Skipping ${name}"
   fi
 done
 echo "All done."
