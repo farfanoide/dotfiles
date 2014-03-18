@@ -60,6 +60,7 @@ Bundle 'tpope/rbenv-ctags'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-endwise'
 Bundle 'https://github.com/vim-ruby/vim-ruby'
+Bundle 'tpope/vim-bundler'
 
 " Rails AutoCompletion (test)
 let g:rubycomplete_buffer_loading = 1
@@ -82,6 +83,7 @@ Bundle 'tejr/vim-tmux'
 "
 " Fuzzy file/buffer/mru finder
 Bundle 'kien/ctrlp.vim'
+" TODO: autoreload when creating new files with nerdtree
 
 Bundle 'scrooloose/nerdtree'
 " NERDTree mappings and options
@@ -256,16 +258,16 @@ endf
 command! -range=% FormatAsHtml call <SID>FormatAsHtml()
 map <Leader>fh :FormatAsHtml<CR>
 
-function! s:RemoveCR()
+function! s:TrimCR()
   let l:save_cursor = getpos(".")
   silent! execute '%s/\r//g'
   call setpos('.', l:save_cursor)
 endfunction
-command! -range=% RemoveCR call <SID>RemoveCR()
-" map <leader>ww :RemoveCR<cr>
-" TODO: create mapping to trim and remove carriage returns
+command! -range=% TrimCR call <SID>TrimCR()
+map <leader>tc :TrimCR<cr>
+" TODO: create mapping to trim and Trim carriage returns
 " if has("Trim")
-"   map <leader>ca :call RemoveCR<CR>
+"   map <leader>ca :call TrimCR<CR>
 " endif
 
 function! Delegate(command)
@@ -320,6 +322,7 @@ vnoremap > >gv
 nnoremap <esc>p p'[v']=
 nnoremap <esc>P P'[v']=
 
+" TODO: toggle indentation back when done
 " Indent entire document
 function! s:IndentBuffer()
   let l:save_cursor = getpos(".")
