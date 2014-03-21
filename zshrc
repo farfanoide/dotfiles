@@ -51,7 +51,9 @@ PATH="/usr/local/share/npm/bin:${PATH}"
 # PATH="/usr/local/share/python:${PATH}"
 
 # Pear Packages
-PATH="$(brew --prefix php55)/bin:$PATH"
+if [[ $(uname) == "Darwin" ]]; then
+  PATH="$(brew --prefix php55)/bin:$PATH"
+fi
 
 # rbenv initialization
 # eval "$(rbenv init -)"
