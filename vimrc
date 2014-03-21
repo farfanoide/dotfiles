@@ -23,6 +23,7 @@ Bundle 'jiangmiao/auto-pairs'
 Bundle 'mattn/emmet-vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'matchit.zip'
 
 " Debugging: -----------------------------------------------
 Bundle 'joonty/vim-xdebug.git'
@@ -59,6 +60,7 @@ Bundle 'tpope/rbenv-ctags'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-endwise'
 Bundle 'https://github.com/vim-ruby/vim-ruby'
+Bundle 'tpope/vim-bundler'
 
 " Rails AutoCompletion (test)
 let g:rubycomplete_buffer_loading = 1
@@ -81,6 +83,7 @@ Bundle 'tejr/vim-tmux'
 "
 " Fuzzy file/buffer/mru finder
 Bundle 'kien/ctrlp.vim'
+" TODO: autoreload when creating new files with nerdtree
 
 Bundle 'scrooloose/nerdtree'
 " NERDTree mappings and options
@@ -241,38 +244,30 @@ nmap <leader>v :tabedit $MYVIMRC<CR>
 
 " Mappings:
 " ctrl+a -> select all
-:map <c-a> ggVG
+map <c-a> ggVG
 
-" format entire document
-function! s:IndentBuffer()
+" format as html
+function! s:FormatAsHtml()
   let l:save_cursor = getpos(".")
-  silent! execute 'normal! ggVG='
-  call setpos('.', l:save_cursor)
-endfunction
-command! -range=% IndentBuffer call <SID>IndentBuffer()
-:map <leader>i :IndentBuffer<cr>
-
-" format php doc as html
-fun! s:FormatPhpAsHtml()
-  let l:save_cursor = getpos(".")
+  let l:file_type = &filetype
   silent! execute 'setfiletype html'
   silent! execute 'normal! ggVG='
-  silent! execute 'setfiletype php'
+  silent! execute 'setfiletype ' . l:file_type
   call setpos('.', l:save_cursor)
 endf
-command! -range=% FormatPhpAsHtml call <SID>FormatPhpAsHtml()
-:map <leader>fh :FormatPhpAsHtml<cr>
+command! -range=% FormatAsHtml call <SID>FormatAsHtml()
+map <Leader>fh :FormatAsHtml<CR>
 
-function! s:RemoveCR()
+function! s:TrimCR()
   let l:save_cursor = getpos(".")
   silent! execute '%s/\r//g'
   call setpos('.', l:save_cursor)
 endfunction
-command! -range=% RemoveCR call <SID>RemoveCR()
-" :map <leader>ww :RemoveCR<cr>
-" TODO: create mapping to trim and remove carriage returns
+command! -range=% TrimCR call <SID>TrimCR()
+map <leader>tc :TrimCR<cr>
+" TODO: create mapping to trim and Trim carriage returns
 " if has("Trim")
-"   :map <leader>ca :call RemoveCR<CR>
+"   map <leader>ca :call TrimCR<CR>
 " endif
 
 function! Delegate(command)
@@ -282,7 +277,7 @@ function! Delegate(command)
 endfunction
 
 Bundle 'godlygeek/tabular'
-:map <leader>t :Tabularize<cr>
+map <leader>t :Tabularize<cr>
 
 " faster commands
 map ; :
@@ -296,17 +291,15 @@ map <leader>n <esc>:tabprevious<cr>
 map <leader>m <esc>:tabnext<cr>
 
 " faster selections in visual mode
-vnoremap J 6j
-vnoremap K 6k
+let g:multi_line_jump=6
+execute "vnoremap J ".g:multi_line_jump."j"
+execute "vnoremap K ".g:multi_line_jump."k"
 
-" Block code indentation
-vnoremap < <gv
-vnoremap > >gv
-
-" Paste and Indent
-nnoremap <esc>p p'[v']=
-nnoremap <esc>P P'[v']=
-
+function! SetMultiLineJump(jump_size)
+  execute "vnoremap J ".a:jump_size."j"
+  execute "vnoremap K ".a:jump_size."k"
+endfunction
+command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
 " PDF auto conversion
 Bundle 'rhysd/open-pdf.vim'
 let g:pdf_convert_on_edit=1
@@ -321,6 +314,24 @@ execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
 set expandtab
 
+" Block code indentation
+vnoremap < <gv
+vnoremap > >gv
+
+" Paste and Indent
+nnoremap <esc>p p'[v']=
+nnoremap <esc>P P'[v']=
+
+" TODO: toggle indentation back when done
+" Indent entire document
+function! s:IndentBuffer()
+  let l:save_cursor = getpos(".")
+  silent! execute 'normal! ggVG='
+  call setpos('.', l:save_cursor)
+endfunction
+command! -range=% IndentBuffer call <SID>IndentBuffer()
+map <leader>i :IndentBuffer<cr>
+
 function! SetTabSize(size)
   execute "set tabstop=".a:size
   execute "set shiftwidth=".a:size
@@ -329,7 +340,8 @@ endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
 " Pascal Compile
-:map <Leader>b :!fpc %<CR>
+" TODO: make it filetype-aware
+map <Leader>b :!fpc %<CR>
 
 " any plugis should be before this
 filetype plugin indent on     " required
