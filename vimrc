@@ -6,7 +6,7 @@ filetype off        " required
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" Change mapleader
+" Change mapLeader
 let mapleader=","
 
 " let Vundle manage Vundle, required
@@ -25,6 +25,17 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'terryma/vim-multiple-cursors'
 Bundle 'matchit.zip'
 
+" Text Objects: --------------------------------------------
+" text object plugin, add abstraction layer for other plugins
+Bundle 'https://github.com/kana/vim-textobj-user/'
+" adds {ar/ir} text objects
+Bundle 'https://github.com/nelstrom/vim-textobj-rubyblock'
+" adds {af/if} and  {ac/ic} function/class
+" adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
+Bundle 'https://github.com/bps/vim-textobj-python'
+" adds {aP/iP}
+Bundle 'https://github.com/akiyan/vim-textobj-php'
+
 " Debugging: -----------------------------------------------
 Bundle 'joonty/vim-xdebug.git'
 
@@ -37,7 +48,7 @@ Bundle "honza/vim-snippets"
 
 " Tags:
 Bundle 'majutsushi/tagbar'
-map <leader>s :TagbarOpenAutoClose<CR>
+map <Leader>s :TagbarOpenAutoClose<CR>
 
 " CSM:
 Bundle 'tpope/vim-fugitive'
@@ -70,8 +81,10 @@ autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
 autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
 " PHP: ----------------------------------------------------
-Bundle 'shawncplus/phpcomplete.vim'
-Bundle 'vim-scripts/symfony.vim'
+" Bundle 'shawncplus/phpcomplete.vim'
+" Bundle 'vim-scripts/symfony.vim'
+Bundle 'spf13/PIV'
+Bundle 'arnaud-lb/vim-php-namespace'
 
 " Markdown: -----------------------------------------------
 Bundle 'tpope/vim-markdown'
@@ -84,6 +97,10 @@ Bundle 'tejr/vim-tmux'
 " Fuzzy file/buffer/mru finder
 Bundle 'kien/ctrlp.vim'
 " TODO: autoreload when creating new files with nerdtree
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
+  \ 'file': '\v\.(exe|so|dll)$'
+  \ }
 
 Bundle 'scrooloose/nerdtree'
 " NERDTree mappings and options
@@ -157,8 +174,15 @@ Bundle 'sjl/gundo.vim.git'
 " Trailing whitespaces
 Bundle 'csexton/trailertrash.vim'
 map <Leader>tw :Trim<CR>
+hi UnwantedTrailerTrash guibg=none ctermbg=none ctermfg=green guifg=green
+
 
 Bundle 'Yggdroot/indentLine'
+" let g:indentLine_char='│'
+" iterm2 cant handle unicode chars :(
+let g:indentLine_char='|'
+map <Leader>it :IndentLinesToggle<CR>
+
 set list
 " set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
 set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:.
@@ -235,16 +259,24 @@ set title
 set splitbelow
 set splitright
 
+" navigation
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+" seamless vim/tmux navigation
+Bundle 'christoomey/vim-tmux-navigator'
+
 " AutoCommands:
 " Auto-reload vimrc on save
 if has("autocmd")
   autocmd! bufwritepost ~/.vimrc source $MYVIMRC
 endif
-nmap <leader>v :tabedit $MYVIMRC<CR>
+nmap <Leader>v :tabedit $MYVIMRC<CR>
 
 " Mappings:
 " ctrl+a -> select all
-map <c-a> ggVG
+map <C-a> ggVG
 
 " format as html
 function! s:FormatAsHtml()
@@ -264,10 +296,10 @@ function! s:TrimCR()
   call setpos('.', l:save_cursor)
 endfunction
 command! -range=% TrimCR call <SID>TrimCR()
-map <leader>tc :TrimCR<cr>
+map <Leader>tc :TrimCR<CR>
 " TODO: create mapping to trim and Trim carriage returns
 " if has("Trim")
-"   map <leader>ca :call TrimCR<CR>
+"   map <Leader>ca :call TrimCR<CR>
 " endif
 
 function! Delegate(command)
@@ -277,18 +309,18 @@ function! Delegate(command)
 endfunction
 
 Bundle 'godlygeek/tabular'
-map <leader>t :Tabularize<cr>
+map <Leader>t :Tabularize<CR>
 
 " faster commands
 map ; :
 
 " faster save
-nnoremap <leader>w :w!<cr>
-nnoremap <leader>tn :tabnew<cr>
+nnoremap <Leader>w :w!<CR>
+nnoremap <Leader>tn :tabnew<CR>
 
 " move faster between tabs
-map <leader>n <esc>:tabprevious<cr>
-map <leader>m <esc>:tabnext<cr>
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
 
 " faster selections in visual mode
 let g:multi_line_jump=6
@@ -330,7 +362,7 @@ function! s:IndentBuffer()
   call setpos('.', l:save_cursor)
 endfunction
 command! -range=% IndentBuffer call <SID>IndentBuffer()
-map <leader>i :IndentBuffer<cr>
+map <Leader>i :IndentBuffer<cr>
 
 function! SetTabSize(size)
   execute "set tabstop=".a:size

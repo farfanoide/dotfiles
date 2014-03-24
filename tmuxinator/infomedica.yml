@@ -28,11 +28,6 @@ windows:
     - mysql -uroot -p docpik
   - log:
       - ctail -F infomedica-app/log/frontend_dev.log
-  - prestador:
-      layout: main-vertical
-      panes:
-        - cd infomedica-app/apps/prestador/modules
-        - ctail -F infomedica-app/log/prestador_dev.log
   - assets:
       layout: main-vertical
       panes:

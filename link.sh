@@ -36,5 +36,9 @@ for name in *; do
     echo -e "$Y [~] Skipping ${name}"
   fi
 done
+echo "Gonna install vim plugins, might take a while."
+sleep 2
+vim +BundleInstall! +BundleClean +qall
+
 echo "All done."
 echo "Enjoy the Ride!"

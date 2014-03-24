@@ -32,7 +32,7 @@ windows:
       panes:
           - bundle exec rails db
           # - if [[ ! -f /usr/local/var/postgres/postmaster.pid  ]]; then postgres -D /usr/local/var/postgres ; fi
-  - server: bundle exec rails s
+  - server: ber
   - logs: ctail -F log/development.log
   - assets:
       layout: main-vertical
