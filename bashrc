@@ -164,11 +164,6 @@ function pvcp()
   pv ${SOURCE} | > ${DESTINATION}
 }
 
-# add homebrew tab-complet
-source `brew --prefix`/Library/Contributions/brew_bash_completion.sh
-if [ -f `brew --prefix`/etc/bash_completion ]; then
-    . `brew --prefix`/etc/bash_completion
-fi
 
 # scm
 function parse_git_dirty {
@@ -190,20 +185,12 @@ parse_svn_repository_root() {
   svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
 }
 
-# export PS1=""
-# USER_HOST="user@host"
-# if [ $USER_HOST !=  "$(whoami)@$(hostname -f)" ]; then
-#   PS1="\u@\h"
-# fi
-
-
-# PS1=$PS1"\w\$(parse_git_branch)$ "
 
 # add homebrew shit
 PATH="/usr/local/bin:${PATH}"
 PATH="/usr/local/sbin:${PATH}"
 
-export PATH=$PATH":/Users/${USER}/.bin"
+export PATH=$PATH":${HOME}/.bin"
 
 # python modules
 # PATH="/usr/local/share/python:${PATH}"
