@@ -1,0 +1,94 @@
+# alias para colorcitos y giladas
+alias ls="ls -hG"
+alias l="ls -o"
+alias la="ll -A"
+# alias lg="la | grep -i"
+alias lr="ls -R "
+alias grep="grep --color=auto"
+alias up="cd .."
+alias c="clear"
+alias h="history"
+alias mplayer="mplayer -msgcolor"
+alias m="mplayer"
+alias df="df -h"
+alias tree="tree -C"
+# requires sudo pip install pygments
+alias hi="pygmentize -g"
+alias du="du -hs"
+# Show me the size of all the things. The bastard child of du and df.
+# http://gyaresu.org/hacking/2012/08/02/alias-to-show-the-size-of-files-and-folders/
+alias duf='du -sk * | sort -nr | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'''
+# Kill all the tabs in Chrome to free up memory
+# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
+alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
+# folders and archives
+alias mv="mv -iv"
+alias srm="sudo rm -Rfv"
+alias mkdir="mkdir -p"
+alias cp="rsync --append --progress -azvrE"
+alias s="ssh"
+
+
+# mac specific alias
+alias o="open"
+alias optimize="o -a ImageOptim"
+alias brup="brew update && brew upgrade"
+alias browserstack="java -jar ~/Dropbox/syncPrefs/cmd/BrowserStackTunnel.jar T6rci6PsccWiU9kF2ygq localhost,80,0"
+alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
+
+# recurrent directories
+alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
+# alias itunes="open -a itunes"
+alias utorrent="open -a -j utorrent"
+alias sitez="cd ~/Dropbox/Sites/"
+alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
+alias my="mysql -uroot -p "
+#alias mystart="mysql.server start"
+alias youtube-dl="youtube-dl --max-quality url"
+# git
+# TODO: add these to git itself to get proper tab completion
+alias gs="git status -bs"
+alias ga="git add --all "
+alias gd="git diff "
+alias grv="git remote -v"
+# http://gyaresu.org/hacking/2012/06/19/a-better-git-log
+#alias gl="git log --pretty=oneline --abbrev-commit --graph --decorate"
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+
+alias gc="git commit -v"
+alias gco="git checkout "
+
+alias mf="mdfind"
+alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
+alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
+alias v="vim"
+# requires brew install grc
+alias ctail="grc tail"
+
+alias dateformat="date \"+%d-%m-%Y\""
+alias docup="ssh docpik 'cd /var/www/html/docpik ; git pull'"
+alias infup="ssh latinman 'cd proyectos/docpik_dev/infomedica-app/ && git pull && ./symfony cc'"
+alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pull'"
+
+
+# tmux
+alias ta='tmux attach -t'
+alias ts='tmux new-session -s'
+alias tl='tmux list-sessions'
+alias ms='tmuxinator start'
+
+# Bundler
+alias be="bundle exec"
+alias bl="bundle list"
+alias bp="bundle package"
+alias bo="bundle open"
+alias bu="bundle update"
+alias bi="bundle install"
+
+# Rails
+alias ber="bundle exec rails server"
+
+# Symfony
+alias sy="./symfony"
+alias rmcl="rm -fr cache/* log/*"
+alias arreglarengine="vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php"

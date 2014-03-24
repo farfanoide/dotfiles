@@ -10,7 +10,7 @@ B="\033[0;34m"
 Y="\033[0;33m"
 
 echo -e "$G Updating Submodules"
-git submodule update --init
+git submodule update --init --recursive
 
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
