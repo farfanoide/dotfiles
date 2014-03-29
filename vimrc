@@ -52,7 +52,7 @@ map <Leader>s :TagbarOpenAutoClose<CR>
 
 " CSM:
 Bundle 'tpope/vim-fugitive'
-
+Bundle 'airblade/vim-gitgutter'
 
 " Languages: ----------------------------------------------
 "
@@ -84,6 +84,9 @@ autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 " Bundle 'shawncplus/phpcomplete.vim'
 " Bundle 'vim-scripts/symfony.vim'
 Bundle 'spf13/PIV'
+" disable php auto-folding
+let g:DisableAutoPHPFolding = 1
+
 Bundle 'arnaud-lb/vim-php-namespace'
 
 " Markdown: -----------------------------------------------
@@ -98,9 +101,9 @@ Bundle 'tejr/vim-tmux'
 Bundle 'kien/ctrlp.vim'
 " TODO: autoreload when creating new files with nerdtree
 let g:ctrlp_custom_ignore = {
-  \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
-  \ 'file': '\v\.(exe|so|dll)$'
-  \ }
+      \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
+      \ 'file': '\v\.(exe|so|dll)$'
+      \ }
 
 Bundle 'scrooloose/nerdtree'
 " NERDTree mappings and options
@@ -171,6 +174,7 @@ set linebreak
 
 " History
 Bundle 'sjl/gundo.vim.git'
+map <Leader>u :GundoToggle<CR>
 " Trailing whitespaces
 Bundle 'csexton/trailertrash.vim'
 map <Leader>tw :Trim<CR>

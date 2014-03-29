@@ -63,7 +63,7 @@ alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
 alias v="vim"
 # requires brew install grc
-alias ctail="grc tail"
+alias ctail="\grc tail"
 
 alias dateformat="date \"+%d-%m-%Y\""
 alias docup="ssh docpik 'cd /var/www/html/docpik ; git pull'"
