@@ -20,6 +20,9 @@ function mystart() {
     mysql.server start
   fi
 }
+function myexec(){
+  mysql -uroot -p -e "$*"
+}
 
 # TODO: check it out, args[0] not working
 function lg(){

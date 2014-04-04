@@ -61,7 +61,7 @@ alias gco="git checkout "
 alias mf="mdfind"
 alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
-alias v="vim"
+alias v="mvim -v"
 # requires brew install grc
 alias ctail="\grc tail"
 

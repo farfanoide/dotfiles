@@ -92,3 +92,8 @@ Host tomate
   HostName tomate.local
   User francisco
   Port 22
+
+Host ildico
+  HostName ildico.local
+  User farfan
+  Port 22

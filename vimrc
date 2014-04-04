@@ -90,7 +90,7 @@ let g:DisableAutoPHPFolding = 1
 Bundle 'arnaud-lb/vim-php-namespace'
 
 " Markdown: -----------------------------------------------
-Bundle 'tpope/vim-markdown'
+Bundle 'plasticboy/vim-markdown'
 
 " Tmux Conf: ----------------------------------------------
 Bundle 'tejr/vim-tmux'
@@ -178,7 +178,7 @@ map <Leader>u :GundoToggle<CR>
 " Trailing whitespaces
 Bundle 'csexton/trailertrash.vim'
 map <Leader>tw :Trim<CR>
-hi UnwantedTrailerTrash guibg=none ctermbg=none ctermfg=green guifg=green
+hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green
 
 
 Bundle 'Yggdroot/indentLine'
@@ -263,6 +263,9 @@ set title
 set splitbelow
 set splitright
 
+Bundle 'vim-scripts/ZoomWin'
+:map <Leader>z :ZoomWin<CR>
+
 " navigation
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -306,6 +309,12 @@ map <Leader>tc :TrimCR<CR>
 "   map <Leader>ca :call TrimCR<CR>
 " endif
 
+" function! SortCSS()
+"   let l:save_cursor = getpos(".")
+"   let l:file_type = &filetype
+"   silent! execute 'visual! i{:sort'
+"   call setpos('.', l:save_cursor)
+" endfunction
 function! Delegate(command)
   let l:save_cursor = getpos(".")
   execute a:command
@@ -355,8 +364,8 @@ vnoremap < <gv
 vnoremap > >gv
 
 " Paste and Indent
-nnoremap <esc>p p'[v']=
-nnoremap <esc>P P'[v']=
+" nnoremap <esc>p p'[v']=
+" nnoremap <esc>P P'[v']=
 
 " TODO: toggle indentation back when done
 " Indent entire document
@@ -375,12 +384,23 @@ function! SetTabSize(size)
 endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
+Bundle 'tpope/vim-unimpaired'
+
+" Bubble single lines
+nnoremap <C-Up> [e
+nnoremap <C-Down> ]e
+" Bubble multiple lines
+vnoremap <C-Up> [egv
+vnoremap <C-Down> ]egv
+
 " Pascal Compile
 " TODO: make it filetype-aware
 map <Leader>b :!fpc %<CR>
 
 " any plugis should be before this
 filetype plugin indent on     " required
+
+set nofoldenable
 
 " dont comment out next line
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
