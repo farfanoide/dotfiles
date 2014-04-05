@@ -1,15 +1,31 @@
 
 # SSH Configurations: -----------------
+
 # no prompt for unkown hosts
 StrictHostKeyChecking no
 UserKnownHostsFile /dev/null
 LogLevel QUIET
+
 # faster ssh in mac
 Host *
  GSSAPIAuthentication no
  GSSAPIKeyExchange no
  AddressFamily inet
 
+# share connections
+ControlMaster auto
+ControlPath /tmp/ssh_mux_%h_%p_%r
+
+# tell server to keep session alive
+ControlPersist 4h
+
+# easier connections between remote servers
+ForwardAgent yes
+
+# atuo-reconnect
+TCPKeepAlive no
+ServerAliveInterval 60
+ServerAliveCountMax 10
 
 # Hosts: ------[remote]-----------------
 Host latinmanf
