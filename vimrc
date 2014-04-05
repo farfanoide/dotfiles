@@ -1,13 +1,14 @@
 set nocompatible    " be iMproved, required
 filetype off        " required
 
-
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " Change mapLeader
 let mapleader=","
+
+" Various Bundles:---------------------------------------------------------------{{{
 
 " let Vundle manage Vundle, required
 Bundle 'gmarik/vundle'
@@ -46,57 +47,90 @@ Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
 
-" Tags:
-Bundle 'majutsushi/tagbar'
-map <Leader>s :TagbarOpenAutoClose<CR>
-
 " CSM:
 Bundle 'tpope/vim-fugitive'
 Bundle 'airblade/vim-gitgutter'
 
-" Languages: ----------------------------------------------
-"
-" Preprocessors: ------------------------------------------
+" Tags:
+Bundle 'majutsushi/tagbar'
+map <Leader>s :TagbarOpenAutoClose<CR>
+
+" syntax check
+Bundle 'scrooloose/syntastic'
+Bundle 'plasticboy/vim-markdown'
+"}}}--------------------[ end Various Bundles  ]----------------------------------------
+" Preprocessors: ------------------------------------------{{{
+
 Bundle 'groenewege/vim-less'
 Bundle 'cakebaker/scss-syntax.vim'
 Bundle 'kchmck/vim-coffee-script'
 
-" syntax check
-Bundle 'scrooloose/syntastic'
+" CSS and LessCSS -------------------------------------{{{
 
-" Ruby: ---------------------------------------------------
+augroup ft_css
+  au!
+
+  au BufNewFile,BufRead *.less setlocal filetype=less
+
+  au Filetype less,css setlocal foldmethod=marker
+  au Filetype less,css setlocal foldmarker={,}
+  au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
+  au Filetype less,css setlocal iskeyword+=-
+
+  " Use <leader>S to sort properties.  Turns this:
+  "
+  "     p {
+  "         width: 200px;
+  "         height: 100px;
+  "         background: red;
+  "
+  "         ...
+  "     }
+  "
+  " into this:
+
+  "     p {
+  "         background: red;
+  "         height: 100px;
+  "         width: 200px;
+  "
+  "         ...
+  "     }
+  au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <leader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+augroup END
+
+" }}}
+" }}} ------------[end preprocessors]------------
+" Ruby:---------------------------------------------------------------{{{
+
 Bundle 'tpope/rbenv-ctags'
-" TODO: http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html
-" TODO: https://github.com/tpope/gem-ctags
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-endwise'
 Bundle 'https://github.com/vim-ruby/vim-ruby'
 Bundle 'tpope/vim-bundler'
 
-" Rails AutoCompletion (test)
-let g:rubycomplete_buffer_loading = 1
-let g:rubycomplete_rails = 1
-autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
 
-" PHP: ----------------------------------------------------
+" " Rails AutoCompletion (test)
+" let g:rubycomplete_buffer_loading = 1
+" let g:rubycomplete_rails = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
+" autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
+"
+"}}}--------------------[ end Ruby ]----------------------------------------
+" PHP:---------------------------------------------------------------{{{
 " Bundle 'shawncplus/phpcomplete.vim'
 " Bundle 'vim-scripts/symfony.vim'
 Bundle 'spf13/PIV'
 " disable php auto-folding
-let g:DisableAutoPHPFolding = 1
-
+" let g:DisableAutoPHPFolding = 1
 Bundle 'arnaud-lb/vim-php-namespace'
-
-" Markdown: -----------------------------------------------
-Bundle 'plasticboy/vim-markdown'
-
-" Tmux Conf: ----------------------------------------------
+"}}}--------------------[ end PHP  ]----------------------------------------
+" Syntax Plugins: -------------------------------------------------{{{
 Bundle 'tejr/vim-tmux'
-
-" File System: --------------------------------------------
-"
+Bundle 'vim-scripts/rtorrent-syntax-file'
+"}}}
+" Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
 Bundle 'kien/ctrlp.vim'
 " TODO: autoreload when creating new files with nerdtree
@@ -121,29 +155,30 @@ let g:nerdtree_tabs_focus_on_files=1
 
 " Hide nerdtree's window scrollbar on macvim
 set guioptions-=L
-
-" Themes: -------------------------------------------------
+"}}}--------------------[ end Files  ]----------------------------------------
+" Eye Candy:---------------------------------------------------------------{{{
+" --------------[Themes]-----------------------------------------------------
 Bundle 'junegunn/seoul256.vim'
 Bundle 'farfanoide/vim-facebook'
 Bundle 'w0ng/vim-hybrid'
 Bundle 'baskerville/bubblegum'
+Bundle 'tomasr/molokai'
+Bundle 'altercation/vim-colors-solarized'
 
-" Eye Candy
+" enable syntax highligting
 syntax on
-
+" Don't try to highlight lines longer than 400 characters.
+set synmaxcol=400
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
 colorscheme bubblegum
-
 " Highlight current line
 set cursorline
-
 " Remove second status bar when using powerline
 set noshowmode
 
-
-" Powerline stuff:
-set guifont=Ubuntu\ Mono\ derivative\ Powerline:h15
+" --------------[Powerline]--------------------------------------------------
+set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 Bundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
@@ -153,39 +188,29 @@ if !has("gui_running")
   let g:airline#extensions#tabline#right_sep = ' '
   let g:ariline#extensions#bufferline#bufferline_separator = ' '
 endif
-" Fix delay after exiting insert mode
-set ttimeoutlen=50
+
 " Dont show toolbar on gui
 set guioptions-=T
 
-" OR ELSE just the 81st column of wide lines...
+" highlight just the 81st column of wide lines...
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
-
-" Editor:
+"}}}--------------------[ end Eye Candy  ]-----------------------------------
+"Editor:---------------------------------------------------------------{{{
 " make backspace work like most other apps
 set backspace=2
+
+" Time out on key codes but not mappings.
+" Basically this makes terminal Vim work sanely.
+set notimeout
+set ttimeout
+set ttimeoutlen=10
 
 " Text Preferences
 set nowrap
 " Break by word at end of line when wrap=true
 set showbreak=⇇
 set linebreak
-
-" History
-Bundle 'sjl/gundo.vim.git'
-map <Leader>u :GundoToggle<CR>
-" Trailing whitespaces
-Bundle 'csexton/trailertrash.vim'
-map <Leader>tw :Trim<CR>
-hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green
-
-
-Bundle 'Yggdroot/indentLine'
-" let g:indentLine_char='│'
-" iterm2 cant handle unicode chars :(
-let g:indentLine_char='|'
-map <Leader>it :IndentLinesToggle<CR>
 
 set list
 " set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
@@ -217,6 +242,7 @@ set nowritebackup
 
 " Tell Vim to use an undo file
 if exists("&undodir")
+  set undofile
   set undodir=~/.vim/undo
 endif
 
@@ -237,15 +263,23 @@ if exists("&relativenumber")
   set relativenumber
   au BufReadPost * set relativenumber
 endif
-
 " Show commands as you type them
 set showcmd
-
-
+" allow unsaved changes to be hidden
+set hidden
 " Start scrolling three lines before the horizontal window border
 set scrolloff=3
+"}}}--------------------[ end Editor  ]-----------------------------------
+" History:---------------------------------------------------------------{{{
+Bundle 'sjl/gundo.vim.git'
+map <Leader>u :GundoToggle<CR>
+" Trailing whitespaces
+Bundle 'csexton/trailertrash.vim'
+map <Leader>tw :Trim<CR>
+hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green
 
-" Search:
+"}}}--------------------[ end History  ]----------------------------------------
+" Search:---------------------------------------------------------------{{{
 " Highlight searches
 set hlsearch
 " Ignore case of searches
@@ -255,36 +289,34 @@ set incsearch
 " Add the g flag to search/replace by default
 set gdefault
 " Map SPACE to remove search highlighting
-nmap <SPACE> <SPACE>:nohlsearch<CR>
-
-" Windows Tabs:
+noremap <silent> <space> :noh<cr>:call clearmatches()<cr>
+" nnoremap <Space> :nohlsearch<CR>
+"}}}--------------------[ end Search  ]------------------------------------
+" Windows Tabs:-----------------------------{{{
 " Show the filename in the window titlebar
 set title
 set splitbelow
 set splitright
 
+" Resize splits when the window is resized
+au VimResized * :wincmd =
+
 Bundle 'vim-scripts/ZoomWin'
 :map <Leader>z :ZoomWin<CR>
 
 " navigation
-nnoremap <C-J> <C-W><C-J>
-nnoremap <C-K> <C-W><C-K>
-nnoremap <C-L> <C-W><C-L>
-nnoremap <C-H> <C-W><C-H>
+nnoremap <C-j> <C-W><C-J>
+nnoremap <C-k> <C-W><C-K>
+nnoremap <C-l> <C-W><C-L>
+nnoremap <C-h> <C-W><C-H>
+
 " seamless vim/tmux navigation
 Bundle 'christoomey/vim-tmux-navigator'
 
-" AutoCommands:
-" Auto-reload vimrc on save
-if has("autocmd")
-  autocmd! bufwritepost ~/.vimrc source $MYVIMRC
-endif
-nmap <Leader>v :tabedit $MYVIMRC<CR>
-
-" Mappings:
+" }}}
+"Code Formatting:---------------------------------------------------------------{{{
 " ctrl+a -> select all
 map <C-a> ggVG
-
 " format as html
 function! s:FormatAsHtml()
   let l:save_cursor = getpos(".")
@@ -315,16 +347,12 @@ map <Leader>tc :TrimCR<CR>
 "   silent! execute 'visual! i{:sort'
 "   call setpos('.', l:save_cursor)
 " endfunction
-function! Delegate(command)
-  let l:save_cursor = getpos(".")
-  execute a:command
-  call setpos('.', l:save_cursor)
-endfunction
-
 Bundle 'godlygeek/tabular'
 map <Leader>t :Tabularize<CR>
 
-" faster commands
+"}}}--------------------[ end Code Formatting  ]----------------------------------------
+" Faster Commands:---------------------------------------------------------------{{{
+" one less key to get to command mode
 map ; :
 
 " faster save
@@ -334,23 +362,25 @@ nnoremap <Leader>tn :tabnew<CR>
 " move faster between tabs
 map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
+" escape with jj
+inoremap jj <ESC>
+" faster matching
+nmap <Tab> %
+vmap <Tab> %
 
 " faster selections in visual mode
 let g:multi_line_jump=6
 execute "vnoremap J ".g:multi_line_jump."j"
 execute "vnoremap K ".g:multi_line_jump."k"
 
+"}}}--------------------[ end Faster Commands ]----------------------------------------
+" Indentation: -----------------------------------{{{
 function! SetMultiLineJump(jump_size)
   execute "vnoremap J ".a:jump_size."j"
   execute "vnoremap K ".a:jump_size."k"
 endfunction
 command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
-" PDF auto conversion
-Bundle 'rhysd/open-pdf.vim'
-let g:pdf_convert_on_edit=1
-let g:pdf_convert_on_read=1
 
-" Indentation
 set autoindent
 set smartindent
 let tabsize = 2
@@ -359,23 +389,42 @@ execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
 set expandtab
 
-" Block code indentation
+Bundle 'tpope/vim-unimpaired'
+
+" Terminal Bubbling:-------------------
+" Bubble single lines
+" nmap <C-j> ]e
+" nmap <C-k> [e
+" Bubble multiple lines
+vmap <C-k> [egv
+vmap <C-j> ]egv
+vmap <C-h> <gv
+vmap <C-l> >gv
+" or alternatively
 vnoremap < <gv
 vnoremap > >gv
 
-" Paste and Indent
-" nnoremap <esc>p p'[v']=
-" nnoremap <esc>P P'[v']=
+" GUI Bubbling: [single line]-----------
+nmap <C-Up> [e
+nmap <C-Down> ]e
+nmap <C-Left> <<
+nmap <C-Right> >>
+" [ multi line ]------------------------
+vmap <C-Up> [egv
+vmap <C-Down> ]egv
+vmap <C-Left> <gv
+vmap <C-Right> >gv
 
-" TODO: toggle indentation back when done
+" Paste and Indent
+nnoremap <esc>p p'[v']=
+nnoremap <esc>P P'[v']=
+
 " Indent entire document
 function! s:IndentBuffer()
-  let l:save_cursor = getpos(".")
-  silent! execute 'normal! ggVG='
-  call setpos('.', l:save_cursor)
+  silent! execute 'normal! gg=G``'
 endfunction
 command! -range=% IndentBuffer call <SID>IndentBuffer()
-map <Leader>i :IndentBuffer<cr>
+nnoremap <leader>i :normal! gg=G``<CR>
 
 function! SetTabSize(size)
   execute "set tabstop=".a:size
@@ -384,23 +433,53 @@ function! SetTabSize(size)
 endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
-Bundle 'tpope/vim-unimpaired'
+" Bundle 'Yggdroot/indentLine'
+" let g:indentLine_char='│'
+" iterm2 cant handle unicode chars :(
+" let g:indentLine_char='|'
+" map <Leader>it :IndentLinesToggle<CR>
+" }}}
+" Folding: ------------------------------------------{{{
+set foldenable
+set foldmethod=marker
+set foldlevelstart=0
 
-" Bubble single lines
-nnoremap <C-Up> [e
-nnoremap <C-Down> ]e
-" Bubble multiple lines
-vnoremap <C-Up> [egv
-vnoremap <C-Down> ]egv
+" Toggle folds
+nnoremap <Leader><Space> za
+vnoremap <Leader><Space> za
+
+" Make zO recursively open whatever fold we're in, even if it's partially open.
+nnoremap zO zczO
+" fold tag
+nnoremap <leader>ft Vatzf
+" }}}
+"Miscellaneous:---------------------------------------------------------------{{{
+
+function! Delegate(command)
+  let l:save_cursor = getpos(".")
+  execute a:command
+  call setpos('.', l:save_cursor)
+endfunction
 
 " Pascal Compile
 " TODO: make it filetype-aware
 map <Leader>b :!fpc %<CR>
 
+" PDF auto conversion
+Bundle 'rhysd/open-pdf.vim'
+let g:pdf_convert_on_edit=1
+let g:pdf_convert_on_read=1
+" AutoCommands:
+" Auto-reload vimrc on save
+if has("autocmd")
+  autocmd! bufwritepost $MYVIMRC source $MYVIMRC
+endif
+nmap <Leader>v :vsp $MYVIMRC<CR>
+"}}}--------------------[ end Miscellaneous  ]----------------------------------------
+
 " any plugis should be before this
 filetype plugin indent on     " required
 
-set nofoldenable
 
 " dont comment out next line
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
