@@ -17,19 +17,13 @@ if [[ -a $func_file ]]; then
   source $func_file
 fi
 
-if [[ -a prompt ]]; then
+func_file="$dir/prompt"
+if [[ -a $prompt_file ]]; then
   source prompt
 fi
 
 # clean up after ourselves
-unset dir func_file alias_file
-
-# recurrent directories
-alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
-# alias itunes="open -a itunes"
-alias utorrent="open -a -j utorrent"
-alias sitez="cd ~/Dropbox/Sites/"
-alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
+unset dir func_file alias_file prompt_file env_file
 
 # Apps and frameworks
 function getwp(){
@@ -52,3 +46,4 @@ function gethtml5(){
 }
 alias getnormalize="wget https://raw.github.com/necolas/normalize.css/master/normalize.css"
 
+PATH="${HOME}/.bin:${PATH}"

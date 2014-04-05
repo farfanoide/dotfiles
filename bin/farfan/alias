@@ -74,6 +74,7 @@ alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pu
 # tmux
 alias ta='tmux attach -t'
 alias ts='tmux new-session -s'
+alias tk='tmux kill-session -t'
 alias tl='tmux list-sessions'
 alias ms='tmuxinator start'
 

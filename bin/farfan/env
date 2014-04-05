@@ -26,4 +26,5 @@ export musicdir="$HOME/Music/iTunes/iTunes\ Media/Music/"
 export downdir="$HOME/Downloads"
 export srcdir="$HOME/Develop/src"
 
+export VISUAL='vim'
 export EDITOR='vim'
