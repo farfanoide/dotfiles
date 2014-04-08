@@ -97,3 +97,16 @@ extract() {
 function reloadshell(){
   exec $SHELL -l
 }
+
+function githubrepo(){
+  if [[ $# -ge 1 ]]; then
+    repo_name=$1
+    repo_url=$(curl -u 'farfanoide' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep ssh_url | cut -d\"  -f4 )
+    if [[ ! -z repo_url ]]; then
+      git remote add origin $repo_url
+    fi
+    unset repo_name repo_url
+  else
+    echo 'need a repo name at least'
+  fi
+}
