@@ -54,10 +54,6 @@ Bundle 'airblade/vim-gitgutter'
 " Tags:
 Bundle 'majutsushi/tagbar'
 map <Leader>s :TagbarOpenAutoClose<CR>
-
-" syntax check
-Bundle 'scrooloose/syntastic'
-Bundle 'plasticboy/vim-markdown'
 "}}}--------------------[ end Various Bundles  ]----------------------------------------
 " Preprocessors: ------------------------------------------{{{
 
@@ -129,20 +125,30 @@ Bundle 'arnaud-lb/vim-php-namespace'
 " Syntax Plugins: -------------------------------------------------{{{
 Bundle 'tejr/vim-tmux'
 Bundle 'vim-scripts/rtorrent-syntax-file'
+Bundle 'plasticboy/vim-markdown'
+" syntax check
+Bundle 'scrooloose/syntastic'
 "}}}
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
 Bundle 'kien/ctrlp.vim'
 " TODO: autoreload when creating new files with nerdtree
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
 let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
       \ 'file': '\v\.(exe|so|dll)$'
       \ }
 
 Bundle 'scrooloose/nerdtree'
-" NERDTree mappings and options
-map <Leader>c :NERDTreeToggle<CR>
-map <Leader>r :NERDTreeFind<CR>
+" TODO: check if macvim with sidebar installed
+if has("gui_running")
+  map <Leader>c :macaction toggleFileBrowser:<CR>
+  map <Leader>r :NERDTreeFind<CR>
+else
+  " NERDTree mappings and options
+  map <Leader>c :NERDTreeToggle<CR>
+  map <Leader>r :NERDTreeFind<CR>
+endif
 " Open NERDTree in new windows by default
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * wincmd p
@@ -164,6 +170,10 @@ Bundle 'w0ng/vim-hybrid'
 Bundle 'baskerville/bubblegum'
 Bundle 'tomasr/molokai'
 Bundle 'altercation/vim-colors-solarized'
+Bundle 'jpo/vim-railscasts-theme'
+Bundle '29decibel/codeschool-vim-theme'
+Bundle 'vim-scripts/apprentice.vim'
+Bundle 'nanotech/jellybeans.vim'
 
 " enable syntax highligting
 syntax on
@@ -314,9 +324,11 @@ nnoremap <C-h> <C-W><C-H>
 Bundle 'christoomey/vim-tmux-navigator'
 
 " }}}
-"Code Formatting:---------------------------------------------------------------{{{
+" Code Formatting:---------------------------------------------------------------{{{
 " ctrl+a -> select all
 map <C-a> ggVG
+" format paragraph and restor cursor position
+map <Leader>fp gwap
 " format as html
 function! s:FormatAsHtml()
   let l:save_cursor = getpos(".")
@@ -340,6 +352,10 @@ map <Leader>tc :TrimCR<CR>
 " if has("Trim")
 "   map <Leader>ca :call TrimCR<CR>
 " endif
+" Trim all
+map <Leader>ta :Trim <cr>:TrimCR <cr>
+" Trim all and format
+map <Leader>taf :Trim <cr>:TrimCR <cr> :FormatAsHtml <cr>
 
 " function! SortCSS()
 "   let l:save_cursor = getpos(".")
@@ -476,7 +492,11 @@ if has("autocmd")
 endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
-
+" this is ridiculously awesome!!
+Bundle 'itchyny/thumbnail.vim'
+" TODO: check unite instead of ctrlp
+Bundle 'Shougo/unite.vim'
+" TODO: meterle a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
 " any plugis should be before this
 filetype plugin indent on     " required
 
