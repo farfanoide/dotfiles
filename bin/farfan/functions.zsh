@@ -21,7 +21,7 @@ function mystart() {
   fi
 }
 function myexec(){
-  mysql -uroot -p -e "$*"
+  mysql -uroot -p -e "$*;"
 }
 
 # TODO: check it out, args[0] not working
