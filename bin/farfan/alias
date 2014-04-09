@@ -28,7 +28,11 @@ alias srm="sudo rm -Rfv"
 alias mkdir="mkdir -p"
 alias cp="rsync --append --progress -azvrE"
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
-alias v="mvim -v"
+if [[ $(uname) == 'Darwin' ]]; then
+  alias v="mvim -v"
+else
+  alias v="gvim -v"
+fi
 # requires brew install grc
 alias ctail="\grc tail"
 alias dateformat="date \"+%d-%m-%Y\""
@@ -66,13 +70,15 @@ alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%
 alias gc="git commit -v"
 alias gco="git checkout "
 # }}}
-# ---------------------[ Tmux ]----------------------------------------{{{
+# ---------------------[ Tmux/Tmuxinator ]----------------------------------------{{{
 alias ta='tmux attach -t'
 alias ts='tmux new-session -s'
 alias tk='tmux kill-session -t'
 alias tl='tmux list-sessions'
-alias ms='tmuxinator start'
 alias tdc='tmux detach-client -t'
+
+alias ms='tmuxinator start'
+alias ml='tmuxinator list'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
 alias be="bundle exec"
