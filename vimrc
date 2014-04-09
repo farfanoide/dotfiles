@@ -177,8 +177,8 @@ Bundle 'nanotech/jellybeans.vim'
 
 " enable syntax highligting
 syntax on
-" Don't try to highlight lines longer than 400 characters.
-set synmaxcol=400
+" Don't try to highlight lines longer than 400 characters. (life saving!)
+set synmaxcol=130
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
 colorscheme bubblegum
@@ -187,8 +187,13 @@ set cursorline
 " Remove second status bar when using powerline
 set noshowmode
 
+if exists('&macatsui')
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
+endif
+if has("gui_gtk2")
+  set guifont=Bitstream\ Vera\ Sans\ Mono\ 12,Fixed\ 12
+endif
 " --------------[Powerline]--------------------------------------------------
-set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 Bundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
@@ -205,6 +210,8 @@ set guioptions-=T
 " highlight just the 81st column of wide lines...
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
+" preatty hex colors
+Bundle 'gorodinskiy/vim-coloresque'
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 "Editor:---------------------------------------------------------------{{{
 " make backspace work like most other apps

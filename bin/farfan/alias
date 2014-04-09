@@ -28,13 +28,17 @@ alias srm="sudo rm -Rfv"
 alias mkdir="mkdir -p"
 alias cp="rsync --append --progress -azvrE"
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
-alias v="mvim -v"
+if [[ $(uname) == 'Darwin' ]]; then
+  alias v="mvim -v"
+else
+  alias v="gvim -v"
+fi
 # requires brew install grc
 alias ctail="\grc tail"
 alias dateformat="date \"+%d-%m-%Y\""
 # }}}
 # ---------------------[ Mac stuff ]----------------------------------------{{{
-if [[ uname == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   alias o="open"
   alias optimize="o -a ImageOptim"
   alias brup="brew update && brew upgrade"
@@ -43,7 +47,7 @@ if [[ uname == 'Darwin' ]]; then
   alias mf="mdfind"
 fi
 # }}}
-# ---------------------[ MySQL ]----------------------------------------{{{
+# ---------------------[ Recurrent Directories ]----------------------------------------{{{
 alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
 alias sitez="cd ~/Dropbox/Sites/"
 alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
