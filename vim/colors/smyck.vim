@@ -17,16 +17,18 @@ set linespace=3
 let g:colors_name = "smyck"
 
 hi Normal               cterm=none ctermbg=none     ctermfg=15      gui=none        guibg=#282828   guifg=#F7F7F7
+hi VertSplit            cterm=none ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
+hi SignColumn           cterm=bold ctermbg=none     ctermfg=8       gui=bold        guibg=#282828   guifg=#8F8F8F
 hi LineNr               cterm=none ctermbg=none     ctermfg=8       gui=none        guibg=#282828   guifg=#8F8F8F
-hi StatusLine           cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#5D5D5D   guifg=#FBFBFB
-hi StatusLineNC         cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#5D5D5D   guifg=#FBFBFB
+" hi StatusLine           cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#5D5D5D   guifg=#FBFBFB
+" hi StatusLineNC         cterm=none ctermbg=15       ctermfg=8       gui=none        guibg=#5D5D5D   guifg=#FBFBFB
 hi Search               cterm=none ctermbg=6        ctermfg=15      gui=none        guibg=#2EB5C1   guifg=#F7F7F7
 hi IncSearch            cterm=none ctermbg=3        ctermfg=8       gui=none        guibg=#F6DC69   guifg=#8F8F8F
 hi ColumnMargin         cterm=none ctermbg=0                        gui=none        guibg=#000000
 hi Error                cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
 hi ErrorMsg             cterm=none ctermbg=1        ctermfg=15      gui=none                        guifg=#F7F7F7
-hi Folded               cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#3B3B3B   guifg=#90AB41
-hi FoldColumn           cterm=none ctermbg=8        ctermfg=2       gui=none        guibg=#3B3B3B   guifg=#90AB41
+hi Folded               cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#3B3B3B   guifg=#F7F7F7
+hi FoldColumn           cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#3B3B3B   guifg=#F7F7F7
 hi NonText              cterm=bold ctermbg=none     ctermfg=8       gui=bold                        guifg=#8F8F8F
 hi ModeMsg              cterm=bold ctermbg=none     ctermfg=10      gui=none
 hi Pmenu                cterm=none ctermbg=8        ctermfg=15      gui=none        guibg=#8F8F8F   guifg=#F7F7F7
