@@ -142,14 +142,14 @@ let g:ctrlp_custom_ignore = {
 
 Bundle 'scrooloose/nerdtree'
 " TODO: check if macvim with sidebar installed
-if has("gui_running")
-  map <Leader>c :macaction toggleFileBrowser:<CR>
-  map <Leader>r :NERDTreeFind<CR>
-else
+" if has("gui_running")
+"   map <Leader>c :macaction toggleFileBrowser:<CR>
+"   map <Leader>r :NERDTreeFind<CR>
+" else
   " NERDTree mappings and options
   map <Leader>c :NERDTreeToggle<CR>
   map <Leader>r :NERDTreeFind<CR>
-endif
+" endif
 " Open NERDTree in new windows by default
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * wincmd p
@@ -178,18 +178,22 @@ Bundle 'nanotech/jellybeans.vim'
 
 " enable syntax highligting
 syntax on
-" Don't try to highlight lines longer than 400 characters.
+" Don't try to highlight lines longer than 130 characters. (life saving!)
 set synmaxcol=130
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
-colorscheme bubblegum
+" colorscheme bubblegum
+colorscheme smyck
 " Highlight current line
 set cursorline
 " Remove second status bar when using powerline
 set noshowmode
 
+set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
+if has("gui_gtk2")
+  set guifont=Bitstream\ Vera\ Sans\ Mono\ 12,Fixed\ 12
+endif
 " --------------[Powerline]--------------------------------------------------
-" set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 Bundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
@@ -199,13 +203,16 @@ if !has("gui_running")
   let g:airline#extensions#tabline#right_sep = ' '
   let g:ariline#extensions#bufferline#bufferline_separator = ' '
 endif
+let g:airline_theme='bubblegum'
 
 " Dont show toolbar on gui
 set guioptions-=T
 
-" highlight just the 81st column of wide lines...
+" highlight just the 120th column of wide lines...
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
+" preatty hex colors
+Bundle 'gorodinskiy/vim-coloresque'
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 "Editor:---------------------------------------------------------------{{{
 " make backspace work like most other apps

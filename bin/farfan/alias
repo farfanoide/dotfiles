@@ -38,7 +38,7 @@ alias ctail="\grc tail"
 alias dateformat="date \"+%d-%m-%Y\""
 # }}}
 # ---------------------[ Mac stuff ]----------------------------------------{{{
-if [[ uname == 'Darwin' ]]; then
+if [[ $(uname) == 'Darwin' ]]; then
   alias o="open"
   alias optimize="o -a ImageOptim"
   alias brup="brew update && brew upgrade"
@@ -47,7 +47,6 @@ if [[ uname == 'Darwin' ]]; then
   alias mf="mdfind"
 fi
 # }}}
-
 # ---------------------[ Linux stuff ]----------------------------------------{{{
 if [[ $(uname) == 'Linux' ]]; then
 alias sai="sudo apt-get update && \
