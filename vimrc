@@ -46,6 +46,7 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
+map <Leader>h :vsp ~/.vim/bundle/vim-snippets/snippets/<CR>
 
 " CSM:
 Bundle 'tpope/vim-fugitive'
@@ -177,7 +178,7 @@ Bundle 'nanotech/jellybeans.vim'
 
 " enable syntax highligting
 syntax on
-" Don't try to highlight lines longer than 400 characters. (life saving!)
+" Don't try to highlight lines longer than 130 characters. (life saving!)
 set synmaxcol=130
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256

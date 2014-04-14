@@ -47,7 +47,15 @@ if [[ $(uname) == 'Darwin' ]]; then
   alias mf="mdfind"
 fi
 # }}}
-# ---------------------[ Recurrent Directories ]----------------------------------------{{{
+# ---------------------[ Linux stuff ]----------------------------------------{{{
+if [[ $(uname) == 'Linux' ]]; then
+alias sai="sudo apt-get update && \
+           sudo apt-get -y dist-upgrade && \
+           sudo apt-get -y autoremove && \
+           sudo apt-get -y autoclean"
+fi
+# }}}
+# ---------------------[ MySQL ]----------------------------------------{{{
 alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
 alias sitez="cd ~/Dropbox/Sites/"
 alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
