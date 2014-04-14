@@ -46,6 +46,7 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
+map <Leader>h :vsp ~/.vim/bundle/vim-snippets/snippets/<CR>
 
 " CSM:
 Bundle 'tpope/vim-fugitive'
@@ -178,7 +179,7 @@ Bundle 'nanotech/jellybeans.vim'
 " enable syntax highligting
 syntax on
 " Don't try to highlight lines longer than 400 characters.
-set synmaxcol=400
+set synmaxcol=130
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
 colorscheme bubblegum
@@ -188,7 +189,7 @@ set cursorline
 set noshowmode
 
 " --------------[Powerline]--------------------------------------------------
-set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
+" set guifont=Ubuntu\ Mono\ derivative\ Powerline:h14
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 Bundle 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
