@@ -98,6 +98,7 @@ alias bi="bundle install"
 # }}}
 # ---------------------[ Rails/Rake ]----------------------------------------{{{
 alias bes="bundle exec rails server"
+alias bec="bundle exec rails console"
 alias ber="bundle exec rake"
 alias bem="bundle exec rake db:migrate"
 alias bemr="bundle exec rake db:rollback"
