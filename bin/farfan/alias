@@ -41,7 +41,7 @@ alias dateformat="date \"+%d-%m-%Y\""
 if [[ $(uname) == 'Darwin' ]]; then
   alias o="open"
   alias optimize="o -a ImageOptim"
-  alias brup="brew update && brew upgrade"
+  alias brup="brew update && brew upgrade && brew cleanup"
   alias browserstack="java -jar ~/Dropbox/syncPrefs/cmd/BrowserStackTunnel.jar T6rci6PsccWiU9kF2ygq localhost,80,0"
   alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
   alias mf="mdfind"
@@ -98,6 +98,7 @@ alias bi="bundle install"
 # }}}
 # ---------------------[ Rails/Rake ]----------------------------------------{{{
 alias bes="bundle exec rails server"
+alias bec="bundle exec rails console"
 alias ber="bundle exec rake"
 alias bem="bundle exec rake db:migrate"
 alias bemr="bundle exec rake db:rollback"

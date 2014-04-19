@@ -182,8 +182,7 @@ syntax on
 set synmaxcol=130
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
-" colorscheme bubblegum
-colorscheme smyck
+colorscheme Tomorrow-Night
 " Highlight current line
 set cursorline
 " Remove second status bar when using powerline
