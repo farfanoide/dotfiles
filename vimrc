@@ -195,7 +195,7 @@ set noshowmode
 
 set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
 if has("gui_gtk2")
-  set guifont=Bitstream\ Vera\ Sans\ Mono\ 12,Fixed\ 12
+  set guifont=Nimbus\ Mono\ L\ Bold\ 10
 endif
 " --------------[Powerline]--------------------------------------------------
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
