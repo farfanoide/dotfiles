@@ -184,6 +184,11 @@ if has('gui_running')
   set synmaxcol=200
 else
   set synmaxcol=130
+  if has("gui_gtk2")
+    set guifont=Nimbus\ Mono\ L\ Bold\ 10
+  else
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
+  endif
 endif
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
@@ -193,10 +198,6 @@ set cursorline
 " Remove second status bar when using powerline
 set noshowmode
 
-set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
-if has("gui_gtk2")
-  set guifont=Nimbus\ Mono\ L\ Bold\ 10
-endif
 " --------------[Powerline]--------------------------------------------------
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 Bundle 'bling/vim-airline'
