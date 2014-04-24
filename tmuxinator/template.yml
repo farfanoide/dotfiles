@@ -1,14 +1,14 @@
-# ~/.tmuxinator/agalma.yml
+# ~/.tmuxinator/template.yml
 
-name: agalma
-root: /Users/farfan/Develop/src/agalma
+name: template
+root: /Users/farfan/Develop/src/template_healing
 
 # Optional tmux socket
 # socket_name: foo
 
 # Runs before everything. Use it to start daemons etc.
-# pre: if [[ $(mysql.server status) =~ "ERROR"*  ]]; then  mysql.server start ; fi
-# pre: if [[ ! -f /usr/local/var/postgres/postmaster.pid  ]]; then postgres -D /usr/local/var/postgres ; fi
+# pre: sudo /etc/rc.d/mysqld start
+
 # Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
 # pre_window: rbenv shell 2.0.0-p247
 
@@ -37,5 +37,5 @@ windows:
   - assets:
       layout: main-vertical
       panes:
-        - cd ~/Dropbox/compartidas/ingenyo/AGALMA
+        - cd ~/Dropbox/Projectz/template_healing
         - cd app/assets

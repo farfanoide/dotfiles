@@ -77,6 +77,7 @@ alias grv="git remote -v"
 alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 alias gc="git commit -v"
 alias gco="git checkout "
+alias herokup="git push heroku master"
 # }}}
 # ---------------------[ Tmux/Tmuxinator ]----------------------------------------{{{
 alias ta='tmux attach -t'

@@ -5,7 +5,7 @@
 StrictHostKeyChecking no
 UserKnownHostsFile /dev/null
 LogLevel QUIET
-
+#
 # faster ssh in mac
 Host *
  GSSAPIAuthentication no
@@ -47,6 +47,10 @@ Host ingenyo
   HostName 162.248.164.204
   User root
   Port 22
+
+# Host aero
+#   HostName desarrollo.belugas.com.ar
+#   IdentityFile ~/.ssh/aero_rsa
 
 # Hosts: ------[local]-----------------
 Host farfanauta

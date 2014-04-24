@@ -2,7 +2,7 @@ set nocompatible    " be iMproved, required
 filetype off        " required
 
 " Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/vundle/
+set rtp+=~/.vim/Bundle/vundle/
 call vundle#rc()
 
 " Change mapLeader
@@ -46,7 +46,7 @@ Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
 Bundle "honza/vim-snippets"
-map <Leader>h :vsp ~/.vim/bundle/vim-snippets/snippets/<CR>
+map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
 
 " CSM:
 Bundle 'tpope/vim-fugitive'
@@ -104,7 +104,7 @@ Bundle 'tpope/rbenv-ctags'
 Bundle 'tpope/vim-rails.git'
 Bundle 'tpope/vim-endwise'
 Bundle 'https://github.com/vim-ruby/vim-ruby'
-Bundle 'tpope/vim-bundler'
+Bundle 'tpope/vim-Bundler'
 
 
 " " Rails AutoCompletion (test)
@@ -175,11 +175,16 @@ Bundle 'jpo/vim-railscasts-theme'
 Bundle '29decibel/codeschool-vim-theme'
 Bundle 'vim-scripts/apprentice.vim'
 Bundle 'nanotech/jellybeans.vim'
+Bundle "daylerees/colour-schemes", { "rtp": "vim/" }
 
 " enable syntax highligting
 syntax on
 " Don't try to highlight lines longer than 130 characters. (life saving!)
-set synmaxcol=130
+if has('gui_running')
+  set synmaxcol=200
+else
+  set synmaxcol=130
+endif
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256
 colorscheme Tomorrow-Night
@@ -485,8 +490,7 @@ function! Delegate(command)
 endfunction
 
 " Pascal Compile
-" TODO: make it filetype-aware
-map <Leader>b :!fpc %<CR>
+map <Leader>b :w<CR> :!fpc %<CR>
 
 " PDF auto conversion
 Bundle 'rhysd/open-pdf.vim'
@@ -507,6 +511,7 @@ Bundle 'Shougo/unite.vim'
 " any plugis should be before this
 filetype plugin indent on     " required
 
+hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 
 " dont comment out next line
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
