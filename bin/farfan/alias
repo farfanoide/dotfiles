@@ -68,16 +68,17 @@ alias mystart="mysql.server start"
 # }}}
 # ---------------------[ Git ]----------------------------------------{{{
 # TODO: add these to git itself to get proper tab completion
-alias gs="git status -bs"
-alias ga="git add --all "
-alias gd="git diff "
-alias grv="git remote -v"
+alias gs='git status -bs'
+alias ga='git add --all '
+alias gd='git diff '
+alias grv='git remote -v'
 # http://gyaresu.org/hacking/2012/06/19/a-better-git-log
 #alias gl="git log --pretty=oneline --abbrev-commit --graph --decorate"
 alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
-alias gc="git commit -v"
-alias gco="git checkout "
-alias herokup="git push heroku master"
+alias gc='git commit -v'
+alias gco='git checkout '
+alias herokup='git push heroku master'
+alias gba='git branch -av'
 # }}}
 # ---------------------[ Tmux/Tmuxinator ]----------------------------------------{{{
 alias ta='tmux attach -t'
@@ -90,29 +91,29 @@ alias ms='tmuxinator start'
 alias ml='tmuxinator list'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
-alias be="bundle exec"
-alias bl="bundle list"
-alias bp="bundle package"
-alias bo="bundle open"
-alias bu="bundle update"
-alias bi="bundle install"
+alias be='bundle exec'
+alias bl='bundle list'
+alias bp='bundle package'
+alias bo='bundle open'
+alias bu='bundle update'
+alias bi='bundle install'
 # }}}
 # ---------------------[ Rails/Rake ]----------------------------------------{{{
-alias bes="bundle exec rails server"
-alias bec="bundle exec rails console"
-alias ber="bundle exec rake"
-alias bem="bundle exec rake db:migrate"
-alias bemr="bundle exec rake db:rollback"
+alias bes='bundle exec rails server'
+alias bec='bundle exec rails console'
+alias ber='bundle exec rake'
+alias bem='bundle exec rake db:migrate'
+alias bemr='bundle exec rake db:rollback'
 # }}}
 # ---------------------[ Symfony ]----------------------------------------{{{
-alias sy="./symfony"
-alias rmcl="rm -fr cache/* log/*"
+alias sy='./symfony'
+alias rmcl='rm -fr cache/* log/*'
 alias arreglarengine="vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php"
 alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
 # }}}
 # ---------------------[ SSH ]----------------------------------------{{{
-alias s="ssh"
-alias docup="ssh docpik 'cd /var/www/html/docpik ; git pull'"
+alias s='ssh'
+alias docup='ssh docpik 'cd /var/www/html/docpik ; git pull''
 alias infup="ssh latinman 'cd proyectos/docpik_dev/infomedica-app/ && git pull && ./symfony cc'"
 alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pull'"
 # }}}
