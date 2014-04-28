@@ -113,7 +113,7 @@ alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
 # }}}
 # ---------------------[ SSH ]----------------------------------------{{{
 alias s='ssh'
-alias docup='ssh docpik 'cd /var/www/html/docpik ; git pull''
+alias docup="ssh docpik 'cd /var/www/html/docpik ; git pull'"
 alias infup="ssh latinman 'cd proyectos/docpik_dev/infomedica-app/ && git pull && ./symfony cc'"
 alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pull'"
 # }}}
