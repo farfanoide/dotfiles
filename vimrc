@@ -38,7 +38,7 @@ Bundle 'https://github.com/bps/vim-textobj-python'
 Bundle 'https://github.com/akiyan/vim-textobj-php'
 
 " Debugging: -----------------------------------------------
-Bundle 'joonty/vim-xdebug.git'
+" Bundle 'joonty/vim-xdebug.git'
 
 " Snippets: -----------------------------------------------
 Bundle 'ervandew/supertab'
@@ -98,6 +98,9 @@ augroup END
 
 " }}}
 " }}} ------------[end preprocessors]------------
+" Python:---------------------------------------------------------------{{{
+Bundle 'klen/python-mode'
+"}}}--------------------[ end Python ]----------------------------------------
 " Ruby:---------------------------------------------------------------{{{
 
 Bundle 'tpope/rbenv-ctags'
@@ -184,11 +187,11 @@ if has('gui_running')
   set synmaxcol=200
 else
   set synmaxcol=130
-  if has("gui_gtk2")
-    set guifont=Nimbus\ Mono\ L\ Bold\ 10
-  else
-    set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
-  endif
+endif
+if has("gui_gtk2")
+  set guifont=Nimbus\ Mono\ L\ Bold\ 10
+else
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
 endif
 " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set t_Co=256

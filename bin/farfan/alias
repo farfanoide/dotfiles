@@ -104,6 +104,7 @@ alias bec='bundle exec rails console'
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
+alias beg='be guard'
 # }}}
 # ---------------------[ Symfony ]----------------------------------------{{{
 alias sy='./symfony'

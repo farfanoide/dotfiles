@@ -28,6 +28,11 @@ ServerAliveInterval 60
 ServerAliveCountMax 10
 
 # Hosts: ------[remote]-----------------
+Host server
+  HostName 162.219.4.26
+  User root
+  Port 22
+
 Host latinmanf
   HostName latinmanagers.no-ip.org
   User farfan
