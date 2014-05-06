@@ -49,10 +49,11 @@ fi
 # }}}
 # ---------------------[ Linux stuff ]----------------------------------------{{{
 if [[ $(uname) == 'Linux' ]]; then
-alias sai="sudo apt-get update && \
+alias sai='sudo apt-get install '
+alias sup='sudo apt-get update && \
            sudo apt-get -y dist-upgrade && \
            sudo apt-get -y autoremove && \
-           sudo apt-get -y autoclean"
+           sudo apt-get -y autoclean'
 fi
 # }}}
 # ---------------------[ MySQL ]----------------------------------------{{{
