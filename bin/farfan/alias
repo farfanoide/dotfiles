@@ -56,7 +56,7 @@ alias sup='sudo apt-get update && \
            sudo apt-get -y autoclean'
 fi
 # }}}
-# ---------------------[ MySQL ]----------------------------------------{{{
+# ---------------------[ Misc ]-----------------------------------------{{{
 alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
 alias sitez="cd ~/Dropbox/Sites/"
 alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
@@ -90,6 +90,7 @@ alias tdc='tmux detach-client -t'
 
 alias ms='tmuxinator start'
 alias ml='tmuxinator list'
+alias mo='tmuxinator open'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
 alias be='bundle exec'
@@ -106,6 +107,15 @@ alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
 alias beg='be guard'
+# }}}
+# ---------------------[ Vagrant ]----------------------------------------{{{
+alias vup='vagrant up'
+alias vsh='vagrant ssh'
+alias vst='vagrant status'
+alias vgs='vagrant global-status'
+alias vre='vagrant resume'
+alias vha='vagrant halt'
+alias vsu='vagrant suspend'
 # }}}
 # ---------------------[ Symfony ]----------------------------------------{{{
 alias sy='./symfony'

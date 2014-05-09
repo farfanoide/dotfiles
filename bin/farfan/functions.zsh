@@ -20,6 +20,7 @@ function mystart() {
     mysql.server start
   fi
 }
+
 function myexec(){
   mysql -uroot -p -e "$*;"
 }
@@ -44,9 +45,7 @@ function lg(){
   fi
   unset args
 }
-function hil(){
-  hi $1 | less
-}
+
 #function check_shell(){
 #  $(ps -p $$ | tail -1) =~ "zsh"*
 #}
@@ -66,6 +65,7 @@ function cr() {
     echo "2 arguments needed."
   fi
 }
+
 function enable_virtualenv(){
   # python -> virtualenv(wrapper)
   export WORKON_HOME="$HOME/.virtualenvs"

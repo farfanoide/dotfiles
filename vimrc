@@ -2,7 +2,7 @@ set nocompatible    " be iMproved, required
 filetype off        " required
 
 " Set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/Bundle/vundle/
+set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
 " Change mapLeader
@@ -338,6 +338,8 @@ nnoremap <C-h> <C-W><C-H>
 
 " seamless vim/tmux navigation
 Bundle 'christoomey/vim-tmux-navigator'
+" tmux integration
+Bundle 'benmills/vimux'
 
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
