@@ -7,3 +7,6 @@
 [submodule "zprezto"]
 	path = zprezto
 	url = https://github.com/sorin-ionescu/prezto
+[submodule "plugins/zaw"]
+	path = plugins/zaw
+	url = https://github.com/zsh-users/zaw
