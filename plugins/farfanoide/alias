@@ -49,11 +49,13 @@ fi
 # }}}
 # ---------------------[ Linux stuff ]----------------------------------------{{{
 if [[ $(uname) == 'Linux' ]]; then
-alias sai='sudo apt-get install '
+alias sai='sudo apt-get install -y '
 alias sup='sudo apt-get update && \
            sudo apt-get -y dist-upgrade && \
            sudo apt-get -y autoremove && \
            sudo apt-get -y autoclean'
+alias pbcopy='xclip -selection clipboard'
+alias pbpaste='xclip -selection clipboard -o'
 fi
 # }}}
 # ---------------------[ Misc ]-----------------------------------------{{{
@@ -61,6 +63,7 @@ alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
 alias sitez="cd ~/Dropbox/Sites/"
 alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
 alias youtube-dl="youtube-dl --max-quality url"
+alias cuevana="cd $srcdir/storm && npm start"
 # }}}
 # ---------------------[ MySQL ]----------------------------------------{{{
 alias my="mysql -uroot -p "

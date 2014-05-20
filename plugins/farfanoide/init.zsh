@@ -17,13 +17,18 @@ if [[ -a $func_file ]]; then
   source $func_file
 fi
 
-func_file="$dir/prompt"
-if [[ -a $prompt_file ]]; then
-  source prompt
+# func_file="$dir/prompt"
+# if [[ -a $prompt_file ]]; then
+#   source prompt
+# fi
+
+zaw_file="$dir/zaw.zsh"
+if [[ -a $zaw_file ]]; then
+  source $zaw_file
 fi
 
 # clean up after ourselves
-unset dir func_file alias_file prompt_file env_file
+unset dir func_file alias_file prompt_file env_file zaw_file
 
 # Apps and frameworks
 function getwp(){

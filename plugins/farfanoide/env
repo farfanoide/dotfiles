@@ -28,3 +28,7 @@ export srcdir="$HOME/Develop/src"
 
 export VISUAL='vim'
 export EDITOR='vim'
+
+
+# make vim and tmux play nicely regarding colors
+export TERM='xterm-256color'

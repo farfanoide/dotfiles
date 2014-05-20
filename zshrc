@@ -11,4 +11,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-source "$HOME"/.bin/farfan/farfan.plugin.zsh
+# Plugins and such
+source "$HOME"/.plugins/zaw/zaw.zsh
+source "$HOME"/.plugins/farfanoide/init.zsh
