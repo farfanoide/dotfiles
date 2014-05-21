@@ -7,53 +7,20 @@ function update_kivy() {
   cd -
 }
 
-function repo_root() {
-  git rev-parse --show-toplevel
-}
+function repo_root() { git rev-parse --show-toplevel }
 
-function grt(){
-  cd $(repo_root)
-}
+function grt() { cd $(repo_root) }
 
-function mystart() {
-  if [[ $(mysql.server status) =~ "ERROR"* ]]; then
-    mysql.server start
-  fi
-}
+function mystart() { [[ $(mysql.server status) =~ "ERROR"* ]] && mysql.server start }
 
-function myexec(){
-  mysql -uroot -p -e "$*;"
-}
+function myexec() { mysql -uroot -p -e "$*;" }
 
-# TODO: check it out, args[0] not working
-function lg(){
-  if [[ $# -ge 2 ]]; then
-    args=($@)
-    to_grep=$args[0]
-    echo $args[0]
-    echo $args
-    unset args[0]
-    ls -lA $to_grep | grep -i ${args[*]}
-    unset args
-  else
-    if [[ $# -eq 0 ]]; then
-      echo "At least 1 parameter needed (something to grep for)"
-      echo "usage: lg [dir] <grep args>"
-    else
-      ls -lA . | grep -i $1
-    fi
-  fi
-  unset args
-}
+function lg() { ls -lA . | grep -i $1 }
 
 #function check_shell(){
 #  $(ps -p $$ | tail -1) =~ "zsh"*
 #}
-# rbenv initialization not needed 'cause i use ohmyzsh's rbenv plugin
-#if which rbenv > /dev/null; then
-#  export RBENV_ROOT=/usr/local/var/rbenv
-#  eval "$(rbenv init -)"
-#fi
+
 function md(){ mkdir -p $1 && cd $1 }
 
 function cr() {
@@ -94,9 +61,8 @@ extract() {
     echo "'$1' is not a valid file!"
   fi
 }
-function reloadshell(){
-  exec $SHELL -l
-}
+
+function reloadshell() { exec $SHELL -l }
 
 function githubrepo(){
   if [[ $# -ge 1 ]]; then

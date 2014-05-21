@@ -1,9 +1,3 @@
-
-# This only runs on user login
-if $(which figlet); then
-  figlet "whasaaaa???"
-fi
-
 # This loads in the configuration in .bashrc
 # Put all configuration there!
 if [ -f ~/.bashrc ]; then
@@ -15,3 +9,5 @@ if [ $(uname) == "Darwin" ]; then
     . $(brew --prefix)/etc/bash_completion
   fi
 fi
+
+# [ -s "/home/farfan/.nvm/nvm.sh" ] && . "/home/farfan/.nvm/nvm.sh" # This loads nvm
