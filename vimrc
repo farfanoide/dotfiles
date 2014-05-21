@@ -11,37 +11,37 @@ let mapleader=","
 " Various Bundles:---------------------------------------------------------------{{{
 
 " let Vundle manage Vundle, required
-Bundle 'gmarik/vundle'
+Plugin 'gmarik/vundle'
 
 " General:
-Bundle 'tpope/vim-repeat'
-Bundle 'tpope/vim-eunuch'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-eunuch'
 
 " Editing Plugins: ----------------------------------------
-Bundle 'tomtom/tcomment_vim'
-Bundle 'tpope/vim-surround'
-Bundle 'jiangmiao/auto-pairs'
-Bundle 'mattn/emmet-vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'matchit.zip'
+Plugin 'tomtom/tcomment_vim'
+Plugin 'tpope/vim-surround'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'mattn/emmet-vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'matchit.zip'
 
 " Text Objects: --------------------------------------------
 " text object plugin, add abstraction layer for other plugins
-Bundle 'https://github.com/kana/vim-textobj-user/'
+Plugin 'https://github.com/kana/vim-textobj-user/'
 " adds {ar/ir} text objects
-Bundle 'https://github.com/nelstrom/vim-textobj-rubyblock'
+Plugin 'https://github.com/nelstrom/vim-textobj-rubyblock'
 " adds {af/if} and  {ac/ic} function/class
 " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
-Bundle 'https://github.com/bps/vim-textobj-python'
+Plugin 'https://github.com/bps/vim-textobj-python'
 " adds {aP/iP}
-Bundle 'https://github.com/akiyan/vim-textobj-php'
+Plugin 'https://github.com/akiyan/vim-textobj-php'
 
 " Debugging: -----------------------------------------------
-" Bundle 'joonty/vim-xdebug.git'
+" Plugin 'joonty/vim-xdebug.git'
 
 " Snippets: -----------------------------------------------
-Bundle 'ervandew/supertab'
+Plugin 'ervandew/supertab'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "garbas/vim-snipmate"
@@ -49,18 +49,18 @@ Bundle "honza/vim-snippets"
 map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
 
 " CSM:
-Bundle 'tpope/vim-fugitive'
-Bundle 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
 
 " Tags:
-Bundle 'majutsushi/tagbar'
+Plugin 'majutsushi/tagbar'
 map <Leader>s :TagbarOpenAutoClose<CR>
 "}}}--------------------[ end Various Bundles  ]----------------------------------------
 " Preprocessors: ------------------------------------------{{{
 
-Bundle 'groenewege/vim-less'
-Bundle 'cakebaker/scss-syntax.vim'
-Bundle 'kchmck/vim-coffee-script'
+Plugin 'groenewege/vim-less'
+Plugin 'cakebaker/scss-syntax.vim'
+Plugin 'kchmck/vim-coffee-script'
 
 " CSS and LessCSS -------------------------------------{{{
 
@@ -99,15 +99,15 @@ augroup END
 " }}}
 " }}} ------------[end preprocessors]------------
 " Python:---------------------------------------------------------------{{{
-Bundle 'klen/python-mode'
+Plugin 'klen/python-mode'
 "}}}--------------------[ end Python ]----------------------------------------
 " Ruby:---------------------------------------------------------------{{{
 
-Bundle 'tpope/rbenv-ctags'
-Bundle 'tpope/vim-rails.git'
-Bundle 'tpope/vim-endwise'
-Bundle 'https://github.com/vim-ruby/vim-ruby'
-Bundle 'tpope/vim-Bundler'
+Plugin 'tpope/rbenv-ctags'
+Plugin 'tpope/vim-rails.git'
+Plugin 'tpope/vim-endwise'
+Plugin 'https://github.com/vim-ruby/vim-ruby'
+Plugin 'tpope/vim-Bundler'
 
 
 " " Rails AutoCompletion (test)
@@ -119,23 +119,24 @@ Bundle 'tpope/vim-Bundler'
 "
 "}}}--------------------[ end Ruby ]----------------------------------------
 " PHP:---------------------------------------------------------------{{{
-" Bundle 'shawncplus/phpcomplete.vim'
-" Bundle 'vim-scripts/symfony.vim'
-Bundle 'spf13/PIV'
+" Plugin 'shawncplus/phpcomplete.vim'
+" Plugin 'vim-scripts/symfony.vim'
+Plugin 'spf13/PIV'
 " disable php auto-folding
 " let g:DisableAutoPHPFolding = 1
-Bundle 'arnaud-lb/vim-php-namespace'
+Plugin 'arnaud-lb/vim-php-namespace'
 "}}}--------------------[ end PHP  ]----------------------------------------
 " Syntax Plugins: -------------------------------------------------{{{
-Bundle 'tejr/vim-tmux'
-Bundle 'vim-scripts/rtorrent-syntax-file'
-Bundle 'plasticboy/vim-markdown'
+Plugin 'tejr/vim-tmux'
+Plugin 'vim-scripts/rtorrent-syntax-file'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'jceb/vim-orgmode'
 " syntax check
-Bundle 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 "}}}
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
-Bundle 'kien/ctrlp.vim'
+Plugin 'kien/ctrlp.vim'
 " TODO: autoreload when creating new files with nerdtree
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
 let g:ctrlp_custom_ignore = {
@@ -143,7 +144,7 @@ let g:ctrlp_custom_ignore = {
       \ 'file': '\v\.(exe|so|dll)$'
       \ }
 
-Bundle 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdtree'
 " TODO: check if macvim with sidebar installed
 " if has("gui_running")
 "   map <Leader>c :macaction toggleFileBrowser:<CR>
@@ -157,7 +158,7 @@ Bundle 'scrooloose/nerdtree'
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * wincmd p
 
-Bundle 'jistr/vim-nerdtree-tabs'
+Plugin 'jistr/vim-nerdtree-tabs'
 " Replace previous options with yet another plugn:
 let g:nerdtree_tabs_open_on_console_startup=0
 let g:nerdtree_tabs_open_on_gui_startup=0
@@ -168,16 +169,16 @@ set guioptions-=L
 "}}}--------------------[ end Files  ]----------------------------------------
 " Eye Candy:---------------------------------------------------------------{{{
 " --------------[Themes]-----------------------------------------------------
-Bundle 'junegunn/seoul256.vim'
-Bundle 'farfanoide/vim-facebook'
-Bundle 'w0ng/vim-hybrid'
-Bundle 'baskerville/bubblegum'
-Bundle 'tomasr/molokai'
-Bundle 'altercation/vim-colors-solarized'
-Bundle 'jpo/vim-railscasts-theme'
-Bundle '29decibel/codeschool-vim-theme'
-Bundle 'vim-scripts/apprentice.vim'
-Bundle 'nanotech/jellybeans.vim'
+Plugin 'junegunn/seoul256.vim'
+Plugin 'farfanoide/vim-facebook'
+Plugin 'w0ng/vim-hybrid'
+Plugin 'baskerville/bubblegum'
+Plugin 'tomasr/molokai'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'jpo/vim-railscasts-theme'
+Plugin '29decibel/codeschool-vim-theme'
+Plugin 'vim-scripts/apprentice.vim'
+Plugin 'nanotech/jellybeans.vim'
 Bundle "daylerees/colour-schemes", { "rtp": "vim/" }
 
 " enable syntax highligting
@@ -203,7 +204,7 @@ set noshowmode
 
 " --------------[Powerline]--------------------------------------------------
 " set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
-Bundle 'bling/vim-airline'
+Plugin 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
 if !has("gui_running")
   let g:airline#extensions#tabline#enabled = 1
@@ -220,7 +221,7 @@ set guioptions-=T
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
 " preatty hex colors
-Bundle 'gorodinskiy/vim-coloresque'
+Plugin 'gorodinskiy/vim-coloresque'
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 "Editor:---------------------------------------------------------------{{{
 " make backspace work like most other apps
@@ -297,10 +298,10 @@ set hidden
 set scrolloff=3
 "}}}--------------------[ end Editor  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
-Bundle 'sjl/gundo.vim.git'
+Plugin 'sjl/gundo.vim.git'
 map <Leader>u :GundoToggle<CR>
 " Trailing whitespaces
-Bundle 'csexton/trailertrash.vim'
+Plugin 'csexton/trailertrash.vim'
 map <Leader>tw :Trim<CR>
 hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green
 
@@ -327,7 +328,7 @@ set splitright
 " Resize splits when the window is resized
 au VimResized * :wincmd =
 
-Bundle 'vim-scripts/ZoomWin'
+Plugin 'vim-scripts/ZoomWin'
 :map <Leader>z :ZoomWin<CR>
 
 " navigation
@@ -337,9 +338,9 @@ nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 
 " seamless vim/tmux navigation
-Bundle 'christoomey/vim-tmux-navigator'
+Plugin 'christoomey/vim-tmux-navigator'
 " tmux integration
-Bundle 'benmills/vimux'
+Plugin 'benmills/vimux'
 
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
@@ -381,7 +382,7 @@ map <Leader>taf :Trim <cr>:TrimCR <cr> :FormatAsHtml <cr>
 "   silent! execute 'visual! i{:sort'
 "   call setpos('.', l:save_cursor)
 " endfunction
-Bundle 'godlygeek/tabular'
+Plugin 'godlygeek/tabular'
 map <Leader>t :Tabularize<CR>
 
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
@@ -423,7 +424,7 @@ execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
 set expandtab
 
-Bundle 'tpope/vim-unimpaired'
+Plugin 'tpope/vim-unimpaired'
 
 " Terminal Bubbling:-------------------
 " Bubble single lines
@@ -467,7 +468,7 @@ function! SetTabSize(size)
 endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
-" Bundle 'Yggdroot/indentLine'
+" Plugin 'Yggdroot/indentLine'
 " let g:indentLine_char='│'
 " iterm2 cant handle unicode chars :(
 " let g:indentLine_char='|'
@@ -499,7 +500,7 @@ endfunction
 map <Leader>b :w<CR> :!fpc %<CR>
 
 " PDF auto conversion
-Bundle 'rhysd/open-pdf.vim'
+Plugin 'rhysd/open-pdf.vim'
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
 " AutoCommands:
@@ -510,9 +511,9 @@ endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " this is ridiculously awesome!!
-Bundle 'itchyny/thumbnail.vim'
+Plugin 'itchyny/thumbnail.vim'
 " TODO: check unite instead of ctrlp
-Bundle 'Shougo/unite.vim'
+Plugin 'Shougo/unite.vim'
 " TODO: meterle a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
 " any plugis should be before this
 filetype plugin indent on     " required
