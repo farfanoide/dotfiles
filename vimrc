@@ -518,6 +518,9 @@ Plugin 'Shougo/unite.vim'
 " any plugis should be before this
 filetype plugin indent on     " required
 
+" enable modeline for per file configs
+set modeline
+
 hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 
 " dont comment out next line

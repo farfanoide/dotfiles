@@ -5,44 +5,36 @@
 cd "$srcdir/$session"
 new_session -n 'Editor' vim
 
-editor_window=1 # this will be our editor window
-# send_keys $editor_window :NERDTreeToggle Enter # tell vim to open Nerdtree
-
+# our windows
+editor_window=1
 general_window=2
+db_window=3
+server_window=4
+log_window=5
+assets_window=6
+
+
+# setup those windows
+send_keys $editor_window :NERDTreeToggle Enter # tell vim to open Nerdtree
+
 new_window -n General
 split $general_window -h
-send_keys $general_window.1 'git status -bs' 'Enter'
-# # new_window -n General git status -bs
-# new_window -a -n edit 'git status -bs' # Create a new window named "edit" running emacs
-# # Create a second window with a vim file browser open
-#
-# # Create 20% split at bottom of window 2 and run Django shell in it
-# send_keys 2.2 "workon $session" "Enter"
-# send_keys 2.2 "python manage.py shell" "Enter"
-#
-# # Select pane 1 in window 2
-select_window $editor_window
-# windows:
-#   - editor:
-#       layout: main-horizontal
-#       panes:
-#         - vim
-#   - general:
-#       panes:
-#         - git status -bs
-#         - bundle exec rails c
-#   - db:
-#       layout: main-horizontal
-#       panes:
-#           - bundle exec rails db
-#           # - if [[ ! -f /usr/local/var/postgres/postmaster.pid  ]]; then postgres -D /usr/local/var/postgres ; fi
-#   - server:
-#       panes:
-#         - bes
-#         - be guard
-#   - logs: ctail -F log/development.log
-#   - assets:
-#       layout: main-vertical
-#       panes:
-#         - cd ~/Dropbox/compartidas/ingenyo/AGALMA
-#         - cd app/assets
+send_command $general_window.1 'git status -bs'
+send_command $general_window.2 'bec'
+
+new_window -n DB
+send_command $db_window 'bundle exec rails db'
+
+new_window -n Server
+split $server_window -v -p "20"
+send_command $server_window.1 'bes'
+send_command $server_window.2 'beg'
+
+new_window -n Log
+send_command $log_window 'ctail -F log/development.log'
+
+new_window -n Assets
+split $assets_window -h
+send_command $assets_window.1 'cd ~/Dropbox/compartidas/ingenyo/AGALMA'
+send_command $assets_window.2 'cd app/assets'
+
