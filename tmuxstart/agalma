@@ -38,3 +38,4 @@ split $assets_window -h
 send_command $assets_window.1 'cd ~/Dropbox/compartidas/ingenyo/AGALMA'
 send_command $assets_window.2 'cd app/assets'
 
+select_window $editor_window
