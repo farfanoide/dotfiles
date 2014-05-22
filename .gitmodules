@@ -10,3 +10,6 @@
 [submodule "plugins/zaw"]
 	path = plugins/zaw
 	url = https://github.com/zsh-users/zaw
+[submodule "plugins/tmuxstart"]
+	path = plugins/tmuxstart
+	url = https://github.com/treyhunner/tmuxstart
