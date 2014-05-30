@@ -26,7 +26,6 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias mv="mv -iv"
 alias srm="sudo rm -Rfv"
 alias mkdir="mkdir -p"
-alias cp="rsync --append --progress -azvrE"
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
 if [[ $(uname) == 'Darwin' ]]; then
   alias v="mvim -v"
@@ -45,17 +44,20 @@ if [[ $(uname) == 'Darwin' ]]; then
   alias browserstack="java -jar ~/Dropbox/syncPrefs/cmd/BrowserStackTunnel.jar T6rci6PsccWiU9kF2ygq localhost,80,0"
   alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
   alias mf="mdfind"
+  alias cp="rsync --append --progress -azvrE"
 fi
 # }}}
 # ---------------------[ Linux stuff ]----------------------------------------{{{
 if [[ $(uname) == 'Linux' ]]; then
-alias sai='sudo apt-get install -y '
-alias sup='sudo apt-get update && \
-           sudo apt-get -y dist-upgrade && \
-           sudo apt-get -y autoremove && \
-           sudo apt-get -y autoclean'
-alias pbcopy='xclip -selection clipboard'
-alias pbpaste='xclip -selection clipboard -o'
+  alias sai='sudo apt-get install -y '
+  alias sar='sudo apt-get purge -y '
+  alias sup='sudo apt-get update && \
+             sudo apt-get -y dist-upgrade && \
+             sudo apt-get -y autoremove && \
+             sudo apt-get -y autoclean'
+  alias pbcopy='xclip -selection clipboard'
+  alias pbpaste='xclip -selection clipboard -o'
+  alias cp='cp -rg'
 fi
 # }}}
 # ---------------------[ Misc ]-----------------------------------------{{{
@@ -84,16 +86,15 @@ alias gco='git checkout '
 alias herokup='git push heroku master'
 alias gba='git branch -av'
 # }}}
-# ---------------------[ Tmux/Tmuxinator ]----------------------------------------{{{
+# ---------------------[ Tmux ]----------------------------------------{{{
 alias ta='tmux attach -t'
-alias ts='tmux new-session -s'
 alias tk='tmux kill-session -t'
 alias tl='tmux list-sessions'
 alias tdc='tmux detach-client -t'
 
-alias ms='tmuxinator start'
-alias ml='tmuxinator list'
-alias mo='tmuxinator open'
+alias ts='tmuxstart'
+alias tsl='ts -l'
+alias tso='ts -o'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
 alias be='bundle exec'

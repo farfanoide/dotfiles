@@ -100,6 +100,7 @@ augroup END
 " }}} ------------[end preprocessors]------------
 " Python:---------------------------------------------------------------{{{
 Plugin 'klen/python-mode'
+Plugin 'farfanoide/vim-kivy'
 "}}}--------------------[ end Python ]----------------------------------------
 " Ruby:---------------------------------------------------------------{{{
 
@@ -224,6 +225,9 @@ call matchadd('ColorColumn', '\%120v', 100)
 Plugin 'gorodinskiy/vim-coloresque'
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 "Editor:---------------------------------------------------------------{{{
+" editorconfig support -- http://editorconfig.org/
+Plugin 'editorconfig/editorconfig-vim'
+
 " make backspace work like most other apps
 set backspace=2
 
