@@ -11,3 +11,6 @@ defaults write com.apple.finder QLEnableTextSelection -bool true
 
 # Disable ipv6
 networksetup -setv6off Wi-Fi
+
+# Hurry those animations the hell up!
+defaults write com.apple.dock expose-animation-duration -float 0.12

@@ -1,15 +1,17 @@
 #!/usr/bin/env ruby
 # encoding: utf-8
-full    = "★"
-empty   = "☆"
+full    = "|"
+# full    = "★"
+empty   = "."
+# empty   = "☆"
 battery = "🔋"
 plug    = "⚡"
- 
-star_count = 5 
+
+star_count = 5
 per_star = 100/star_count
- 
+
 v = Hash.new()
- 
+
 ARGF.each do |a|
   if a.start_with? "Currently"
     #test for the first line
@@ -32,16 +34,16 @@ ARGF.each do |a|
 end
 outstring = ""
 if v[:source]== "Battery Power"
- outstring += "#{battery}  " 
+ outstring += "#{battery}  "
 else
   outstring +="#{plug}  "
 end
- 
+
 full_stars  = v[:percent]/per_star
 empty_stars = star_count - full_stars
 full_stars.times  {outstring += "#{full} "}
 empty_stars.times {outstring += "#{empty} "}
- 
+
 outstring += v[:time] == "0:00" ? " charged" : " #{v[:time]}"
- 
+
 puts outstring

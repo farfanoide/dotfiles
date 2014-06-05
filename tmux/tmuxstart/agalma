@@ -1,0 +1,38 @@
+# -*- mode: zsh -*-
+# vi: set ft=zsh :
+
+# Go to the repository directory and start the session
+cd "$SRC_DIR/$session"
+new_session -n 'Editor'
+
+# our windows
+editor_window=1; general_window=2; db_window=3; server_window=4; log_window=5; assets_window=6;
+
+# setup those windows
+send_line $editor_window vim
+
+new_window -n General
+split $general_window -h
+send_line $general_window.1 'git status -bs'
+send_line $general_window.2 'bec'
+
+new_window -n DB
+send_line $db_window 'bundle exec rails db'
+
+new_window -n Server
+split $server_window -v -p "20"
+send_line $server_window.1 'bes'
+send_line $server_window.2 'beg'
+
+new_window -n Log
+send_line $log_window 'ctail -F log/development.log'
+
+new_window -n Assets
+split $assets_window -h
+send_line $assets_window.1 'cd ~/Dropbox/compartidas/ingenyo/AGALMA'
+send_line $assets_window.2 'cd app/assets'
+
+select_window $editor_window
+
+# -*- mode: sh -*-
+# vi: set ft=sh :
