@@ -21,10 +21,11 @@ export LESS_TERMCAP_ZW=$(tput rsupm)
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # directories
-export projdir="$HOME/Develop/sites"
-export musicdir="$HOME/Music/iTunes/iTunes\ Media/Music/"
-export downdir="$HOME/Downloads"
-export srcdir="$HOME/Develop/src"
+export PROJ_DIR="$HOME/Develop/sites"
+export MUSIC_DIR="$HOME/Music/iTunes/iTunes\ Media/Music/"
+export DOWN_DIR="$HOME/Downloads"
+export SRC_DIR="$HOME/Develop/src"
+export TMUXSTART_DIR="$HOME/.tmux/tmuxstart"
 
 export VISUAL='vim'
 export EDITOR='vim'
@@ -32,3 +33,6 @@ export EDITOR='vim'
 
 # make vim and tmux play nicely regarding colors
 export TERM='xterm-256color'
+
+# ls options
+_mac_osx && export CLICOLOR=1

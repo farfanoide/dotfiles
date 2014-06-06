@@ -1,3 +1,7 @@
+# helpers
+_mac_osx() { [[ $(uname) == 'Darwin' ]] }
+_linux() { [[ $(uname) == 'Linux' ]] }
+
 # diretory from which the plugins is being invoked
 dir=$(dirname $0)
 
@@ -40,6 +44,7 @@ function getwp(){
     fi
     rm -rf latest.tar.gz
 }
+
 function gethtml5(){
     wget https://github.com/h5bp/html5-boilerplate/archive/master.zip
     tar -xvf master.zip

@@ -1,6 +1,11 @@
 # ---------------------[ General Stuff ]----------------------------------------{{{
+alias v='vim'
+if _mac_osx ; then
+  alias ls="ls -h"
+else
+  alias ls='ls -h --color=auto'
+fi
 # alias para colorcitos y giladas
-alias ls="ls -hG"
 alias l="ls -o"
 alias la="ll -A"
 # alias lg="la | grep -i"
@@ -27,14 +32,11 @@ alias mv="mv -iv"
 alias srm="sudo rm -Rfv"
 alias mkdir="mkdir -p"
 alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
-if [[ $(uname) == 'Darwin' ]]; then
-  alias v="mvim -v"
-else
-  alias v="gvim -v"
-fi
 # requires brew install grc
 alias ctail="\grc tail"
 alias dateformat="date \"+%d-%m-%Y\""
+
+# override cp with advanced copy http://beatex.org/web/advancedcopy.html#compile
 if [[ -f "$HOME/.bin/cp" ]] ; then
   alias cp='cp -rg'
 else
@@ -42,7 +44,7 @@ else
 fi
 # }}}
 # ---------------------[ Mac stuff ]----------------------------------------{{{
-if [[ $(uname) == 'Darwin' ]]; then
+if _mac_osx ; then
   alias o="open"
   alias optimize="o -a ImageOptim"
   alias brup="brew update && brew upgrade && brew cleanup"
@@ -52,7 +54,7 @@ if [[ $(uname) == 'Darwin' ]]; then
 fi
 # }}}
 # ---------------------[ Linux stuff ]----------------------------------------{{{
-if [[ $(uname) == 'Linux' ]]; then
+if _linux ; then
   alias sai='sudo apt-get install -y '
   alias sar='sudo apt-get purge -y '
   alias sup='sudo apt-get update && \
