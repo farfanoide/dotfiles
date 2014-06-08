@@ -8,7 +8,7 @@ fi
 # alias para colorcitos y giladas
 alias l="ls -o"
 alias la="ll -A"
-# alias lg="la | grep -i"
+alias lg="la | grep -i"
 alias lr="ls -R "
 alias grep="grep --color=auto"
 alias up="cd .."
@@ -72,6 +72,7 @@ alias sitez="cd ~/Dropbox/Sites/"
 alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
 alias youtube-dl="youtube-dl --max-quality url"
 alias cuevana="cd $srcdir/storm && npm start"
+alias getnormalize="wget https://raw.github.com/necolas/normalize.css/master/normalize.css"
 # }}}
 # ---------------------[ MySQL ]----------------------------------------{{{
 alias my="mysql -uroot -p "
@@ -141,3 +142,5 @@ alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pu
 alias scp='scp -r'
 # }}}
 
+# _*_ mode: sh _*_
+# vi: set ft=sh :

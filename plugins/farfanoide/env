@@ -18,7 +18,7 @@ export LESS_TERMCAP_ZO=$(tput ssupm)
 export LESS_TERMCAP_ZW=$(tput rsupm)
 
 # brew cask options
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 # directories
 export PROJ_DIR="$HOME/Develop/sites"
@@ -35,4 +35,4 @@ export EDITOR='vim'
 export TERM='xterm-256color'
 
 # ls options
-_mac_osx && export CLICOLOR=1
+if _mac_osx; then export CLICOLOR=1; fi

@@ -13,4 +13,4 @@ fi
 # Customize to your needs...
 # Plugins and such
 source "$HOME"/.plugins/zaw/zaw.zsh
-source "$HOME"/.plugins/farfanoide/init.zsh
+source "$HOME"/.plugins/farfanoide/init.sh
