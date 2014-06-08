@@ -41,11 +41,22 @@ Plugin 'https://github.com/akiyan/vim-textobj-php'
 " Plugin 'joonty/vim-xdebug.git'
 
 " Snippets: -----------------------------------------------
-Plugin 'ervandew/supertab'
-Bundle "MarcWeber/vim-addon-mw-utils"
-Bundle "tomtom/tlib_vim"
-Bundle "garbas/vim-snipmate"
+Bundle "Shougo/neocomplete.vim"
+"
 Bundle "honza/vim-snippets"
+Bundle "Shougo/neosnippet.vim"
+Bundle "Shougo/neosnippet-snippets"
+
+let g:neosnippet#enable_snipmate_compatibility=1
+let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
+
+let g:neocomplete#enable_at_startup=1
+
 map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
 
 " CSM:
@@ -142,6 +153,13 @@ au BufNewFile,BufRead *.st setlocal filetype=xml
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
 Plugin 'kien/ctrlp.vim'
+let g:ctrlp_prompt_mappings = {
+      \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>', '<c-h>'],
+      \ }
+" TODO: check unite instead of ctrlp
+Plugin 'Shougo/unite.vim'
+" TODO: meterle a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
+
 " TODO: autoreload when creating new files with nerdtree
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
 let g:ctrlp_custom_ignore = {
@@ -158,6 +176,7 @@ map <Leader>r :NERDTreeFind<CR>
 " Open NERDTree in new windows by default
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * wincmd p
+let g:NERDTreeMapOpenVSplit='v'
 
 Plugin 'jistr/vim-nerdtree-tabs'
 " Replace previous options with yet another plugn:
@@ -244,7 +263,7 @@ set linebreak
 
 set list
 " set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
-set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:.
+set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:•
 
 " Make vim more useful
 " Use by default system wide clipboard
@@ -403,13 +422,18 @@ map <Leader>m <esc>:tabnext<CR>
 " escape with jj
 inoremap jj <ESC>
 " faster matching
-nmap <Tab> %
-vmap <Tab> %
+" nmap <Tab> %
+" vmap <Tab> %
 
 " faster selections in visual mode
 let g:multi_line_jump=6
 execute "vnoremap J ".g:multi_line_jump."j"
 execute "vnoremap K ".g:multi_line_jump."k"
+
+" TODO: disable C-h in terminal
+" change cursor position in insert mode
+" inoremap <C-h> <left>
+" inoremap <C-l> <right>
 
 "}}}--------------------[ end Faster Commands ]----------------------------------------
 " Indentation: -----------------------------------{{{
@@ -514,10 +538,7 @@ endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " this is ridiculously awesome!!
-Plugin 'itchyny/thumbnail.vim'
-" TODO: check unite instead of ctrlp
-Plugin 'Shougo/unite.vim'
-" TODO: meterle a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
+" Plugin 'itchyny/thumbnail.vim'
 " any plugis should be before this
 call vundle#end()
 filetype plugin indent on     " required

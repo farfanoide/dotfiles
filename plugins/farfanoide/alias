@@ -96,11 +96,11 @@ alias gba='git branch -av'
 # ---------------------[ Tmux ]----------------------------------------{{{
 alias ta='tmux attach -t'
 alias tk='tmux kill-session -t'
-alias tl='tmux list-sessions'
 alias tdc='tmux detach-client -t'
 
 alias ts='tmuxstart'
 alias tsl='ts -l'
+alias tl='ts -l'
 alias tso='ts -o'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
