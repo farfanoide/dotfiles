@@ -16,7 +16,7 @@ func_file="$dir/functions"
 [ -e $func_file ] && source $func_file
 
 path_file="$dir/path"
-[ -e $path_file ] && source path
+[ -e $path_file ] && source $path_file
 
 # clean up after ourselves
 unset dir env_file alias_file func_file path_file
