@@ -3,7 +3,7 @@ filetype off        " required
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+call vundle#begin()
 
 " Change mapLeader
 let mapleader=","
@@ -99,7 +99,7 @@ augroup END
 " }}}
 " }}} ------------[end preprocessors]------------
 " Python:---------------------------------------------------------------{{{
-Plugin 'klen/python-mode'
+" Plugin 'klen/python-mode'
 Plugin 'farfanoide/vim-kivy'
 "}}}--------------------[ end Python ]----------------------------------------
 " Ruby:---------------------------------------------------------------{{{
@@ -134,6 +134,10 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'jceb/vim-orgmode'
 " syntax check
 Plugin 'scrooloose/syntastic'
+
+" Show smalltalk files as xml
+au BufNewFile,BufRead *.st setlocal filetype=xml
+
 "}}}
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
@@ -146,15 +150,11 @@ let g:ctrlp_custom_ignore = {
       \ }
 
 Plugin 'scrooloose/nerdtree'
-" TODO: check if macvim with sidebar installed
-" if has("gui_running")
-"   map <Leader>c :macaction toggleFileBrowser:<CR>
-"   map <Leader>r :NERDTreeFind<CR>
-" else
-  " NERDTree mappings and options
-  map <Leader>c :NERDTreeToggle<CR>
-  map <Leader>r :NERDTreeFind<CR>
-" endif
+
+" Show/Hide NerdTree
+map <Leader>c :NERDTreeToggle<CR>
+" Find current buffer in nerdtree
+map <Leader>r :NERDTreeFind<CR>
 " Open NERDTree in new windows by default
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * wincmd p
@@ -204,15 +204,14 @@ set cursorline
 set noshowmode
 
 " --------------[Powerline]--------------------------------------------------
-" set rtp+=/usr/local/lib/python2.7/site-packages/powerline/bindings/vim/
 Plugin 'bling/vim-airline'
 let g:airline_powerline_fonts = 1
-if !has("gui_running")
-  let g:airline#extensions#tabline#enabled = 1
-  let g:airline#extensions#tabline#left_sep = ' '
-  let g:airline#extensions#tabline#right_sep = ' '
-  let g:ariline#extensions#bufferline#bufferline_separator = ' '
-endif
+" if !has("gui_running")
+"   let g:airline#extensions#tabline#enabled = 1
+"   let g:airline#extensions#tabline#left_sep = ' '
+"   let g:airline#extensions#tabline#right_sep = ' '
+"   let g:ariline#extensions#bufferline#bufferline_separator = ' '
+" endif
 let g:airline_theme='bubblegum'
 
 " Dont show toolbar on gui
@@ -520,10 +519,12 @@ Plugin 'itchyny/thumbnail.vim'
 Plugin 'Shougo/unite.vim'
 " TODO: meterle a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
 " any plugis should be before this
+call vundle#end()
 filetype plugin indent on     " required
 
 " enable modeline for per file configs
 set modeline
+
 
 hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 
