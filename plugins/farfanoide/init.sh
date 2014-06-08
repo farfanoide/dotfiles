@@ -1,38 +1,23 @@
-#!/usr/bin/env bash
-
 # helpers
 _mac_osx() { [[ $(uname) == 'Darwin' ]] ;}
 _linux() { [[ $(uname) == 'Linux' ]] ;}
 
 # directory from which the plugins is being invoked
-dir=$(dirname $0)
+dir="$PLUGINS_DIR/farfanoide"
 
 env_file="$dir/env"
-if [[ -a $env_file ]]; then
-  source $env_file
-fi
+[ -e $env_file ] && source $env_file
 
 alias_file="$dir/alias"
-if [[ -a $alias_file ]]; then
-  source $alias_file
-fi
+[ -e $alias_file ] && source $alias_file
 
 # load functions after alias so that they can be inherited
 func_file="$dir/functions"
-if [[ -a $func_file ]]; then
-  source $func_file
-fi
+[ -e $func_file ] && source $func_file
 
-func_file="$dir/path"
-if [[ -a $path_file ]]; then
-  source path
-fi
-
-zaw_file="$dir/zaw.zsh"
-if [[ -a $zaw_file ]]; then
-  source $zaw_file
-fi
+path_file="$dir/path"
+[ -e $path_file ] && source path
 
 # clean up after ourselves
-unset dir func_file alias_file prompt_file env_file zaw_file path_file
+unset dir env_file alias_file func_file path_file
 

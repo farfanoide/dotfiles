@@ -7,7 +7,7 @@ else
 fi
 # alias para colorcitos y giladas
 alias l="ls -o"
-alias la="ll -A"
+alias la="ls -lA"
 alias lg="la | grep -i"
 alias lr="ls -R "
 alias grep="grep --color=auto"

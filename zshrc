@@ -10,7 +10,13 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
 # Plugins and such
-source "$HOME"/.plugins/zaw/zaw.zsh
-source "$HOME"/.plugins/farfanoide/init.sh
+PLUGINS_DIR="$HOME/.plugins/"
+source "$PLUGINS_DIR/farfanoide/init.sh"
+
+# zaw -> C-r replacement for zsh
+source "$PLUGINS_DIR/zaw/zaw.zsh"
+zaw_file="$PLUGINS_DIR/zaw.zsh"
+[ -e $zaw_file ] && source $zaw_file
+
+unset zaw_file

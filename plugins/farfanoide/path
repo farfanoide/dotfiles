@@ -1,5 +1,5 @@
 # personal binaries
-PATH="${HOME}/.bin:${PATH}"
+export PATH="${HOME}/.bin:${PATH}"
 
 # _*_ mode: sh _*_
 # vi: set ft=sh :
