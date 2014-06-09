@@ -40,24 +40,50 @@ Plugin 'https://github.com/akiyan/vim-textobj-php'
 " Debugging: -----------------------------------------------
 " Plugin 'joonty/vim-xdebug.git'
 
-" Snippets: -----------------------------------------------
-Bundle "Shougo/neocomplete.vim"
-"
-Bundle "honza/vim-snippets"
-Bundle "Shougo/neosnippet.vim"
-Bundle "Shougo/neosnippet-snippets"
+" Neocomplete: --------------------------------------------
 
-let g:neosnippet#enable_snipmate_compatibility=1
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+" enable async stuff for Shougo's plugins
+Plugin 'Shougo/vimproc.vim'
+" enable context_filetype
 
-imap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : (pumvisible() ? "\<C-n>" : "\<TAB>")
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-imap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-smap <expr><S-TAB> pumvisible() ? "\<C-p>" : ""
-
+Plugin 'Shougo/context_filetype.vim'
+Plugin 'Shougo/neocomplete.vim'
 let g:neocomplete#enable_at_startup=1
 
+" NeoSnippets: -----------------------------------------------{{{
+Plugin 'honza/vim-snippets'
+Plugin 'Shougo/neosnippet.vim'
+Plugin 'Shougo/neosnippet-snippets'
+" Plugin key-mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \: pumvisible() ? "\<C-n>" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+      \ "\<Plug>(neosnippet_expand_or_jump)"
+      \: "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" Enable snipMate compatibility feature.
+let g:neosnippet#enable_snipmate_compatibility = 1
+
+" add custom snippets
+" let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
+
+" open snippets dir
 map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
+"}}}
+
+
 
 " CSM:
 Plugin 'tpope/vim-fugitive'
@@ -157,8 +183,19 @@ let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>', '<c-h>'],
       \ }
 " TODO: check unite instead of ctrlp
-Plugin 'Shougo/unite.vim'
-" TODO: meterle a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
+" Plugin 'Shougo/unite.vim'
+"
+" " file search
+" nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
+" " clipboard search
+" let g:unite_source_history_yank_enable = 1
+" nnoremap <C-y> :Unite -auto-preview history/yank<cr>
+"
+" " buffer search
+" nnoremap <space>s :Unite -auto-preview -quick-match buffer<cr>
+" nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+
+" TODO: meterl-auto-previewe a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
 
 " TODO: autoreload when creating new files with nerdtree
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
@@ -350,8 +387,23 @@ set splitright
 " Resize splits when the window is resized
 au VimResized * :wincmd =
 
-Plugin 'vim-scripts/ZoomWin'
-:map <Leader>z :ZoomWin<CR>
+"toggles whether or not the current window is automatically zoomed
+function! ToggleMaxWins()
+  if exists('g:windowMax')
+    au! maxCurrWin
+    wincmd =
+    unlet g:windowMax
+  else
+    augroup maxCurrWin
+        " au! BufEnter * wincmd _ | wincmd |
+        " maximize it!
+        au! WinEnter * wincmd _ | wincmd |
+    augroup END
+    do maxCurrWin WinEnter
+    let g:windowMax=1
+  endif
+endfunction
+nnoremap <Leader>z :call ToggleMaxWins()<CR>
 
 " navigation
 nnoremap <C-j> <C-W><C-J>
@@ -454,9 +506,6 @@ set expandtab
 Plugin 'tpope/vim-unimpaired'
 
 " Terminal Bubbling:-------------------
-" Bubble single lines
-" nmap <C-j> ]e
-" nmap <C-k> [e
 " Bubble multiple lines
 vmap <C-k> [egv
 vmap <C-j> ]egv
@@ -537,6 +586,7 @@ if has("autocmd")
 endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
+
 " this is ridiculously awesome!!
 " Plugin 'itchyny/thumbnail.vim'
 " any plugis should be before this
