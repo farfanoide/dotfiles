@@ -172,13 +172,13 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'jceb/vim-orgmode'
 " Required by vim-orgmode
 Plugin 'tpope/vim-speeddating'
-au BufNewFile,BufRead *.org setlocal filetype=org
+au BufNewFile,BufRead,BufEnter *.org setlocal filetype=org
 
 " syntax check
 Plugin 'scrooloose/syntastic'
 
 " Show smalltalk files as xml
-au BufNewFile,BufRead *.st setlocal filetype=xml
+au BufNewFile,BufRead,BufEnter *.st setlocal filetype=xml
 
 "}}}
 " Files:---------------------------------------------------------------{{{
@@ -417,6 +417,17 @@ nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
 
+" Maps Alt-[h,j,k,l] to resizing a window split
+" use actual characters in mac instead of <[A|M]-[h|j|k|l]>
+" noremap <silent> <M-h> <C-w><
+noremap <silent> ˙ <C-w>5<
+" noremap <silent> <M-j> <C-W>-
+noremap <silent> ∆ <C-W5>-
+" noremap <silent> <M-k> <C-W>+
+noremap <silent> ˚ <C-W>5+
+" noremap <silent> <M-l> <C-w>>
+noremap <silent> ¬ <C-w>5>
+
 " seamless vim/tmux navigation
 Plugin 'christoomey/vim-tmux-navigator'
 " tmux integration
@@ -425,7 +436,7 @@ Plugin 'benmills/vimux'
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
 " ctrl+a -> select all
-map <C-a> ggVG
+nnoremap <C-a> ggVG
 " format paragraph and restor cursor position
 map <Leader>fp gwap
 " format as html
@@ -479,9 +490,10 @@ map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
 " Escape with jj
 inoremap jj <ESC>
+
 " Faster matching
-" nmap <Tab> %
-" vmap <Tab> %
+nmap <Tab> %
+vmap <Tab> %
 
 " Faster selections in visual mode
 let g:multi_line_jump=6
@@ -490,8 +502,8 @@ execute "vnoremap K ".g:multi_line_jump."k"
 
 " TODO: test vimrc to find where this breaks
 " change cursor position in insert mode
+inoremap <C-l> <right>
 " inoremap <C-h> <left>
-" inoremap <C-l> <right>
 nnoremap <Leader>note :vsp ~/.notes/notes.org<CR>
 nnoremap <Leader>nt :vsp ~/.notes/notes.org<CR>
 nnoremap <Leader>sh :vsp ~/.notes/shortcuts.org<CR>
