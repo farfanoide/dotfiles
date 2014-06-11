@@ -7,6 +7,7 @@ call vundle#begin()
 
 " Change mapLeader
 let mapleader=","
+let maplocalleader='\'
 
 " Various Bundles:---------------------------------------------------------------{{{
 
@@ -169,6 +170,10 @@ Plugin 'tejr/vim-tmux'
 Plugin 'vim-scripts/rtorrent-syntax-file'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jceb/vim-orgmode'
+" Required by vim-orgmode
+Plugin 'tpope/vim-speeddating'
+au BufNewFile,BufRead *.org setlocal filetype=org
+
 " syntax check
 Plugin 'scrooloose/syntastic'
 
@@ -381,6 +386,7 @@ noremap <silent> <space> :noh<cr>:call clearmatches()<cr>
 " Windows Tabs:-----------------------------{{{
 " Show the filename in the window titlebar
 set title
+" sane splitting
 set splitbelow
 set splitright
 
@@ -461,31 +467,35 @@ map <Leader>t :Tabularize<CR>
 
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
 " Faster Commands:---------------------------------------------------------------{{{
-" one less key to get to command mode
+" One less key to get to command mode
 map ; :
 
-" faster save
+" Faster save
 nnoremap <Leader>w :w!<CR>
 nnoremap <Leader>tn :tabnew<CR>
 
-" move faster between tabs
+" Move faster between tabs
 map <Leader>n <esc>:tabprevious<CR>
 map <Leader>m <esc>:tabnext<CR>
-" escape with jj
+" Escape with jj
 inoremap jj <ESC>
-" faster matching
+" Faster matching
 " nmap <Tab> %
 " vmap <Tab> %
 
-" faster selections in visual mode
+" Faster selections in visual mode
 let g:multi_line_jump=6
 execute "vnoremap J ".g:multi_line_jump."j"
 execute "vnoremap K ".g:multi_line_jump."k"
 
-" TODO: disable C-h in terminal
+" TODO: test vimrc to find where this breaks
 " change cursor position in insert mode
 " inoremap <C-h> <left>
 " inoremap <C-l> <right>
+nnoremap <Leader>note :vsp ~/.notes/notes.org<CR>
+nnoremap <Leader>nt :vsp ~/.notes/notes.org<CR>
+nnoremap <Leader>sh :vsp ~/.notes/shortcuts.org<CR>
+
 
 "}}}--------------------[ end Faster Commands ]----------------------------------------
 " Indentation: -----------------------------------{{{

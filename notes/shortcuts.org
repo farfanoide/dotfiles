@@ -1,0 +1,4 @@
+* vim
+  ** insert mode
+      Ctrl d -> unindent
+      Ctrl t -> indent

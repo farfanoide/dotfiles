@@ -1,0 +1,27 @@
+* Facultad
+** Objetos
+** IBD
+** Mate II
+* Work
+** Nomanod
+*** Dar Propiedades
+** Los Pibes
+*** Agalma TODO [0/4]
+    - [ ] testear menus
+    - [ ] testear paginas
+    - [ ] testear noticias
+    - [ ] crear session de tmuxstart
+* Personal
+** Learn
+   - vim [0/3]
+         - [ ] nerdtree bookmarks
+         - [ ] augroups
+         - [ ] folding
+   - orgmode TODO [0/1]
+         - [ ] add due date to todos
+** Programming
+*** simuladorHDD
+*** tmuxstart TODO [0/3]
+    - [ ] implement new option with examples
+    - [ ] create authors pull request
+    - [ ] do something else(just a test for orgmode)
