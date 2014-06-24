@@ -21,8 +21,7 @@ alias tree="tree -C"
 # requires sudo pip install pygments
 alias hi="pygmentize -g"
 alias du="du -hs"
-# Show me the size of all the things. The bastard child of du and df.
-# http://gyaresu.org/hacking/2012/08/02/alias-to-show-the-size-of-files-and-folders/
+# Show me the size of all the things. The bastard child of du and df ->  http://gyaresu.org/hacking/2012/08/02/alias-to-show-the-size-of-files-and-folders/
 alias duf='du -sk * | sort -nr | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'''
 # Kill all the tabs in Chrome to free up memory
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
@@ -46,6 +45,7 @@ fi
 # ---------------------[ Mac stuff ]----------------------------------------{{{
 if _mac_osx ; then
   alias o="open"
+  alias o.="open ."
   alias optimize="o -a ImageOptim"
   alias brup="brew update && brew upgrade && brew cleanup"
   alias browserstack="java -jar ~/Dropbox/syncPrefs/cmd/BrowserStackTunnel.jar T6rci6PsccWiU9kF2ygq localhost,80,0"
@@ -99,7 +99,7 @@ alias tk='tmux kill-session -t'
 alias tdc='tmux detach-client -t'
 
 alias ts='tmuxstart'
-alias tsl='ts -l'
+alias tsl='ts ls'
 alias tl='ts -l'
 alias tso='ts -o'
 # }}}
@@ -123,7 +123,7 @@ alias beg='be guard'
 alias vup='vagrant up'
 alias vsh='vagrant ssh'
 alias vst='vagrant status'
-alias vgs='vagrant global-status'
+alias vsg='vagrant global-status'
 alias vre='vagrant resume'
 alias vha='vagrant halt'
 alias vsu='vagrant suspend'
@@ -140,7 +140,9 @@ alias docup="ssh docpik 'cd /var/www/html/docpik ; git pull'"
 alias infup="ssh latinman 'cd proyectos/docpik_dev/infomedica-app/ && git pull && ./symfony cc'"
 alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pull'"
 alias scp='scp -r'
+alias sshfixpermissions='chmod -R 700 "$HOME/.ssh" && chmod 600 "$HOME/.ssh/*rsa" && chmod 644 "$HOME/.ssh/*pub"'
 # }}}
-
+# ---------------------[ Modeline ]-----------------------------------{{{
 # _*_ mode: sh _*_
 # vi: set ft=sh :
+#}}}
