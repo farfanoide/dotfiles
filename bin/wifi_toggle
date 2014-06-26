@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+wifi_interface=$(networksetup -listallhardwareports  | grep -i wi-fi -2 | grep -i device | cut -d: -f2 | tr -d ' ')
+wifi_status=$(networksetup -getairportpower $wifi_interface | cut -d: -f 2 | tr -d ' ')
+
+if [ "$wifi_status" = "Off" ]; then
+  networksetup -setairportpower $wifi_interface on
+else
+  networksetup -setairportpower $wifi_interface off
+fi
