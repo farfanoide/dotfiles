@@ -1,14 +1,84 @@
+" Vundle Init: ------------------------------------------------------------------{{{
 set nocompatible    " be iMproved, required
 filetype off        " required
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/vundle/
 call vundle#begin()
+"}}}
+"Editor:---------------------------------------------------------------{{{
 
-" Change mapLeader
-let mapleader=","
+" Change Leader
+let mapleader=','
 let maplocalleader='\'
 
+Plugin 'editorconfig/editorconfig-vim' " editorconfig support -- http://editorconfig.org/
+
+set backspace=2 " make backspace work like most other apps
+
+" Time out on key codes but not mappings.
+" Basically this makes terminal Vim work sanely.
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+
+" Text Preferences
+
+set nowrap
+set linebreak   " Break by word at end of line when wrap=true
+set showbreak=⇇ " Line break character
+
+set list " Show special characters
+" set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
+set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:•
+
+" Make vim more useful
+set clipboard=unnamed " Use by default system wide clipboard
+
+set nocompatible
+set wildmenu              " Enhance command-line completion
+set esckeys               " Allow cursor keys in insert mode
+set ttyfast               " Optimize for fast terminal connections
+set encoding=utf-8 nobomb " Use UTF-8 without BOM
+set binary                " Don’t add empty newlines at the end of files
+
+" set fileformats=dos,unix,mac
+
+" Disable backups and swap files
+set noswapfile
+set nobackup
+set nowritebackup
+" set backupdir=~/.vim/backups
+" set directory=~/.vim/swaps
+
+" Tell Vim to use an undo file
+if exists("&undodir")
+  set undofile
+  set undodir=~/.vim/undo
+endif
+
+set laststatus=2  " Always show status line
+set mouse=a       " Enable mouse in all modes
+set noerrorbells  " Disable error bells
+set nostartofline " Don’t reset cursor to start of line when moving around.
+" set shortmess=atI " Don’t show the intro message when starting vim
+set number        " Use normal numbers
+
+
+set autoread   " Automatically read a file when it is changed from the outside
+set lazyredraw " Don't redraw while executing macros
+
+" and relative line numbers
+if exists("&relativenumber")
+  set relativenumber
+  au BufReadPost * set relativenumber
+endif
+
+set showcmd     " Show commands as you type them
+set hidden      " allow unsaved changes to be hidden
+set scrolloff=3 " Start scrolling three lines before the horizontal window border
+set modeline    " enable modeline for per file configs
+"}}}--------------------[ end Editor  ]-----------------------------------
 " Various Bundles:---------------------------------------------------------------{{{
 
 " let Vundle manage Vundle, required
@@ -24,6 +94,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'jiangmiao/auto-pairs'
 Plugin 'mattn/emmet-vim'
 Plugin 'Lokaltog/vim-easymotion'
+" Plugin 'justinmk/vim-sneak'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'matchit.zip'
 
@@ -92,6 +163,7 @@ Plugin 'airblade/vim-gitgutter'
 
 " Tags:
 Plugin 'majutsushi/tagbar'
+" TODO: replace with https://github.com/h1mesuke/unite-outline
 map <Leader>s :TagbarOpenAutoClose<CR>
 "}}}--------------------[ end Various Bundles  ]----------------------------------------
 " Preprocessors: ------------------------------------------{{{
@@ -165,11 +237,12 @@ Plugin 'spf13/PIV'
 " let g:DisableAutoPHPFolding = 1
 Plugin 'arnaud-lb/vim-php-namespace'
 "}}}--------------------[ end PHP  ]----------------------------------------
-" Syntax Plugins: -------------------------------------------------{{{
+" Syntax Plugins:--------------------------------------------------{{{
 Plugin 'tejr/vim-tmux'
 Plugin 'vim-scripts/rtorrent-syntax-file'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'jceb/vim-orgmode'
+Plugin 'vim-scripts/bats.vim'
 " Required by vim-orgmode
 Plugin 'tpope/vim-speeddating'
 au BufNewFile,BufRead,BufEnter *.org setlocal filetype=org
@@ -187,38 +260,36 @@ Plugin 'kien/ctrlp.vim'
 let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>', '<c-h>'],
       \ }
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
+let g:ctrlp_custom_ignore = {
+      \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
+      \ 'file': '\v\.(exe|so|dll|pyc)$'
+      \ }
 " TODO: check unite instead of ctrlp
 " Plugin 'Shougo/unite.vim'
-"
-" " file search
-" nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
-" " clipboard search
-" let g:unite_source_history_yank_enable = 1
-" nnoremap <C-y> :Unite -auto-preview history/yank<cr>
-"
-" " buffer search
-" nnoremap <space>s :Unite -auto-preview -quick-match buffer<cr>
-" nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+" Plugin 'Shougo/unite-outline'
+" Plugin 'tsukkee/unite-tag'
+" Plugin 'ujihisa/unite-rake'
+" Plugin 'tsukkee/unite-help'
+
+
 
 " TODO: meterl-auto-previewe a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
 
 " TODO: autoreload when creating new files with nerdtree
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
-      \ 'file': '\v\.(exe|so|dll)$'
-      \ }
 
 Plugin 'scrooloose/nerdtree'
 
 " Show/Hide NerdTree
 map <Leader>c :NERDTreeToggle<CR>
 " Find current buffer in nerdtree
-map <Leader>r :NERDTreeFind<CR>
+noremap <Leader>r :NERDTreeFind<CR>
 " Open NERDTree in new windows by default
 " autocmd VimEnter * NERDTree
 " autocmd VimEnter * wincmd p
 let g:NERDTreeMapOpenVSplit='v'
+
+let NERDTreeIgnore=['\.pyc$', '\~$']
 
 Plugin 'jistr/vim-nerdtree-tabs'
 " Replace previous options with yet another plugn:
@@ -241,11 +312,12 @@ Plugin 'jpo/vim-railscasts-theme'
 Plugin '29decibel/codeschool-vim-theme'
 Plugin 'vim-scripts/apprentice.vim'
 Plugin 'nanotech/jellybeans.vim'
-Bundle "daylerees/colour-schemes", { "rtp": "vim/" }
+Plugin 'daylerees/colour-schemes', { 'rtp': 'vim/' }
 
-" enable syntax highligting
-syntax on
-" Don't try to highlight lines longer than 130 characters. (life saving!)
+syntax on " enable syntax highligting
+
+
+" don't try to highlight lines longer than 130 characters. (life saving!)
 if has('gui_running')
   set synmaxcol=200
 else
@@ -256,111 +328,27 @@ if has("gui_gtk2")
 else
   set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
 endif
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-colorscheme Tomorrow-Night
-" Highlight current line
-set cursorline
-" Remove second status bar when using powerline
-set noshowmode
+
+set t_Co=256               " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set cursorline             " Highlight current line
+set noshowmode             " Remove second status bar when using powerline
+colorscheme Tomorrow-Night " This changes a lot
 
 " --------------[Powerline]--------------------------------------------------
-Plugin 'bling/vim-airline'
+Plugin 'bling/vim-airline' " vimscript airline, yay!
 let g:airline_powerline_fonts = 1
-" if !has("gui_running")
-"   let g:airline#extensions#tabline#enabled = 1
-"   let g:airline#extensions#tabline#left_sep = ' '
-"   let g:airline#extensions#tabline#right_sep = ' '
-"   let g:ariline#extensions#bufferline#bufferline_separator = ' '
-" endif
 let g:airline_theme='bubblegum'
 
-" Dont show toolbar on gui
-set guioptions-=T
+set guioptions-=T " Dont show toolbar on gui
 
 " highlight just the 120th column of wide lines...
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
-" preatty hex colors
-Plugin 'gorodinskiy/vim-coloresque'
+
+Plugin 'gorodinskiy/vim-coloresque' " preatty hex colors
+" no background for those vertical splits, they look ugly
+hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
-"Editor:---------------------------------------------------------------{{{
-" editorconfig support -- http://editorconfig.org/
-Plugin 'editorconfig/editorconfig-vim'
-
-" make backspace work like most other apps
-set backspace=2
-
-" Time out on key codes but not mappings.
-" Basically this makes terminal Vim work sanely.
-set notimeout
-set ttimeout
-set ttimeoutlen=10
-
-" Text Preferences
-set nowrap
-" Break by word at end of line when wrap=true
-set showbreak=⇇
-set linebreak
-
-set list
-" set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
-set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:•
-
-" Make vim more useful
-" Use by default system wide clipboard
-set clipboard=unnamed
-
-set nocompatible
-" Enhance command-line completion
-set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Optimize for fast terminal connections
-set ttyfast
-" Use UTF-8 without BOM
-set encoding=utf-8 nobomb
-" Don’t add empty newlines at the end of files
-set binary
-"set fileformats=dos,unix,mac
-
-" Disable backups and swap files
-set noswapfile
-set nobackup
-set nowritebackup
-" set backupdir=~/.vim/backups
-" set directory=~/.vim/swaps
-
-" Tell Vim to use an undo file
-if exists("&undodir")
-  set undofile
-  set undodir=~/.vim/undo
-endif
-
-" Always show status line
-set laststatus=2
-" Enable mouse in all modes
-set mouse=a
-" Disable error bells
-set noerrorbells
-" Don’t reset cursor to start of line when moving around.
-set nostartofline
-" Don’t show the intro message when starting vim
-set shortmess=atI
-" Use normal numbers
-set number
-" and relative line numbers
-if exists("&relativenumber")
-  set relativenumber
-  au BufReadPost * set relativenumber
-endif
-" Show commands as you type them
-set showcmd
-" allow unsaved changes to be hidden
-set hidden
-" Start scrolling three lines before the horizontal window border
-set scrolloff=3
-"}}}--------------------[ end Editor  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
 Plugin 'sjl/gundo.vim.git'
 map <Leader>u :GundoToggle<CR>
@@ -384,16 +372,15 @@ noremap <silent> <space> :noh<cr>:call clearmatches()<cr>
 " nnoremap <Space> :nohlsearch<CR>
 "}}}--------------------[ end Search  ]------------------------------------
 " Windows Tabs:-----------------------------{{{
-" Show the filename in the window titlebar
-set title
+set title " Show the filename in the window titlebar
+
 " sane splitting
 set splitbelow
 set splitright
 
-" Resize splits when the window is resized
-au VimResized * :wincmd =
+au VimResized * :wincmd = " Resize splits when the window is resized
 
-"toggles whether or not the current window is automatically zoomed
+" toggles whether or not the current window is automatically zoomed
 function! ToggleMaxWins()
   if exists('g:windowMax')
     au! maxCurrWin
@@ -401,9 +388,9 @@ function! ToggleMaxWins()
     unlet g:windowMax
   else
     augroup maxCurrWin
-        " au! BufEnter * wincmd _ | wincmd |
-        " maximize it!
-        au! WinEnter * wincmd _ | wincmd |
+      " au! BufEnter * wincmd _ | wincmd |
+      " maximize it!
+      au! WinEnter * wincmd _ | wincmd |
     augroup END
     do maxCurrWin WinEnter
     let g:windowMax=1
@@ -411,11 +398,12 @@ function! ToggleMaxWins()
 endfunction
 nnoremap <Leader>z :call ToggleMaxWins()<CR>
 
-" navigation
+" Window Navigation:
 nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
+Plugin 'christoomey/vim-tmux-navigator' " seamless vim/tmux navigation
 
 " Maps Alt-[h,j,k,l] to resizing a window split
 " use actual characters in mac instead of <[A|M]-[h|j|k|l]>
@@ -428,10 +416,12 @@ noremap <silent> ˚ <C-W>5+
 " noremap <silent> <M-l> <C-w>>
 noremap <silent> ¬ <C-w>5>
 
-" seamless vim/tmux navigation
-Plugin 'christoomey/vim-tmux-navigator'
 " tmux integration
 Plugin 'benmills/vimux'
+
+" Move faster between tabs
+map <Leader>n <esc>:tabprevious<CR>
+map <Leader>m <esc>:tabnext<CR>
 
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
@@ -485,9 +475,7 @@ map ; :
 nnoremap <Leader>w :w!<CR>
 nnoremap <Leader>tn :tabnew<CR>
 
-" Move faster between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
+
 " Escape with jj
 inoremap jj <ESC>
 
@@ -503,14 +491,18 @@ execute "vnoremap K ".g:multi_line_jump."k"
 " TODO: test vimrc to find where this breaks
 " change cursor position in insert mode
 inoremap <C-l> <right>
-" inoremap <C-h> <left>
-nnoremap <Leader>note :vsp ~/.notes/notes.org<CR>
-nnoremap <Leader>nt :vsp ~/.notes/notes.org<CR>
-nnoremap <Leader>sh :vsp ~/.notes/shortcuts.org<CR>
+inoremap <C-h> <left>
+
+" Join upper line at the end of current one
+nnoremap <leader>j ddkOpJ
+
+nnoremap <Leader>note :30vsp ~/.notes/notes.org<CR>
+nnoremap <Leader>nt :30vsp ~/.notes/notes.org<CR>
+nnoremap <Leader>sh :30vsp ~/.notes/shortcuts.org<CR>
 
 
 "}}}--------------------[ end Faster Commands ]----------------------------------------
-" Indentation: -----------------------------------{{{
+" Indentation:------------------------------------{{{
 function! SetMultiLineJump(jump_size)
   execute "vnoremap J ".a:jump_size."j"
   execute "vnoremap K ".a:jump_size."k"
@@ -608,18 +600,94 @@ if has("autocmd")
 endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
-
-" this is ridiculously awesome!!
-" Plugin 'itchyny/thumbnail.vim'
-" any plugis should be before this
-call vundle#end()
+" Vundle End: ------------------------------------------------------------------{{{
+call vundle#end() " any plugis should be before this
 filetype plugin indent on     " required
-
-" enable modeline for per file configs
-set modeline
+"}}}
 
 
-hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 
+
+" ==== Unite ======================= {{{
+" ==================================
+" personal unite mappings
+" nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
+" " clipboard search
+" let g:unite_source_history_yank_enable = 1
+" nnoremap <C-y> :Unite -auto-preview history/yank<cr>
+"
+" " buffer search
+" nnoremap <space>s :Unite -auto-preview -quick-match buffer<cr>
+" nnoremap <space>/ :Unite -auto-preview grep:.<cr>
+
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+"
+" let g:unite_source_history_yank_enable = 1
+" let g:unite_force_overwrite_statusline = 0
+" if executable('ag')
+"   let g:unite_source_grep_command = 'ag'
+"   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+"   let g:unite_source_grep_recursive_opt = ''
+" endif
+"
+" call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
+"   \ 'ignore_pattern', join([
+"   \ '\.git/',
+"   \ '\.sass-cache/',
+"   \ '\vendor/',
+"   \ '\node_modules/',
+"   \ ], '\|'))
+"
+" " Custom mappings for the unite buffer
+" autocmd FileType unite call s:unite_settings()
+" function! s:unite_settings()
+"   let b:SuperTabDisabled=1
+"
+"   imap <buffer> <C-j> <Plug>(unite_select_next_line)
+"   imap <buffer> <C-k> <Plug>(unite_select_previous_line)
+"   imap <buffer> <c-a> <Plug>(unite_choose_action)
+"
+"   imap <silent><buffer><expr> <C-s> unite#do_action('split')
+"   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
+"   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+"
+"   nmap <buffer> <ESC> <Plug>(unite_exit)
+" endfunction
+"
+" " The prefix key
+" nnoremap [unite] <Nop>
+" nmap <space> [unite]
+"
+" " General purpose
+" nnoremap [unite]<space> :Unite -no-split -start-insert source<cr>
+"
+" " Files
+" nnoremap [unite]f :Unite -no-split -start-insert file_rec/async<cr>
+"
+" " Files in rails
+" nnoremap [unite]rm :Unite -no-split -start-insert -input=app/models/ file_rec/async<cr>
+" nnoremap [unite]rv :Unite -no-split -start-insert -input=app/views/ file_rec/async<cr>
+" nnoremap [unite]ra :Unite -no-split -start-insert -input=app/assets/ file_rec/async<cr>
+" nnoremap [unite]rs :Unite -no-split -start-insert -input=spec/ file_rec/async<cr>
+"
+" " Grepping
+" nnoremap [unite]g :Unite -no-split grep:.<cr>
+" nnoremap [unite]d :Unite -no-split grep:.:-s:\(TODO\|FIXME\)<cr>
+"
+" " Content
+" nnoremap [unite]o :Unite -no-split -start-insert -auto-preview outline<cr>
+" nnoremap [unite]l :Unite -no-split -start-insert line<cr>
+" nnoremap [unite]t :!retag<cr>:Unite -no-split -auto-preview -start-insert tag<cr>
+"
+" " Quickly switch between recent things
+" nnoremap [unite]F :Unite -no-split buffer tab file_mru directory_mru<cr>
+" nnoremap [unite]b :Unite -no-split buffer<cr>
+" nnoremap [unite]m :Unite -no-split file_mru<cr>
+"
+" " Yank history
+" nnoremap [unite]y :Unite -no-split history/yank<cr>
+
+" }}}
 " dont comment out next line
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r

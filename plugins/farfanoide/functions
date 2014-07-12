@@ -1,16 +1,16 @@
-function repo_root() { git rev-parse --show-toplevel ;}
+repo_root() { git rev-parse --show-toplevel ;}
 
-function grt() { cd $(repo_root) ;}
+grt() { cd $(repo_root) ;}
 
-function mystart() { [[ $(mysql.server status) =~ "ERROR"* ]] && mysql.server start ;}
+mystart() { [[ $(mysql.server status) =~ "ERROR"* ]] && mysql.server start ;}
 
-function myexec() { mysql -uroot -p -e "$*;" ;}
+myexec() { mysql -uroot -p -e "$*;" ;}
 
-function lg() { ls -lA . | grep -i $1 ;}
+lg() { ls -lA . | grep -i $1 ;}
 
-function md(){ mkdir -p $1 && cd $1 ;}
+md(){ mkdir -p $1 && cd $1 ;}
 
-function cr() {
+cr() {
   if [[ $# -ge 2 ]]; then
     cp $1 $2
     echo "Removing $1"
@@ -20,14 +20,14 @@ function cr() {
   fi
 }
 
-function enable_virtualenv(){
+enable_virtualenv(){
   # python -> virtualenv(wrapper)
   export WORKON_HOME="$HOME/.virtualenvs"
   source /usr/local/bin/virtualenvwrapper.sh
   export PROJECT_HOME=$HOME/Develop/sites
 }
 
-function extract() {
+extract() {
   if [ -f $1 ] ; then
     case $1 in
       *.tar.bz2) tar xvjf $1    ;;
@@ -49,9 +49,9 @@ function extract() {
   fi
 }
 
-function reloadshell() { exec $SHELL -l ;}
+reloadshell() { exec $SHELL -l ;}
 
-function githubrepo(){
+githubrepo(){
   if [[ $# -ge 1 ]]; then
     local repo_name repo_url
     repo_name=$1
@@ -65,7 +65,7 @@ function githubrepo(){
 }
 
 # Apps and frameworks
-function getwp(){
+getwp(){
   wget http://wordpress.org/latest.tar.gz
   tar -xvf latest.tar.gz
   if [[ $# -gt 0 ]]; then
@@ -76,7 +76,7 @@ function getwp(){
 }
 
 
-function gethtml5(){
+gethtml5(){
   wget https://github.com/h5bp/html5-boilerplate/archive/master.zip
   tar -xvf master.zip
   if [[ $# -gt 0 ]]; then

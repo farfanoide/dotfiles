@@ -1,2 +1,5 @@
 backups/*
 vim/bundle/*
+bin/cp
+bin/mv
+

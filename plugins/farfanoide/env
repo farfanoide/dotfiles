@@ -25,7 +25,7 @@ export PROJ_DIR="$HOME/Develop/sites"
 export MUSIC_DIR="$HOME/Music/iTunes/iTunes\ Media/Music/"
 export DOWN_DIR="$HOME/Downloads"
 export SRC_DIR="$HOME/Develop/src"
-export TMUXSTART_DIR="$HOME/.tmux/tmuxstart"
+export YATSH_DIR="$HOME/.tmux/yat.sh"
 
 export VISUAL='vim'
 export EDITOR='vim'

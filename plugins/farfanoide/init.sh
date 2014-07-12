@@ -1,6 +1,6 @@
 # helpers
-_mac_osx() { [[ $(uname) == 'Darwin' ]] ;}
-_linux() { [[ $(uname) == 'Linux' ]] ;}
+_mac_osx() { [ $(uname) = 'Darwin' ] ;}
+_linux() { [ $(uname) = 'Linux' ] ;}
 
 # directory from which the plugins is being invoked
 dir="$PLUGINS_DIR/farfanoide"
@@ -21,3 +21,4 @@ path_file="$dir/path"
 # clean up after ourselves
 unset dir env_file alias_file func_file path_file
 
+if which exenv > /dev/null; then eval "$(exenv init -)"; fi

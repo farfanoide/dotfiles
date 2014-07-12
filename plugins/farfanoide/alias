@@ -73,6 +73,7 @@ alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
 alias youtube-dl="youtube-dl --max-quality url"
 alias cuevana="cd $srcdir/storm && npm start"
 alias getnormalize="wget https://raw.github.com/necolas/normalize.css/master/normalize.css"
+alias shut='sudo shutdown -h now'
 # }}}
 # ---------------------[ MySQL ]----------------------------------------{{{
 alias my="mysql -uroot -p "
@@ -98,9 +99,9 @@ alias ta='tmux attach -t'
 alias tk='tmux kill-session -t'
 alias tdc='tmux detach-client -t'
 
-alias ts='tmuxstart'
+alias ts='yat.sh'
 alias tsl='ts ls'
-alias tl='ts -l'
+alias tl='tsl'
 alias tso='ts -o'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{

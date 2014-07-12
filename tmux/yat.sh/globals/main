@@ -1,19 +1,18 @@
 # Make an htop window make a regular shell window
 
-new_session -n general
+new_session -n 'General'
 
 # windows:
 general=1; music=2; downloads=3; dotfiles=4;
 
-send_line $general 'ls'
+new_window -n 'Music'
+send_line $music 'musik'
 
-new_window -n music
-send_line $music musik ; ls ;
+new_window -n 'Downloads'
+send_line $downloads "cd $DOWN_DIR"
 
-new_window -n downloads
-send_line $downloads "cd $DOWN_DIR ; ls"
-
-new_window -n dotfiles
+new_window -n 'Dotfiles'
 send_line $dotfiles "cd $SRC_DIR/dotfiles"
+
 # -*- mode: sh -*-
 # vi: set ft=sh :
