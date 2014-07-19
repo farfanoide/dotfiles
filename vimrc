@@ -16,33 +16,27 @@ Plugin 'editorconfig/editorconfig-vim' " editorconfig support -- http://editorco
 
 set backspace=2 " make backspace work like most other apps
 
-" Time out on key codes but not mappings.
 " Basically this makes terminal Vim work sanely.
-set notimeout
-set ttimeout
+set notimeout      " Time out on key codes
+set ttimeout       " Dont timeout on mappings
 set ttimeoutlen=10
 
 " Text Preferences
-
-set nowrap
+set nowrap      " Dont wrap long lines
 set linebreak   " Break by word at end of line when wrap=true
 set showbreak=⇇ " Line break character
-
-set list " Show special characters
-" set listchars=tab:▸\ ,extends:❯,precedes:❮,trail:-
-set listchars=tab:❯\ ,extends:▸\,precedes:❮,trail:•
+set list        " Show special characters
+set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:•
+" alternate tab ❯
 
 " Make vim more useful
-set clipboard=unnamed " Use by default system wide clipboard
-
-set nocompatible
+set clipboard=unnamed     " Use system wide clipboard by default
 set wildmenu              " Enhance command-line completion
+set wildmode=list:full    " Show complete list of options and navigation too
 set esckeys               " Allow cursor keys in insert mode
 set ttyfast               " Optimize for fast terminal connections
 set encoding=utf-8 nobomb " Use UTF-8 without BOM
 set binary                " Don’t add empty newlines at the end of files
-
-" set fileformats=dos,unix,mac
 
 " Disable backups and swap files
 set noswapfile
@@ -52,76 +46,59 @@ set nowritebackup
 " set directory=~/.vim/swaps
 
 " Tell Vim to use an undo file
-if exists("&undodir")
-  set undofile
-  set undodir=~/.vim/undo
-endif
+" if exists("&undodir")
+"   set undofile
+"   set undodir=~/.vim/undo
+" endif
 
-set laststatus=2  " Always show status line
-set mouse=a       " Enable mouse in all modes
-set noerrorbells  " Disable error bells
-set nostartofline " Don’t reset cursor to start of line when moving around.
-" set shortmess=atI " Don’t show the intro message when starting vim
-set number        " Use normal numbers
-
-
-set autoread   " Automatically read a file when it is changed from the outside
-set lazyredraw " Don't redraw while executing macros
-
-" and relative line numbers
-if exists("&relativenumber")
-  set relativenumber
-  au BufReadPost * set relativenumber
-endif
-
-set showcmd     " Show commands as you type them
-set hidden      " allow unsaved changes to be hidden
-set scrolloff=3 " Start scrolling three lines before the horizontal window border
-set modeline    " enable modeline for per file configs
+"set shortmess=atI " Don’t show the intro message when starting vim
+set laststatus=2   " Always show status line (not needed when using airline)
+set mouse=a        " Enable mouse in all modes
+set noerrorbells   " Disable error bells
+set nostartofline  " Don’t reset cursor to start of line when moving around.
+set number         " Use normal numbers
+set relativenumber " and relative line numbers
+set autoread       " Automatically read a file when it is changed from the outside
+set autowriteall   " Write all buffers
+set lazyredraw     " Don't redraw while executing macros
+set showcmd        " Show commands as you type them
+set hidden         " allow unsaved changes to be hidden
+set scrolloff=3    " Start scrolling three lines before the horizontal window border
+set modeline       " enable modeline for per file configs
 "}}}--------------------[ end Editor  ]-----------------------------------
 " Various Bundles:---------------------------------------------------------------{{{
-
-" let Vundle manage Vundle, required
-Plugin 'gmarik/vundle'
-
+Plugin 'gmarik/vundle' " let Vundle manage Vundle, required
 " General:
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-eunuch'
+Plugin 'tpope/vim-repeat' " enable repeating supported plugin maps with .
+Plugin 'tpope/vim-eunuch' " nice UNIX helpers like SudoWrite, etc
 
 " Editing Plugins: ----------------------------------------
-Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-surround'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'mattn/emmet-vim'
-Plugin 'Lokaltog/vim-easymotion'
-" Plugin 'justinmk/vim-sneak'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'matchit.zip'
+Plugin 'tomtom/tcomment_vim'          " easy code commenting
+Plugin 'tpope/vim-surround'           " easy pair characters manipulation
+Plugin 'jiangmiao/auto-pairs'         " easy quoting, etc. ie: insert ' -> ''; [ -> []
+Plugin 'mattn/emmet-vim'              " new era of zencoding :)
+Plugin 'Lokaltog/vim-easymotion'      " jump, jump, jump around
+Plugin 'terryma/vim-multiple-cursors' " sublime multi cursors wannabe
+Plugin 'matchit.zip'                  " match tags :)
+" Faster matching
+nmap <Tab> %
+vmap <Tab> %
 
 " Text Objects: --------------------------------------------
-" text object plugin, add abstraction layer for other plugins
-Plugin 'https://github.com/kana/vim-textobj-user/'
-" adds {ar/ir} text objects
-Plugin 'https://github.com/nelstrom/vim-textobj-rubyblock'
+Plugin 'https://github.com/kana/vim-textobj-user/'         " text object plugin, add abstraction layer for other plugins
+Plugin 'https://github.com/nelstrom/vim-textobj-rubyblock' " adds {ar/ir} text objects
+Plugin 'https://github.com/akiyan/vim-textobj-php'         " adds {aP/iP}
+Plugin 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
 " adds {af/if} and  {ac/ic} function/class
-" adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
-Plugin 'https://github.com/bps/vim-textobj-python'
-" adds {aP/iP}
-Plugin 'https://github.com/akiyan/vim-textobj-php'
 
-" Debugging: -----------------------------------------------
-" Plugin 'joonty/vim-xdebug.git'
 
 " Neocomplete: --------------------------------------------
-
-" enable async stuff for Shougo's plugins
-Plugin 'Shougo/vimproc.vim'
+Plugin 'Shougo/vimproc.vim' " enable async stuff for Shougo's plugins
 " enable context_filetype
 
 Plugin 'Shougo/context_filetype.vim'
 Plugin 'Shougo/neocomplete.vim'
 let g:neocomplete#enable_at_startup=1
-
 " NeoSnippets: -----------------------------------------------{{{
 Plugin 'honza/vim-snippets'
 Plugin 'Shougo/neosnippet.vim'
@@ -154,24 +131,18 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " open snippets dir
 map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
 "}}}
-
-
-
 " CSM:
 Plugin 'tpope/vim-fugitive'
 Plugin 'airblade/vim-gitgutter'
-
 " Tags:
 Plugin 'majutsushi/tagbar'
-" TODO: replace with https://github.com/h1mesuke/unite-outline
 map <Leader>s :TagbarOpenAutoClose<CR>
+" TODO: replace with https://github.com/h1mesuke/unite-outline
 "}}}--------------------[ end Various Bundles  ]----------------------------------------
 " Preprocessors: ------------------------------------------{{{
-
 Plugin 'groenewege/vim-less'
 Plugin 'cakebaker/scss-syntax.vim'
 Plugin 'kchmck/vim-coffee-script'
-
 " CSS and LessCSS -------------------------------------{{{
 
 augroup ft_css
@@ -184,25 +155,7 @@ augroup ft_css
   au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
   au Filetype less,css setlocal iskeyword+=-
 
-  " Use <leader>S to sort properties.  Turns this:
-  "
-  "     p {
-  "         width: 200px;
-  "         height: 100px;
-  "         background: red;
-  "
-  "         ...
-  "     }
-  "
-  " into this:
-
-  "     p {
-  "         background: red;
-  "         height: 100px;
-  "         width: 200px;
-  "
-  "         ...
-  "     }
+  " Use <leader>S to sort properties.
   au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <leader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 augroup END
 
@@ -284,12 +237,9 @@ Plugin 'scrooloose/nerdtree'
 map <Leader>c :NERDTreeToggle<CR>
 " Find current buffer in nerdtree
 noremap <Leader>r :NERDTreeFind<CR>
-" Open NERDTree in new windows by default
-" autocmd VimEnter * NERDTree
-" autocmd VimEnter * wincmd p
-let g:NERDTreeMapOpenVSplit='v'
-
-let NERDTreeIgnore=['\.pyc$', '\~$']
+let g:NERDTreeMapOpenVSplit='v'      " keep mappings between ctrlp and nerdtree concise
+let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap files
+set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
 
 Plugin 'jistr/vim-nerdtree-tabs'
 " Replace previous options with yet another plugn:
@@ -297,11 +247,10 @@ let g:nerdtree_tabs_open_on_console_startup=0
 let g:nerdtree_tabs_open_on_gui_startup=0
 let g:nerdtree_tabs_focus_on_files=1
 
-" Hide nerdtree's window scrollbar on macvim
-set guioptions-=L
+
 "}}}--------------------[ end Files  ]----------------------------------------
 " Eye Candy:---------------------------------------------------------------{{{
-" --------------[Themes]-----------------------------------------------------
+" --------------[Themes]-----------------------------------------------------"{{{
 Plugin 'junegunn/seoul256.vim'
 Plugin 'farfanoide/vim-facebook'
 Plugin 'w0ng/vim-hybrid'
@@ -313,20 +262,21 @@ Plugin '29decibel/codeschool-vim-theme'
 Plugin 'vim-scripts/apprentice.vim'
 Plugin 'nanotech/jellybeans.vim'
 Plugin 'daylerees/colour-schemes', { 'rtp': 'vim/' }
+"}}}
 
-syntax on " enable syntax highligting
+syntax on " Enable syntax highligting
 
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
 if has('gui_running')
   set synmaxcol=200
+  if has("gui_gtk2")
+    set guifont=Nimbus\ Mono\ L\ Bold\ 10
+  else
+    set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
+  endif
 else
   set synmaxcol=130
-endif
-if has("gui_gtk2")
-  set guifont=Nimbus\ Mono\ L\ Bold\ 10
-else
-  set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
 endif
 
 set t_Co=256               " Use 256 colours (Use this setting only if your terminal supports 256 colours)
@@ -335,12 +285,11 @@ set noshowmode             " Remove second status bar when using powerline
 colorscheme Tomorrow-Night " This changes a lot
 
 " --------------[Powerline]--------------------------------------------------
-Plugin 'bling/vim-airline' " vimscript airline, yay!
-let g:airline_powerline_fonts = 1
-let g:airline_theme='bubblegum'
+Plugin 'bling/vim-airline'        " vimscript airline, yay!
+let g:airline_powerline_fonts = 1 " use powerline fonts
+let g:airline_theme='bubblegum'   " nice theme
 
 set guioptions-=T " Dont show toolbar on gui
-
 " highlight just the 120th column of wide lines...
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
@@ -350,23 +299,20 @@ Plugin 'gorodinskiy/vim-coloresque' " preatty hex colors
 hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
-Plugin 'sjl/gundo.vim.git'
-map <Leader>u :GundoToggle<CR>
-" Trailing whitespaces
-Plugin 'csexton/trailertrash.vim'
+" Plugin 'sjl/gundo.vim.git'
+" map <Leader>u :GundoToggle<CR>
+
+Plugin 'csexton/trailertrash.vim' " Trailing whitespaces
 map <Leader>tw :Trim<CR>
 hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green
 
 "}}}--------------------[ end History  ]----------------------------------------
 " Search:---------------------------------------------------------------{{{
-" Highlight searches
-set hlsearch
-" Ignore case of searches
-set ignorecase
-" Highlight dynamically as pattern is typed
-set incsearch
-" Add the g flag to search/replace by default
-set gdefault
+
+set hlsearch   " Highlight searches
+set ignorecase " Ignore case of searches
+set incsearch  " Highlight dynamically as pattern is typed
+set gdefault   " Add the g flag to search/replace by default
 " Map SPACE to remove search highlighting
 noremap <silent> <space> :noh<cr>:call clearmatches()<cr>
 " nnoremap <Space> :nohlsearch<CR>
@@ -375,9 +321,8 @@ noremap <silent> <space> :noh<cr>:call clearmatches()<cr>
 set title " Show the filename in the window titlebar
 
 " sane splitting
-set splitbelow
-set splitright
-
+set splitbelow            " hsplits below by default
+set splitright            " vsplits right by default
 au VimResized * :wincmd = " Resize splits when the window is resized
 
 " toggles whether or not the current window is automatically zoomed
@@ -398,12 +343,12 @@ function! ToggleMaxWins()
 endfunction
 nnoremap <Leader>z :call ToggleMaxWins()<CR>
 
+Plugin 'christoomey/vim-tmux-navigator' " seamless vim/tmux navigation
 " Window Navigation:
 nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
-Plugin 'christoomey/vim-tmux-navigator' " seamless vim/tmux navigation
 
 " Maps Alt-[h,j,k,l] to resizing a window split
 " use actual characters in mac instead of <[A|M]-[h|j|k|l]>
@@ -415,13 +360,6 @@ noremap <silent> ∆ <C-W5>-
 noremap <silent> ˚ <C-W>5+
 " noremap <silent> <M-l> <C-w>>
 noremap <silent> ¬ <C-w>5>
-
-" tmux integration
-Plugin 'benmills/vimux'
-
-" Move faster between tabs
-map <Leader>n <esc>:tabprevious<CR>
-map <Leader>m <esc>:tabnext<CR>
 
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
@@ -448,21 +386,11 @@ function! s:TrimCR()
 endfunction
 command! -range=% TrimCR call <SID>TrimCR()
 map <Leader>tc :TrimCR<CR>
-" TODO: create mapping to trim and Trim carriage returns
-" if has("Trim")
-"   map <Leader>ca :call TrimCR<CR>
-" endif
 " Trim all
 map <Leader>ta :Trim <cr>:TrimCR <cr>
 " Trim all and format
-map <Leader>taf :Trim <cr>:TrimCR <cr> :FormatAsHtml <cr>
+map <Leader>taf :Trim <cr>:TrimCR <cr> :IndentBuffer<cr>
 
-" function! SortCSS()
-"   let l:save_cursor = getpos(".")
-"   let l:file_type = &filetype
-"   silent! execute 'visual! i{:sort'
-"   call setpos('.', l:save_cursor)
-" endfunction
 Plugin 'godlygeek/tabular'
 map <Leader>t :Tabularize<CR>
 
@@ -479,9 +407,6 @@ nnoremap <Leader>tn :tabnew<CR>
 " Escape with jj
 inoremap jj <ESC>
 
-" Faster matching
-nmap <Tab> %
-vmap <Tab> %
 
 " Faster selections in visual mode
 let g:multi_line_jump=6
@@ -509,15 +434,22 @@ function! SetMultiLineJump(jump_size)
 endfunction
 command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
 
+" Smart indentation of new lines
 set autoindent
 set smartindent
+
+" dont comment out next line
+autocmd FileType * setlocal formatoptions-=o formatoptions-=r
+
+" Tab expansion settings
 let tabsize = 2
 execute "set tabstop=".tabsize
 execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
-set expandtab
+set expandtab " Use spaces instead of tabs
 
-Plugin 'tpope/vim-unimpaired'
+
+Plugin 'tpope/vim-unimpaired' " Some nice text object manipulation mappings
 
 " Terminal Bubbling:-------------------
 " Bubble multiple lines
@@ -559,7 +491,7 @@ endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
 " Plugin 'Yggdroot/indentLine'
-" let g:indentLine_char='│'
+let g:indentLine_char='│'
 " iterm2 cant handle unicode chars :(
 " let g:indentLine_char='|'
 " map <Leader>it :IndentLinesToggle<CR>
@@ -689,5 +621,3 @@ filetype plugin indent on     " required
 " nnoremap [unite]y :Unite -no-split history/yank<cr>
 
 " }}}
-" dont comment out next line
-autocmd FileType * setlocal formatoptions-=o formatoptions-=r
