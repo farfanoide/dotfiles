@@ -1,12 +1,12 @@
 repo_root() { git rev-parse --show-toplevel ;}
 
-grt() { cd $(repo_root) ;}
+grt() { cd "$(repo_root)" ; }
 
-mystart() { [[ $(mysql.server status) =~ "ERROR"* ]] && mysql.server start ;}
+function mystart() { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
 
 myexec() { mysql -uroot -p -e "$*;" ;}
 
-lg() { ls -lA . | grep -i $1 ;}
+function lg() { ls -lA . | grep -i $1 ;}
 
 md(){ mkdir -p $1 && cd $1 ;}
 
@@ -53,14 +53,15 @@ reloadshell() { exec $SHELL -l ;}
 
 githubrepo(){
   if [[ $# -ge 1 ]]; then
-    local repo_name repo_url
+    local repo_name repo_url origin
     repo_name=$1
-    repo_url=$(curl -u 'farfanoide' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep ssh_url | cut -d\"  -f4 )
-    if [[ ! -z repo_url ]]; then
+    repo_url="$(curl -u 'farfanoide' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep ssh_url | cut -d\"  -f4 )"
+    origin="$(git remote -v | grep origin)"
+    if [ ! -z "$repo_url" -a -z "$origin" ]; then
       git remote add origin $repo_url
     fi
   else
-    echo 'need a repo name at least'
+    echo 'Need a repo name at least'
   fi
 }
 

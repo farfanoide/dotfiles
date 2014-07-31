@@ -21,4 +21,5 @@ path_file="$dir/path"
 # clean up after ourselves
 unset dir env_file alias_file func_file path_file
 
-if which exenv > /dev/null; then eval "$(exenv init -)"; fi
+# enable virtualenv
+enable_virtualenv
