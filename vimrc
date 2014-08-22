@@ -1,4 +1,4 @@
-" Vundle Init: ------------------------------------------------------------------{{{
+" Plug Init: ------------------------------------------------------------------{{{
 set nocompatible    " be iMproved, required
 filetype off        " required
 
@@ -298,7 +298,6 @@ endif
 set t_Co=256               " Use 256 colours (Use this setting only if your terminal supports 256 colours)
 set cursorline             " Highlight current line
 set noshowmode             " Remove second status bar when using powerline
-colorscheme Tomorrow-Night " This changes a lot
 
 " --------------[Powerline]--------------------------------------------------
 Plug 'bling/vim-airline'        " vimscript airline, yay!
@@ -559,10 +558,10 @@ if has("autocmd")
 endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
-" Vundle End: ------------------------------------------------------------------{{{
-"call vundle#end() " any plugis should be before this
-call plug#end() " any plugis should be before this
+" Plug End: ------------------------------------------------------------------{{{
+call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
+colorscheme clear_colors_dark " This changes a lot
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 "}}}
