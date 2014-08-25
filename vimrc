@@ -52,7 +52,7 @@ set nowritebackup
 "   set undodir=~/.vim/undo
 " endif
 
-"set shortmess=atI " Don’t show the intro message when starting vim
+set shortmess=at   " Don't show 'Hit ENTER to continue' message
 set laststatus=2   " Always show status line (not needed when using airline)
 set mouse=a        " Enable mouse in all modes
 set noerrorbells   " Disable error bells
@@ -68,6 +68,22 @@ set scrolloff=3    " Start scrolling three lines before the horizontal window bo
 set modeline       " enable modeline for per file configs
 
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
+
+" Enable "bracketed paste mode"
+" http://stackoverflow.com/a/7053522/31493
+if &term =~ "xterm.*"
+    let &t_ti = &t_ti . "\e[?2004h"
+    let &t_te = "\e[?2004l" . &t_te
+    function XTermPasteBegin(ret)
+        set pastetoggle=<Esc>[201~
+        set paste
+        return a:ret
+    endfunction
+    map <expr> <Esc>[200~ XTermPasteBegin("i")
+    imap <expr> <Esc>[200~ XTermPasteBegin("")
+    cmap <Esc>[200~ <nop>
+    cmap <Esc>[201~ <nop>
+endif
 "}}}--------------------[ end Editor  ]-----------------------------------
 " Various Bundles:---------------------------------------------------------------{{{
 Plug 'gmarik/vundle' " let Vundle manage Vundle, required
@@ -213,13 +229,15 @@ Plug 'plasticboy/vim-markdown'          " Markdown support
 Plug 'jceb/vim-orgmode'                 " OrgMode support
 Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
 Plug 'elixir-lang/vim-elixir'           " Elixir support
-au BufNewFile,BufRead,BufEnter *.org setlocal filetype=org
 
 Plug 'scrooloose/syntastic' " Syntax check
 
 " Show smalltalk files as xml
-au BufNewFile,BufRead,BufEnter *.st setlocal filetype=xml
-
+au BufNewFile,BufRead *.st setlocal filetype=xml
+" Org files
+au BufNewFile,BufRead *.org setlocal filetype=org
+" Treat .md files as Markdown
+au BufNewFile,BufRead *.md setlocal filetype=markdown
 "}}}
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
@@ -277,6 +295,8 @@ Plug 'vim-scripts/apprentice.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'AlxHnr/clear_colors'
 Plug 'daylerees/colour-schemes', { 'rtp': 'vim/' }
+Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
+
 
 "}}}
 
@@ -300,10 +320,10 @@ set cursorline             " Highlight current line
 set noshowmode             " Remove second status bar when using powerline
 
 " --------------[Powerline]--------------------------------------------------
-Plug 'bling/vim-airline'        " vimscript airline, yay!
+Plug 'bling/vim-airline'          " vimscript airline, yay!
 let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:airline_theme='bubblegum'   " nice theme
-let g:airline_theme='tomorrow'   " nice theme
+let g:airline_theme='tomorrow'    " nice theme
 
 if has('gui_running')
   let g:airline_powerline_fonts = 0 " dont use powerline fonts
@@ -317,8 +337,6 @@ highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
 
 " Plug 'gorodinskiy/vim-coloresque' " preatty hex colors
-" no background for those vertical splits, they look ugly
-hi VertSplit   guibg=NONE   ctermbg=NONE      gui=NONE
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
 " Plug 'sjl/gundo.vim.git'
@@ -449,6 +467,9 @@ inoremap <C-h> <left>
 " Join upper line at the end of current one
 nnoremap <leader>j ddkOpJ
 
+" 
+" :silent execute "!echo @% | pbcopy " | redraw!
+
 " nnoremap <Leader>note :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>nt :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>sh :30vsp ~/.notes/shortcuts.org<CR>
@@ -557,11 +578,20 @@ if has("autocmd")
   autocmd! bufwritepost $MYVIMRC source $MYVIMRC
 endif
 nmap <Leader>v :vsp $MYVIMRC<CR>
+
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+let g:goyo_width = 120
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " Plug End: ------------------------------------------------------------------{{{
+
 call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
-colorscheme clear_colors_dark " This changes a lot
+colorscheme Tomorrow-Night " This changes a lot
+" no background for those vertical splits, they look ugly
+hi VertSplit guibg=NONE ctermbg=NONE gui=NONE
+
+
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 "}}}
