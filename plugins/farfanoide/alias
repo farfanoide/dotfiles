@@ -110,7 +110,7 @@ alias bl='bundle list'
 alias bp='bundle package'
 alias bo='bundle open'
 alias bu='bundle update'
-alias bi='bundle install'
+alias bi='bundle check; bundle install'
 # }}}
 # ---------------------[ Rails/Rake ]----------------------------------------{{{
 alias bes='bundle exec rails server'
@@ -125,9 +125,11 @@ alias vup='vagrant up'
 alias vsh='vagrant ssh'
 alias vst='vagrant status'
 alias vsg='vagrant global-status'
+alias vgs='vsg'
 alias vre='vagrant resume'
 alias vha='vagrant halt'
 alias vsu='vagrant suspend'
+alias vpr='vagrant provision'
 # }}}
 # ---------------------[ Symfony ]----------------------------------------{{{
 alias sy='./symfony'
