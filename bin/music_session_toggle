@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Little script to jump between any tmux session and an always running one,
+#  received as an argument, ie: if you had a session 'main' and you always kept
+#  a named window 'Music', you could easily jump to it by calling this scipt
+#  like so:
+#       $ music_session_toggle "main:Music"
+#  Or even have a tmux binding for it like this one (in your ~/.tmux.conf):
+#       $ bind m run 'music_session_toggle main:Music'
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
+set -e
+
+_get_previous_session_name() {
+  tmux show-environment -g previous_session | cut -d '=' -f 2
+}
+
+_get_current_session_name() {
+  tmux display-message -p '#S'
+}
+
+jump_session=$1; shift
+if [ $TMUX ]; then
+  current_session=$(_get_current_session_name)
+  if [[ ! "${jump_session}" =~ "${current_session}" ]]; then
+    tmux set-environment -g previous_session $(_get_current_session_name)
+    tmux switch-client -t $jump_session
+  else
+    previous_session=$(_get_previous_session_name)
+    tmux set-environment -g -u previous_session
+    tmux switch-client -t $previous_session
+  fi
+else
+  if tmux has-session -t main; then tmux attach-session -t main:Music; fi
+fi
