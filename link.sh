@@ -11,6 +11,7 @@ Y="\033[0;33m"
 
 echo -e "$G Updating Submodules"
 git submodule update --init --recursive
+git submodule foreach git checkout master && git pull
 
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
@@ -38,7 +39,7 @@ for name in *; do
 done
 echo "Gonna install vim plugins, might take a while."
 sleep 2
-vim +BundleInstall! +BundleClean +qall
+vim +PlugInstall! +PlugClean +qall
 
 echo "All done."
 echo "Enjoy the Ride!"
