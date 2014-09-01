@@ -1,0 +1,9 @@
+#= DESCRIPTION: Basic tmux session
+
+new_session -n 'General'
+
+send_line 'General' 'ls'
+
+
+# -*- mode: sh -*-
+# vi: set ft=sh :

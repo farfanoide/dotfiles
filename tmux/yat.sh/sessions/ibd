@@ -1,0 +1,9 @@
+cd ~/Dropbox/compartidas/Facultad/2do/IBD/2014/
+
+new_session -n general
+
+# windows:
+general=1;
+new_window
+# -*- mode: sh -*-
+# vi: set ft=sh :

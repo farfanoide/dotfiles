@@ -1,5 +1,7 @@
-# Make an htop window make a regular shell window
+#= AUTHOR: farfanoide (https://github.com/farfanoide)
+#= DESCRIPTION: Personal main session
 
+path=~
 new_session -n 'General'
 
 # windows:
