@@ -26,7 +26,8 @@ set nowrap      " Dont wrap long lines
 set linebreak   " Break by word at end of line when wrap=true
 set showbreak=⇇ " Line break character
 set list        " Show special characters
-set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:•
+" set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:Ξ
+set listchars=tab:│\ ,extends:»\,precedes:«,trail:•
 " alternate tab ❯
 
 " Make vim more useful
@@ -72,17 +73,17 @@ Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
 " Enable "bracketed paste mode"
 " http://stackoverflow.com/a/7053522/31493
 if &term =~ "xterm.*"
-    let &t_ti = &t_ti . "\e[?2004h"
-    let &t_te = "\e[?2004l" . &t_te
-    function XTermPasteBegin(ret)
-        set pastetoggle=<Esc>[201~
-        set paste
-        return a:ret
-    endfunction
-    map <expr> <Esc>[200~ XTermPasteBegin("i")
-    imap <expr> <Esc>[200~ XTermPasteBegin("")
-    cmap <Esc>[200~ <nop>
-    cmap <Esc>[201~ <nop>
+  let &t_ti = &t_ti . "\e[?2004h"
+  let &t_te = "\e[?2004l" . &t_te
+  function! XTermPasteBegin(ret)
+    set pastetoggle=<Esc>[201~
+    set paste
+    return a:ret
+  endfunction
+  map <expr> <Esc>[200~ XTermPasteBegin("i")
+  imap <expr> <Esc>[200~ XTermPasteBegin("")
+  cmap <Esc>[200~ <nop>
+  cmap <Esc>[201~ <nop>
 endif
 "}}}--------------------[ end Editor  ]-----------------------------------
 " Various Bundles:---------------------------------------------------------------{{{
@@ -250,20 +251,9 @@ let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
       \ 'file': '\v\.(exe|so|dll|pyc)$'
       \ }
-" TODO: check unite instead of ctrlp
-" Plug 'Shougo/unite.vim'
-" Plug 'Shougo/unite-outline'
-" Plug 'tsukkee/unite-tag'
-" Plug 'ujihisa/unite-rake'
-" Plug 'tsukkee/unite-help'
-
-
-
-" TODO: meterl-auto-previewe a todos los plugins de este fieja, ssh-unite, vimfiler, etccccccc
-
-" TODO: autoreload when creating new files with nerdtree
 
 Plug 'scrooloose/nerdtree'
+" TODO: autoreload when creating new files with nerdtree
 
 " Show/Hide NerdTree
 map <Leader>n :NERDTreeToggle<CR>
@@ -321,7 +311,9 @@ set noshowmode             " Remove second status bar when using powerline
 
 " --------------[Powerline]--------------------------------------------------
 Plug 'bling/vim-airline'          " vimscript airline, yay!
-let g:airline_powerline_fonts = 1 " use powerline fonts
+let g:airline_powerline_fonts = 0 " use powerline fonts
+let g:airline_left_sep=' '
+let g:airline_right_sep=' '
 let g:airline_theme='bubblegum'   " nice theme
 let g:airline_theme='tomorrow'    " nice theme
 
@@ -339,12 +331,9 @@ call matchadd('ColorColumn', '\%120v', 100)
 " Plug 'gorodinskiy/vim-coloresque' " preatty hex colors
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
-" Plug 'sjl/gundo.vim.git'
-" map <Leader>u :GundoToggle<CR>
 
 Plug 'csexton/trailertrash.vim' " Trailing whitespaces
-map <Leader>tw :Trim<CR>
-hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green
+map <Leader>tw :TrailerTrim<CR>
 
 "}}}--------------------[ end History  ]----------------------------------------
 " Search:---------------------------------------------------------------{{{
@@ -427,9 +416,9 @@ endfunction
 command! -range=% TrimCR call <SID>TrimCR()
 map <Leader>tc :TrimCR<CR>
 " Trim all
-map <Leader>ta :Trim <cr>:TrimCR <cr>
+map <Leader>ta :TrailerTrim <cr>:TrimCR <cr>
 " Trim all and format
-map <Leader>taf :Trim <cr>:TrimCR <cr> :IndentBuffer<cr>
+map <Leader>taf :TrailerTrim <cr>:TrimCR <cr> :IndentBuffer<cr>
 
 Plug 'godlygeek/tabular'
 map <Leader>t :Tabularize<CR>
@@ -438,6 +427,9 @@ map <Leader>t :Tabularize<CR>
 " turns into:
 "   @something = create :something
 map <Leader>ei ^diwds(xea =wds{I@
+
+" TODO: consider instance variables
+" s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
 
 
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
@@ -467,7 +459,7 @@ inoremap <C-h> <left>
 " Join upper line at the end of current one
 nnoremap <leader>j ddkOpJ
 
-" 
+" send current's buffer full dir into clipboard
 " :silent execute "!echo @% | pbcopy " | redraw!
 
 " nnoremap <Leader>note :30vsp ~/.notes/notes.org<CR>
@@ -581,104 +573,26 @@ nmap <Leader>v :vsp $MYVIMRC<CR>
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-let g:goyo_width = 120
+let g:goyo_width = 100
+let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " Plug End: ------------------------------------------------------------------{{{
-
+Plug 'Shougo/unite.vim'
 call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
-colorscheme Tomorrow-Night " This changes a lot
-" no background for those vertical splits, they look ugly
-hi VertSplit guibg=NONE ctermbg=NONE gui=NONE
 
+function! ResetColors()
+  " no background for those vertical splits, they look ugly
+  execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
+  " Custom colors for trailing whitespaces
+  execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
+endfunction
+
+autocmd ColorScheme * :call ResetColors()
+
+colorscheme Tomorrow-Night " This changes a lot
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 "}}}
 
-
-
-
-
-
-" ==== Unite ======================= {{{
-" ==================================
-" personal unite mappings
-" nnoremap <C-p> :Unite -auto-preview file_rec/async<cr>
-" " clipboard search
-" let g:unite_source_history_yank_enable = 1
-" nnoremap <C-y> :Unite -auto-preview history/yank<cr>
-"
-" " buffer search
-" nnoremap <space>s :Unite -auto-preview -quick-match buffer<cr>
-" nnoremap <space>/ :Unite -auto-preview grep:.<cr>
-
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" call unite#filters#sorter_default#use(['sorter_rank'])
-"
-" let g:unite_source_history_yank_enable = 1
-" let g:unite_force_overwrite_statusline = 0
-" if executable('ag')
-"   let g:unite_source_grep_command = 'ag'
-"   let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
-"   let g:unite_source_grep_recursive_opt = ''
-" endif
-"
-" call unite#custom_source('file_rec,file_rec/async,file_mru,file,buffer,grep',
-"   \ 'ignore_pattern', join([
-"   \ '\.git/',
-"   \ '\.sass-cache/',
-"   \ '\vendor/',
-"   \ '\node_modules/',
-"   \ ], '\|'))
-"
-" " Custom mappings for the unite buffer
-" autocmd FileType unite call s:unite_settings()
-" function! s:unite_settings()
-"   let b:SuperTabDisabled=1
-"
-"   imap <buffer> <C-j> <Plug>(unite_select_next_line)
-"   imap <buffer> <C-k> <Plug>(unite_select_previous_line)
-"   imap <buffer> <c-a> <Plug>(unite_choose_action)
-"
-"   imap <silent><buffer><expr> <C-s> unite#do_action('split')
-"   imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-"   imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-"
-"   nmap <buffer> <ESC> <Plug>(unite_exit)
-" endfunction
-"
-" " The prefix key
-" nnoremap [unite] <Nop>
-" nmap <space> [unite]
-"
-" " General purpose
-" nnoremap [unite]<space> :Unite -no-split -start-insert source<cr>
-"
-" " Files
-" nnoremap [unite]f :Unite -no-split -start-insert file_rec/async<cr>
-"
-" " Files in rails
-" nnoremap [unite]rm :Unite -no-split -start-insert -input=app/models/ file_rec/async<cr>
-" nnoremap [unite]rv :Unite -no-split -start-insert -input=app/views/ file_rec/async<cr>
-" nnoremap [unite]ra :Unite -no-split -start-insert -input=app/assets/ file_rec/async<cr>
-" nnoremap [unite]rs :Unite -no-split -start-insert -input=spec/ file_rec/async<cr>
-"
-" " Grepping
-" nnoremap [unite]g :Unite -no-split grep:.<cr>
-" nnoremap [unite]d :Unite -no-split grep:.:-s:\(TODO\|FIXME\)<cr>
-"
-" " Content
-" nnoremap [unite]o :Unite -no-split -start-insert -auto-preview outline<cr>
-" nnoremap [unite]l :Unite -no-split -start-insert line<cr>
-" nnoremap [unite]t :!retag<cr>:Unite -no-split -auto-preview -start-insert tag<cr>
-"
-" " Quickly switch between recent things
-" nnoremap [unite]F :Unite -no-split buffer tab file_mru directory_mru<cr>
-" nnoremap [unite]b :Unite -no-split buffer<cr>
-" nnoremap [unite]m :Unite -no-split file_mru<cr>
-"
-" " Yank history
-" nnoremap [unite]y :Unite -no-split history/yank<cr>
-
-" }}}

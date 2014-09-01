@@ -11,8 +11,9 @@
 	whitespace = nowarn
 [push]
 	default = simple
-
 [init]
 	templatedir = ~/.git_template
 [github]
 	user = farfanoide
+[alias]
+  lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --

@@ -47,6 +47,7 @@ if _mac_osx ; then
   alias o="open"
   alias o.="open ."
   alias optimize="o -a ImageOptim"
+  alias optim=optimize
   alias brup="brew update && brew upgrade && brew cleanup"
   alias browserstack="java -jar ~/Dropbox/syncPrefs/cmd/BrowserStackTunnel.jar T6rci6PsccWiU9kF2ygq localhost,80,0"
   alias airport="/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport"
@@ -91,7 +92,6 @@ alias grv='git remote -v'
 alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
 alias gc='git commit -v'
 alias gco='git checkout '
-alias herokup='git push heroku master'
 alias gba='git branch -av'
 # }}}
 # ---------------------[ Tmux ]----------------------------------------{{{
@@ -111,6 +111,13 @@ alias bp='bundle package'
 alias bo='bundle open'
 alias bu='bundle update'
 alias bi='bundle check; bundle install'
+# }}}
+# ---------------------[ Heroku ]-----------------------------------------{{{
+alias herokup='git push heroku master'
+alias hup=herokup
+alias ho='heroku open'
+alias hl='heroku logs -t'
+hr(){ heroku run $*; }
 # }}}
 # ---------------------[ Rails/Rake ]----------------------------------------{{{
 alias bes='bundle exec rails server'

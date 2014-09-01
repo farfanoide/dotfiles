@@ -89,5 +89,10 @@ gethtml5(){
   rm -rfv master.zip
 }
 
+# test this:
+# remote_gzip() {
+#     parallel -S $1 --cleanup --return {/}.gz "gzip --best {} -c &gt; {/}.gz" ::: $2
+# }
+
 # _*_ mode: sh _*_
 # vi: set ft=sh :
