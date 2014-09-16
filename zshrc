@@ -14,6 +14,12 @@ fi
 PLUGINS_DIR="$HOME/.plugins/"
 source "$PLUGINS_DIR/farfanoide/init.sh"
 
+# own completions
+fpath=("$HOME/.fpath" ${fpath[*]})
+# compsys initialization
+autoload -U compinit
+compinit
+
 # zaw -> C-r replacement for zsh
 source "$PLUGINS_DIR/zaw/zaw.zsh"
 zaw_file="$PLUGINS_DIR/zaw.zsh"
