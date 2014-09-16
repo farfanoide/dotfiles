@@ -123,13 +123,16 @@ alias ho='heroku open'
 alias hl='heroku logs -t'
 hr(){ heroku run $*; }
 # }}}
-# ---------------------[ Rails/Rake ]----------------------------------------{{{
-alias bes='bundle exec rails server'
-alias bec='bundle exec rails console'
+# ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
+alias bes='bundle exec rails server 2> /dev/null || bundle exec rackup '
+alias bec='bundle exec rails console 2> /dev/null || bundle exec racksh'
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
 alias beg='be guard'
+# get development db name from database.yml
+devdb(){ cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2; }
+getdevdb() { $(devdb) | pbcopy;}
 # }}}
 # ---------------------[ Vagrant ]----------------------------------------{{{
 alias vup='vagrant up'
