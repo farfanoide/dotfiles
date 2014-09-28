@@ -27,7 +27,7 @@ set linebreak   " Break by word at end of line when wrap=true
 set showbreak=⇇ " Line break character
 set list        " Show special characters
 " set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:Ξ
-set listchars=tab:│\ ,extends:»\,precedes:«,trail:•
+set listchars=tab:⇥\ ,extends:»\,precedes:«,trail:•
 " alternate tab ❯
 
 " Make vim more useful
@@ -231,7 +231,9 @@ Plug 'jceb/vim-orgmode'                 " OrgMode support
 Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
 Plug 'elixir-lang/vim-elixir'           " Elixir support
 
-Plug 'scrooloose/syntastic' " Syntax check
+Plug 'scrooloose/syntastic'  " Syntax check
+
+Plug 'suan/vim-instant-markdown' " Preview markdown files
 
 " Show smalltalk files as xml
 au BufNewFile,BufRead *.st setlocal filetype=xml
@@ -459,13 +461,19 @@ inoremap <C-h> <left>
 " Join upper line at the end of current one
 nnoremap <leader>j ddkOpJ
 
-" send current's buffer full dir into clipboard
-" :silent execute "!echo @% | pbcopy " | redraw!
+" send current's buffer full dir into clipboard 
+" '%' = current buffer; ':p' = full path modifier
+function! CurrentBufferToPasteBoard()
+ silent execute "!echo %:p | pbcopy"| redraw!
+endfunction
+nnoremap <Leader>cb call CurrentBufferToPasteBoard()
 
 " nnoremap <Leader>note :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>nt :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>sh :30vsp ~/.notes/shortcuts.org<CR>
 
+nnoremap <Leader>lu YpVr-
+nnoremap <Leader>ul YpVr=
 
 "}}}--------------------[ end Faster Commands ]----------------------------------------
 " Indentation:------------------------------------{{{
@@ -573,7 +581,7 @@ nmap <Leader>v :vsp $MYVIMRC<CR>
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
-let g:goyo_width = 100
+let g:goyo_width = 80
 let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " Plug End: ------------------------------------------------------------------{{{
