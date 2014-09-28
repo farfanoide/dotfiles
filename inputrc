@@ -12,8 +12,9 @@ $if Bash
     Space: magic-space
 $endif
 
-# Woo!
-set editing-mode vi
+# vi bindings everywhere are not such a good idea...
+# it takes a little getting used to it.
+# set editing-mode vi
 
 # Adds punctuation as word delimiters
 set bind-tty-special-chars off
