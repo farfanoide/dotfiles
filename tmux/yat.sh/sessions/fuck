@@ -1,0 +1,15 @@
+#= AUTHOR: farfanoide (https://github.com/farfanoide)
+
+cd $SRC_DIR/faculty
+
+new_session -n 'General'
+send_line 'General' 'ls'
+
+new_window -n 'Ing'
+send_line 'Ing' 'cd ing_soft_1'
+
+new_window -n 'POO'
+send_line 'POO' 'cd poo_I_2014'
+
+# -*- mode: sh -*-
+# vi: set ft=sh :
