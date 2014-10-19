@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+_search_for() { local find_me=$1; }
+
+_get_results() {
+  local args=$*
+  curl -L -s "https://www.gitignore.io/api/${args}"
+}
+
+if [ $# -ge 1 ]; then
+  if [ "$args" = 'list' ]; then
+    echo  "$(_get_results $*)" | sed 's/,/\ /g'
+  else
+    _get_results $*
+  fi
+else
+  echo 'Usage: gi list|<keywords>'
+fi
