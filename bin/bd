@@ -1,0 +1,87 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#
+#  Script to manage a vagrant vm for docker with parallels provider. If invoked
+#  from within tmux it'll set environment variables for all new windows
+#  Requirements:
+#
+#   - vagrant parallels plugin: [https://github.com/Parallels/vagrant-parallels]
+#     > vagrant plugin installl vagrant-parallels
+#
+#   - parallels boot2docker box: [https://vagrantcloud.com/parallels/boxes/boot2docker]
+#     > vagrant init parallels/boot2docker
+#
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
+
+set -e
+
+cd ${BOOT2DOCKER_VAGRANT_DIR:-"${HOME}/Develop/src/boot2docker"}
+
+SCRIPT_NAME="$(basename $0)"
+TAB='    '
+RESET='\033[0m'
+G='\033[0;32m'
+Y='\033[0;33m'
+
+arg=$1
+
+_docker_config(){
+  if [ -e 'Vagrantfile' ]; then
+    # TODO: test vagrant status output to see if vm running
+    export DOCKER_HOST_IP=$(vagrant ssh-config | sed -n "s/[ ]*HostName[ ]*//gp")
+    export DOCKER_HOST="tcp://${DOCKER_HOST_IP}:2375"
+
+    if [ ! -z "$TMUX" ]; then
+      tmux set-environment -g DOCKER_HOST_IP ${DOCKER_HOST_IP}
+      tmux set-environment -g DOCKER_HOST ${DOCKER_HOST}
+    fi
+
+  fi
+}
+_docker_list_config() {
+  echo "Docker configurations:"
+  echo "DOCKER_HOST_IP => ${DOCKER_HOST_IP}"
+  echo "DOCKER_HOST    => ${DOCKER_HOST}"
+}
+_edit_vm()        { ${EDITOR:-vi} Vagrantfile ;}
+_docker_start()   { vagrant up --provider parallels && _docker_config ;}
+_docker_restart() { vagrant reload && _docker_config ;}
+_docker_stop()    {
+  vagrant suspend
+  tmux set-environment -g -u DOCKER_HOST_IP
+  tmux set-environment -g -u DOCKER_HOST
+}
+
+_usage() {
+  echo -e "Unknown option."
+  echo
+  echo -e "Usage: ${G}${SCRIPT_NAME}${RESET} <config|start|stop>"
+  echo
+  echo -e "Options:"
+  echo -e "${TAB}${Y} config  ${RESET} -- Export env vars for docker to communicate with the server."
+  echo -e "${TAB}${Y} editww  ${RESET} -- Open vagrant file for editing."
+  echo -e "${TAB}${Y} start   ${RESET} -- Start vm with docker server."
+  echo -e "${TAB}${Y} reload  ${RESET} -- Restart vm with docker server."
+  echo -e "${TAB}${Y} stop    ${RESET} -- Stop vm."
+  echo -e "${TAB}${Y} help    ${RESET} -- Show this help."
+}
+
+case "$arg" in
+  config) _docker_config && _docker_list_config  ;;
+  edit)   _edit_vm                               ;;
+  reload) _docker_restart && _docker_list_config ;;
+  start)  _docker_start  && _docker_list_config  ;;
+  stop)   _docker_stop                           ;;
+  help|*) _usage                                 ;;
+esac
+
