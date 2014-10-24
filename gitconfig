@@ -1,6 +1,6 @@
 [core]
 	fileMode = false
-	excludesfile = /Users/farfan/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	autocrlf = input
 [color]
 	ui = always
