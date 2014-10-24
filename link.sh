@@ -8,8 +8,9 @@ G="\033[0;32m"
 R="\033[0;31m"
 B="\033[0;34m"
 Y="\033[0;33m"
+RESET='\033[0m'
 
-echo -e "$G Updating Submodules"
+echo -e "$G Updating Submodules $RESET"
 git submodule update --init --recursive
 git submodule foreach 'git checkout master && git pull'
 
