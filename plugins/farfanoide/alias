@@ -99,10 +99,10 @@ alias ta='tmux attach -t'
 alias tk='tmux kill-session -t'
 alias tdc='tmux detach-client -t'
 
-alias ts='yat.sh'
-alias tsl='ts ls'
-alias tl='tsl'
-alias tso='ts -o'
+alias ts='echo usa ys puto'
+alias ys='yat.sh'
+alias ysl='ys ls'
+alias yl='ysl'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
 alias be='bundle exec'
@@ -114,9 +114,7 @@ alias bi='bundle check; bundle install'
 # }}}
 # ---------------------[ Heroku ]-----------------------------------------{{{
 herokup() {
-  git push heroku master
-  dotenv=$(repo_root)/.env
-  [ -e $dotenv ] && heroku config:add $(cat $dotenv)
+  git push heroku master && [ -e "$(repo_root)/.env" ] && heroku config:add $(cat $dotenv)
 }
 alias hup=herokup
 alias ho='heroku open'
@@ -124,15 +122,15 @@ alias hl='heroku logs -t'
 hr(){ heroku run $*; }
 # }}}
 # ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
-alias bes='bundle exec rails server 2> /dev/null || bundle exec rackup '
+bes() { bundle exec rails server $args 2> /dev/null || bundle exec rackup $* ;}
 alias bec='bundle exec rails console 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh)'
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
 alias beg='be guard'
 # get development db name from database.yml
-devdb(){ cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2; }
-getdevdb() { $(devdb) | pbcopy;}
+devdb()    { cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2; }
+getdevdb() { echo "$(devdb)" | pbcopy;}
 # }}}
 # ---------------------[ Vagrant ]----------------------------------------{{{
 alias vup='vagrant up'

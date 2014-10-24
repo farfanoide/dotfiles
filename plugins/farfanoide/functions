@@ -1,6 +1,6 @@
 repo_root() { git rev-parse --show-toplevel ;}
 
-grt() { cd "$(repo_root)" ; }
+grt() { cd "$(repo_root)" ;}
 
 function mystart() { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
 
@@ -88,6 +88,8 @@ gethtml5(){
   fi
   rm -rfv master.zip
 }
+
+strip_comments() { perl -pe 's/#.*$//' $* ;}
 
 # test this:
 # remote_gzip() {
