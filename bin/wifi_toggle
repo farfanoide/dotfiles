@@ -1,10 +1,25 @@
 #!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#   Simple script to toggle wifi on and off on a mac.
+#   It doesn't take many interfaces into account.
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
 
-wifi_interface=$(networksetup -listallhardwareports  | grep -i wi-fi -2 | grep -i device | cut -d: -f2 | tr -d ' ')
-wifi_status=$(networksetup -getairportpower $wifi_interface | cut -d: -f 2 | tr -d ' ')
+_cut_and_clean() { cut -d: -f 2 | tr -d ' ' ;}
+_get_device()    { grep -i wi-fi -2 | grep -i device | _cut_and_clean ;}
 
-if [ "$wifi_status" = "Off" ]; then
-  networksetup -setairportpower $wifi_interface on
-else
-  networksetup -setairportpower $wifi_interface off
-fi
+wifi_interface=$(networksetup -listallhardwareports  | _get_device)
+wifi_status=$(networksetup -getairportpower $wifi_interface | _cut_and_clean)
+
+[ "$wifi_status" = "Off" ] && status="On" || status="Off"
+
+networksetup -setairportpower $wifi_interface $status && echo "Wi-Fi: ${status}"
