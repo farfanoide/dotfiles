@@ -34,5 +34,10 @@ export EDITOR='vim'
 # make vim and tmux play nicely regarding colors
 export TERM='xterm-256color'
 
+
+_set_null_glob
+for file in "/tmp/$(whoami)/env/"*; do source $file; done
+_unset_null_glob
+
 # ls options
 if _mac_osx; then export CLICOLOR=1; fi
