@@ -26,3 +26,4 @@ zaw_file="$PLUGINS_DIR/zaw.zsh"
 [ -e $zaw_file ] && source $zaw_file
 
 unset zaw_file
+eval "$(bd init)"
