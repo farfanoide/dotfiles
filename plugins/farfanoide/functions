@@ -52,6 +52,7 @@ extract() {
 }
 
 reloadshell() { exec $SHELL -l ;}
+alias shellreload=reloadshell
 
 githubrepo(){
   if [[ $# -ge 1 ]]; then
