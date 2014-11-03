@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 # Description
 # -----------
 #
@@ -15,15 +15,15 @@
 #     > vagrant init parallels/boot2docker
 #
 #
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 # Author
 # -------
 #
 #  * Farfanoide (https://github.com/farfanoide)
 #
-# ------------------------------------------------------------------------------
+# ---------------------------------------------------------------------------------------
 
-set -e
+[ -z "$BD_DEBUG" ] && set -e || set -x
 
 cd ${BOOT2DOCKER_VAGRANT_DIR:-"${HOME}/Develop/src/boot2docker"}
 
@@ -32,56 +32,105 @@ TAB='    '
 RESET='\033[0m'
 G='\033[0;32m'
 Y='\033[0;33m'
+CONFIG_FILE="/tmp/$(whoami)/env/docker_config"
+VM_NOT_RUNNING_MESSAGE="VM not running, start it with '${SCRIPT_NAME} start'"
+
+_usage() {
+  echo -e "Usage: ${G}${SCRIPT_NAME}${RESET} <OPTION>"
+  echo
+  echo -e "Available Options:"
+  echo -e "${TAB}${Y} config${RESET} -- Export ENV VARS for docker to communicate with the server."
+  echo -e "${TAB}${Y} edit  ${RESET} -- Open vagrant file for editing."
+  echo -e "${TAB}${Y} reload${RESET} -- Restart docker server VM."
+  echo -e "${TAB}${Y} start ${RESET} -- Start docker server VM."
+  echo -e "${TAB}${Y} stop  ${RESET} -- Stop docker server VM."
+  echo -e "${TAB}${Y} help  ${RESET} -- Show this help."
+  echo
+  echo -e "Note: output from <config|clean> should be evaled in order to modify current ENV."
+}
+
+[ $# -lt 1 ] && _usage && exit
 
 arg=$1
 
-_docker_config(){
-  if [ -e 'Vagrantfile' ]; then
-    # TODO: test vagrant status output to see if vm running
-    export DOCKER_HOST_IP=$(vagrant ssh-config | sed -n "s/[ ]*HostName[ ]*//gp")
-    export DOCKER_HOST="tcp://${DOCKER_HOST_IP}:2375"
-
-    if [ ! -z "$TMUX" ]; then
-      tmux set-environment -g DOCKER_HOST_IP ${DOCKER_HOST_IP}
-      tmux set-environment -g DOCKER_HOST ${DOCKER_HOST}
-    fi
-
-  fi
+# Export bd as a shell function to let it change ENV VARS
+if [ "$arg" = 'init' ]; then
+cat <<EOS
+bd() {
+  arg=\$1; SH_ECHO=true
+  case "\$arg" in
+    (config|clean) eval "\$(command ${SCRIPT_NAME} \$arg)"       ;;
+    (start) command ${SCRIPT_NAME} \$arg && eval "\`command ${SCRIPT_NAME} config\`" ;;
+    (stop) command ${SCRIPT_NAME} \$arg && eval "\`command ${SCRIPT_NAME} clean\`" ;;
+    (*) command ${SCRIPT_NAME} \$arg
+  esac
 }
-_docker_list_config() {
+EOS
+exit 0
+fi
+
+# Just in case, we create a temporary config file to be sourced by new terminals
+_create_tmp_config() {
+  mkdir -p $(dirname $CONFIG_FILE)
+  echo -e $* > $CONFIG_FILE
+}
+
+# If we're running from a function, we need to echo the command to be evaled.
+_sh_echo() { [ -z "$SH_ECHO" ] && echo -e $* || echo "echo -e $*" ;}
+
+_list_config() {
   echo "Docker configurations:"
   echo "DOCKER_HOST_IP => ${DOCKER_HOST_IP}"
   echo "DOCKER_HOST    => ${DOCKER_HOST}"
 }
-_edit_vm()        { ${EDITOR:-vi} Vagrantfile ;}
-_docker_start()   { vagrant up --provider parallels && _docker_config ;}
-_docker_restart() { vagrant reload && _docker_config ;}
-_docker_stop()    {
-  vagrant suspend
+
+_clean_cfg() {
+cat <<EOS
+rm -f "/tmp/\$(whoami)/env/docker_config"
+unset DOCKER_HOST
+unset DOCKER_HOST_IP
+if [ -n "\${TMUX}" ]; then
   tmux set-environment -g -u DOCKER_HOST_IP
   tmux set-environment -g -u DOCKER_HOST
+fi
+EOS
+}
+_vm_runnging(){
+  local vm_status="$(vagrant status | grep state -2 | tail -1)"
+  [[ "${vm_status}" =~ "running" ]]
+}
+_edit_vm() { ${EDITOR:-vi} Vagrantfile ;}
+_start()   { _vm_runnging && _sh_echo "VM already running." || vagrant up --provider parallels ;}
+_reload()  { _vm_runnging && vagrant reload  || _sh_echo "$VM_NOT_RUNNING_MESSAGE" ;}
+_stop()    { _vm_runnging && vagrant suspend || _sh_echo "$VM_NOT_RUNNING_MESSAGE" ;}
+_config()  {
+  if _vm_runnging; then
+
+    local docker_host_ip=$(vagrant ssh-config | sed -n "s/[ ]*HostName[ ]*//gp")
+    local docker_host="tcp://${docker_host_ip}:2375"
+    local docker_host_ip_export="export DOCKER_HOST_IP=${docker_host_ip}"
+    local docker_host_export="export DOCKER_HOST=\"${docker_host}\""
+
+    if [ ! -z "$TMUX" ]; then
+      tmux set-environment -g DOCKER_HOST_IP $docker_host_ip
+      tmux set-environment -g DOCKER_HOST $docker_host
+    fi
+
+    _create_tmp_config "$docker_host_ip_export \n$docker_host_export"
+    echo "$docker_host_ip_export; $docker_host_export"
+  else
+    _sh_echo "$VM_NOT_RUNNING_MESSAGE"
+  fi
 }
 
-_usage() {
-  echo -e "Unknown option."
-  echo
-  echo -e "Usage: ${G}${SCRIPT_NAME}${RESET} <config|start|stop>"
-  echo
-  echo -e "Options:"
-  echo -e "${TAB}${Y} config  ${RESET} -- Export env vars for docker to communicate with the server."
-  echo -e "${TAB}${Y} editww  ${RESET} -- Open vagrant file for editing."
-  echo -e "${TAB}${Y} start   ${RESET} -- Start vm with docker server."
-  echo -e "${TAB}${Y} reload  ${RESET} -- Restart vm with docker server."
-  echo -e "${TAB}${Y} stop    ${RESET} -- Stop vm."
-  echo -e "${TAB}${Y} help    ${RESET} -- Show this help."
-}
 
 case "$arg" in
-  config) _docker_config && _docker_list_config  ;;
-  edit)   _edit_vm                               ;;
-  reload) _docker_restart && _docker_list_config ;;
-  start)  _docker_start  && _docker_list_config  ;;
-  stop)   _docker_stop                           ;;
-  help|*) _usage                                 ;;
+  config) _config      ;;
+  list)   _list_config ;;
+  edit)   _edit_vm     ;;
+  reload) _reload      ;;
+  start)  _start       ;;
+  stop)   _stop        ;;
+  clean)  _clean_cfg   ;;
+  help|*) _usage       ;;
 esac
-

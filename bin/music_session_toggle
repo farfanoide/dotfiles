@@ -20,25 +20,24 @@
 # ------------------------------------------------------------------------------
 set -e
 
-_get_previous_session_name() {
-  tmux show-environment -g previous_session | cut -d '=' -f 2
-}
+_get_prev_session()   { tmux show-environment -g previous_session | cut -d'=' -f2 ;}
 
-_get_current_session_name() {
-  tmux display-message -p '#S'
-}
+_get_current_session(){ tmux display-message -p '#S' ;}
 
 jump_session=$1; shift
-if [ $TMUX ]; then
-  current_session=$(_get_current_session_name)
+
+if [ -n "${TMUX}" ]; then
+  current_session=$(_get_current_session)
+
   if [[ ! "${jump_session}" =~ "${current_session}" ]]; then
-    tmux set-environment -g previous_session $(_get_current_session_name)
+    tmux set-environment -g previous_session $(_get_current_session)
     tmux switch-client -t $jump_session
   else
-    previous_session=$(_get_previous_session_name)
+    previous_session=$(_get_prev_session)
     tmux set-environment -g -u previous_session
     tmux switch-client -t $previous_session
   fi
+
 else
-  if tmux has-session -t main; then tmux attach-session -t main:Music; fi
+  tmux has-session -t main 2> /dev/null && tmux attach-session -t main:Music
 fi

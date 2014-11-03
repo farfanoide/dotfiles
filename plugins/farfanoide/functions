@@ -1,15 +1,14 @@
-repo_root() { git rev-parse --show-toplevel ;}
-
-grt() { cd "$(repo_root)" ;}
-
-function mystart() { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
-
-myexec() { mysql -uroot -p -e "$*;" ;}
-
-function lg() { ls -lA . | grep -i $1 ;}
-
-md(){ mkdir -p $1 && cd $1 ;}
-
+repo_root()      { git rev-parse --show-toplevel ;}
+grt()            { cd "$(repo_root)" ;}
+mystart()        { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
+myexec()         { mysql -uroot -p -e "$*;" ;}
+function lg()    { ls -lA . | grep -i $1 ;}
+md()             { mkdir -p $1 && cd $1 ;}
+current_shell()  { ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }' ;}
+reloadshell()    { exec $SHELL -l ;}
+strip_comments() { perl -pe 's/#.*$//' ;}
+reloadshell()    { exec $SHELL -l ;}
+alias shellreload=reloadshell
 cr() {
   if [[ $# -ge 2 ]]; then
     cp $1 $2
@@ -17,6 +16,23 @@ cr() {
     rm -f $1
   else
     echo "2 arguments needed."
+  fi
+}
+
+_set_null_glob() {
+  local cur_shell=$(current_shell)
+  if [[ "$cur_shell" =~ 'bash' ]]; then
+    shopt -s nullglob
+  elif [[ "$cur_shell" =~ 'zsh' ]]; then
+    setopt NULL_GLOB
+  fi
+}
+_unset_null_glob() {
+  local cur_shell=$(current_shell)
+  if [[ "$cur_shell" =~ 'bash' ]]; then
+    shopt -u nullglob
+  elif [[ "$cur_shell" =~ 'zsh' ]]; then
+    unsetopt NULL_GLOB
   fi
 }
 
@@ -51,8 +67,6 @@ extract() {
   fi
 }
 
-reloadshell() { exec $SHELL -l ;}
-alias shellreload=reloadshell
 
 githubrepo(){
   if [[ $# -ge 1 ]]; then
@@ -68,29 +82,6 @@ githubrepo(){
   fi
 }
 
-# Apps and frameworks
-getwp(){
-  wget http://wordpress.org/latest.tar.gz
-  tar -xvf latest.tar.gz
-  if [[ $# -gt 0 ]]; then
-    mv "wordpress/*" $1
-    rm -rf wordpress
-  fi
-  rm -rf latest.tar.gz
-}
-
-
-gethtml5(){
-  wget https://github.com/h5bp/html5-boilerplate/archive/master.zip
-  tar -xvf master.zip
-  if [[ $# -gt 0 ]]; then
-    mv "html5-boilerplate-master/*" $1
-    rm -rf html5-boilerplate-master/
-  fi
-  rm -rfv master.zip
-}
-
-strip_comments() { perl -pe 's/#.*$//' $* ;}
 
 # test this:
 # remote_gzip() {

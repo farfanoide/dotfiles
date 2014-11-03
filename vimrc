@@ -87,7 +87,6 @@ if &term =~ "xterm.*"
 endif
 "}}}--------------------[ end Editor  ]-----------------------------------
 " Various Bundles:---------------------------------------------------------------{{{
-Plug 'gmarik/vundle' " let Vundle manage Vundle, required
 " General:
 Plug 'tpope/vim-repeat' " enable repeating supported plugin maps with .
 Plug 'tpope/vim-eunuch' " nice UNIX helpers like SudoWrite, etc
@@ -222,18 +221,22 @@ Plug 'spf13/PIV'
 Plug 'arnaud-lb/vim-php-namespace'
 "}}}--------------------[ end PHP  ]----------------------------------------
 " Syntax Plugins:--------------------------------------------------{{{
+
+Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
+map <Leader>t :Tabularize<CR>
+
 Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'tejr/vim-tmux'                    " tmux conf files support
 Plug 'vim-scripts/bats.vim'             " Bats support
-" Plug 'markcornick/vim-bats'             " Bats support
 Plug 'plasticboy/vim-markdown'          " Markdown support
 Plug 'jceb/vim-orgmode'                 " OrgMode support
 Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
 Plug 'elixir-lang/vim-elixir'           " Elixir support
+Plug 'scrooloose/syntastic'             " Syntax check
+Plug 'suan/vim-instant-markdown'        " Preview markdown files
+Plug 'honza/dockerfile.vim'             " Dockerfile support
+Plug 'evidens/vim-twig'                 " Twig support
 
-Plug 'scrooloose/syntastic'  " Syntax check
-
-Plug 'suan/vim-instant-markdown' " Preview markdown files
 
 " Show smalltalk files as xml
 au BufNewFile,BufRead *.st setlocal filetype=xml
@@ -286,7 +289,6 @@ Plug '29decibel/codeschool-vim-theme'
 Plug 'vim-scripts/apprentice.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'AlxHnr/clear_colors'
-Plug 'daylerees/colour-schemes', { 'rtp': 'vim/' }
 Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
 
 
@@ -296,15 +298,14 @@ syntax on " Enable syntax highligting
 
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
+set synmaxcol=300
 if has('gui_running')
-  set synmaxcol=200
+  set guifont=Ubuntu\ Mono\ derivative\ Powerline:h15
+  set linespace=7
   if has("gui_gtk2")
     set guifont=Nimbus\ Mono\ L\ Bold\ 10
   else
-    set guifont=Ubuntu\ Mono\ derivative\ Powerline:h13
   endif
-else
-  set synmaxcol=130
 endif
 
 set t_Co=256               " Use 256 colours (Use this setting only if your terminal supports 256 colours)
@@ -313,17 +314,18 @@ set noshowmode             " Remove second status bar when using powerline
 
 " --------------[Powerline]--------------------------------------------------
 Plug 'bling/vim-airline'          " vimscript airline, yay!
-let g:airline_powerline_fonts = 0 " use powerline fonts
+let g:airline_powerline_fonts = 1 " use powerline fonts
 let g:airline_left_sep=' '
 let g:airline_right_sep=' '
 let g:airline_theme='bubblegum'   " nice theme
 let g:airline_theme='tomorrow'    " nice theme
 
-if has('gui_running')
-  let g:airline_powerline_fonts = 0 " dont use powerline fonts
-  let g:airline_left_sep=' '
-  let g:airline_right_sep=' '
-endif
+set linespace=5
+" if has('gui_running')
+"   let g:airline_powerline_fonts = 0 " dont use powerline fonts
+"   let g:airline_left_sep=' '
+"   let g:airline_right_sep=' '
+" endif
 
 set guioptions-=T " Dont show toolbar on gui
 " highlight just the 120th column of wide lines...
@@ -345,8 +347,9 @@ set ignorecase " Ignore case of searches
 set incsearch  " Highlight dynamically as pattern is typed
 set gdefault   " Add the g flag to search/replace by default
 " Map SPACE to remove search highlighting
-noremap <silent> <space> :noh<cr>:call clearmatches()<cr>
-" nnoremap <Space> :nohlsearch<CR>
+noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
+
+Plug 'vim-scripts/SearchComplete' " Tab completion in searches
 "}}}--------------------[ end Search  ]------------------------------------
 " Windows Tabs:-----------------------------{{{
 set title " Show the filename in the window titlebar
@@ -422,8 +425,6 @@ map <Leader>ta :TrailerTrim <cr>:TrimCR <cr>
 " Trim all and format
 map <Leader>taf :TrailerTrim <cr>:TrimCR <cr> :IndentBuffer<cr>
 
-Plug 'godlygeek/tabular'
-map <Leader>t :Tabularize<CR>
 " extract let  to isntance variable. ie:
 "   let(:something) { create :something }
 " turns into:
@@ -468,6 +469,11 @@ function! CurrentBufferToPasteBoard()
 endfunction
 nnoremap <Leader>cb call CurrentBufferToPasteBoard()
 
+" cd into current buffer's directory
+nnoremap <LEADER>cd :cd %:p:h<CR>:pwd<CR>
+
+nnoremap <LEADER>dg :diffget <CR>
+nnoremap <LEADER>dp :diffput <CR>
 " nnoremap <Leader>note :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>nt :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>sh :30vsp ~/.notes/shortcuts.org<CR>
@@ -568,15 +574,14 @@ endfunction
 " Pascal Compile
 map <Leader>b :w<CR> :!fpc %<CR>
 
-" PDF auto conversion
+
+" PDF auto conversion -> requires xpdf which in turn requires xquartz
 Plug 'rhysd/open-pdf.vim'
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
 " AutoCommands:
 " Auto-reload vimrc on save
-if has("autocmd")
-  autocmd! bufwritepost $MYVIMRC source $MYVIMRC
-endif
+autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors()
 nmap <Leader>v :vsp $MYVIMRC<CR>
 
 Plug 'junegunn/goyo.vim'
@@ -595,12 +600,16 @@ function! ResetColors()
   " Custom colors for trailing whitespaces
   execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
 endfunction
-
 autocmd ColorScheme * :call ResetColors()
+
+function! HideUnwantedBackgrounds()
+  source ~/.vim/default_colors
+endfunction
 
 colorscheme Tomorrow-Night " This changes a lot
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
-"}}}
 
+noremap <c-s> :CtrlPBufTag<CR>
+"}}}
