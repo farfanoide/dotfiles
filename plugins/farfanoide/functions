@@ -7,6 +7,8 @@ md()             { mkdir -p $1 && cd $1 ;}
 current_shell()  { ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }' ;}
 reloadshell()    { exec $SHELL -l ;}
 strip_comments() { perl -pe 's/#.*$//' ;}
+vagrant_killall(){ vagrant global-status | awk '$3 == "running"{print $4}' | xargs -I '{}' sh -c 'cd "$1" && vagrant halt' }
+chpwd ()         { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ;}
 cr() {
   if [[ $# -ge 2 ]]; then
     cp $1 $2
