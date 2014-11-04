@@ -155,7 +155,7 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 " Tags:
 Plug 'majutsushi/tagbar'
-map <Leader>s :TagbarOpenAutoClose<CR>
+" map <Leader>s :TagbarOpenAutoClose<CR>
 " TODO: replace with https://github.com/h1mesuke/unite-outline
 
 
@@ -256,6 +256,12 @@ let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
       \ 'file': '\v\.(exe|so|dll|pyc)$'
       \ }
+
+Plug 'tacahiroy/ctrlp-funky'
+let g:ctrlp_extensions = ['funky']
+let g:ctrlp_funky_matchtype = 'path'
+let g:ctrlp_funky_syntax_highlight = 1
+map <Leader>s :CtrlPFunky<CR>
 
 Plug 'scrooloose/nerdtree'
 " TODO: autoreload when creating new files with nerdtree
