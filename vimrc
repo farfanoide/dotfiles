@@ -440,6 +440,10 @@ map <Leader>ei ^diwds(xea =wds{I@
 " One less key to get to command mode
 map ; :
 
+if has("autocmd")
+  autocmd BufWritePre * :silent !mkdir -p %:p:h
+  " TODO: |echo 'Directory created =>'expand("%:h")
+end
 " Faster save
 nnoremap <Leader>w :w!<CR>
 nnoremap <Leader>tn :tabnew<CR>
