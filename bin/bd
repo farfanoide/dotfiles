@@ -6,13 +6,12 @@
 #
 #  Script to manage a vagrant vm for docker with parallels provider. If invoked
 #  from within tmux it'll set environment variables for all new windows
+#
 #  Requirements:
 #
+#   - vagrant: [https://www.vagrantup.com/]
 #   - vagrant parallels plugin: [https://github.com/Parallels/vagrant-parallels]
-#     > vagrant plugin installl vagrant-parallels
-#
 #   - parallels boot2docker box: [https://vagrantcloud.com/parallels/boxes/boot2docker]
-#     > vagrant init parallels/boot2docker
 #
 #
 # ---------------------------------------------------------------------------------------
@@ -43,6 +42,7 @@ _usage() {
   echo -e "${TAB}${Y} edit  ${RESET} -- Open vagrant file for editing."
   echo -e "${TAB}${Y} reload${RESET} -- Restart docker server VM."
   echo -e "${TAB}${Y} start ${RESET} -- Start docker server VM."
+  echo -e "${TAB}${Y} status${RESET} -- Print status of the docker server VM."
   echo -e "${TAB}${Y} stop  ${RESET} -- Stop docker server VM."
   echo -e "${TAB}${Y} help  ${RESET} -- Show this help."
   echo
@@ -57,9 +57,10 @@ arg=$1
 if [ "$arg" = 'init' ]; then
 cat <<EOS
 bd() {
-  arg=\$1; SH_ECHO=true
+  arg=\$1;
+  export SH_ECHO=true
   case "\$arg" in
-    (config|clean) eval "\$(command ${SCRIPT_NAME} \$arg)"       ;;
+    (config|clean) eval "\`command ${SCRIPT_NAME} \$arg\`"       ;;
     (start) command ${SCRIPT_NAME} \$arg && eval "\`command ${SCRIPT_NAME} config\`" ;;
     (stop) command ${SCRIPT_NAME} \$arg && eval "\`command ${SCRIPT_NAME} clean\`" ;;
     (*) command ${SCRIPT_NAME} \$arg
@@ -103,6 +104,7 @@ _edit_vm() { ${EDITOR:-vi} Vagrantfile ;}
 _start()   { _vm_runnging && _sh_echo "VM already running." || vagrant up --provider parallels ;}
 _reload()  { _vm_runnging && vagrant reload  || _sh_echo "$VM_NOT_RUNNING_MESSAGE" ;}
 _stop()    { _vm_runnging && vagrant suspend || _sh_echo "$VM_NOT_RUNNING_MESSAGE" ;}
+_status()  { vagrant status ;}
 _config()  {
   if _vm_runnging; then
 
@@ -130,6 +132,7 @@ case "$arg" in
   edit)   _edit_vm     ;;
   reload) _reload      ;;
   start)  _start       ;;
+  status) _status      ;;
   stop)   _stop        ;;
   clean)  _clean_cfg   ;;
   help|*) _usage       ;;
