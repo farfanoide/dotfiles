@@ -306,7 +306,7 @@ syntax on " Enable syntax highligting
 " don't try to highlight lines longer than 130 characters. (life saving!)
 set synmaxcol=300
 if has('gui_running')
-  set guifont=Ubuntu\ Mono\ derivative\ Powerline:h15
+  set guifont=PragmataPro\ for\ Powerline:h14
   set linespace=7
   if has("gui_gtk2")
     set guifont=Nimbus\ Mono\ L\ Bold\ 10
@@ -609,6 +609,8 @@ function! ResetColors()
   execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
   " Custom colors for trailing whitespaces
   execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
+  " kind of bored of same old yellow... let's use #E0B56E
+  execute 'hi String ctermfg=yellow guifg=#E0B56E'
 endfunction
 autocmd ColorScheme * :call ResetColors()
 
