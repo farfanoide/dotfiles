@@ -18,14 +18,12 @@ git submodule foreach 'git checkout master && git pull'
 # the script will be added here
 skip=("README.md", "tools", "backups", "sshconfig", $0, $*)
 bckpdir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
+[ ! -d $bckpdir ] && mkdir -p $bckpdir
 for name in *; do
   if [[ ! ${skip[*]} =~ $name ]]; then
     target="$HOME/.$name"
 
     if [ -a $target ]; then
-      if [[ ! -d $bckpdir ]]; then
-        mkdir -p $bckpdir
-      fi
       echo -e "$B [+] Backing up $target to $bckpdir/.$name"
       cp -r $target $bckpdir
       echo -e "$R [-] Removing $target"
