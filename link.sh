@@ -17,8 +17,10 @@ git submodule foreach 'git checkout master && git pull'
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
 skip=("README.md", "tools", "backups", "sshconfig", $0, $*)
-bckpdir="${PWD}/backups/$(date "+%Y%m%d%H%M%S_backup")"
-for name in *; do
+dotsdir="$(dirname $0)"
+bckpdir="${dotsdir}/backups/$(date "+%Y%m%d%H%M%S_backup")"
+
+for name in $dotsdir/*; do
   if [[ ! ${skip[*]} =~ $name ]]; then
     target="$HOME/.$name"
 
@@ -32,8 +34,8 @@ for name in *; do
       rm $target
     fi
 
-    ln -s "$PWD/$name" "$target"
-    echo -e "$G [>] Linked $PWD/$name to $target"
+    ln -s "$dotsdir/$name" "$target"
+    echo -e "$G [>] Linked $dotsdir/$name to $target"
   else
     echo -e "$Y [~] Skipping ${name}"
   fi
