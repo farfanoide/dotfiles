@@ -115,7 +115,8 @@ alias bi='bundle check; bundle install'
 # }}}
 # ---------------------[ Heroku ]-----------------------------------------{{{
 herokup() {
-  git push heroku master && [ -e "$(repo_root)/.env" ] && heroku config:add $(cat $dotenv)
+  local dotenv="$(repo_root)/.env"
+  git push heroku master && [ -e $dotenv ] && heroku config:set $(cat $dotenv) && heroku apps:open
 }
 alias hup=herokup
 alias ho='heroku open'
