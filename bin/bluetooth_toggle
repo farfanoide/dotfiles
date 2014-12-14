@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#   Simple script to toggle bluetooth on and off on a mac.
+#   Depends on:
+#       - blueutil: (https://github.com/toy/blueutil)
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
+if ! command blueutil 2> /dev/null; then
+cat <<EOS
+[EROR] - blueutil not found
+[INFO] - You can download it here:
+[INFO] - https://github.com/toy/blueutil
+EOS
+exit 1
+fi
+
+_bt_status() { blueutil | head -1 | cut -d':' -f2 | tr -d ' ' ;}
+
+[ "$(_bt_status)" = '0' ] && status=1 || status=0
+
+blueutil power $status
