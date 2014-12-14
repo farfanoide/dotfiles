@@ -16,7 +16,7 @@ git submodule foreach 'git checkout master && git pull'
 
 # Array of filenames to skip, any arguments passed to
 # the script will be added here
-skip=("README.md", "tools", "backups", "sshconfig", $0, $*)
+skip=('README.md', 'tools', 'backups', 'sshconfig', $0, $*)
 dotsdir="$(dirname $0)"
 bckpdir="${dotsdir}/backups/$(date "+%Y%m%d%H%M%S_backup")"
 [ ! -d $bckpdir ] && mkdir -p $bckpdir
@@ -38,9 +38,14 @@ for name in $dotsdir/*; do
     echo -e "$Y [~] Skipping ${name}"
   fi
 done
-echo "Gonna install vim plugins, might take a while."
+echo 'Gonna install vim plugins, might take a while.'
+
+echo 'Installing vim-plug'
+mkdir -p ~/.vim/autoload
+curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
 sleep 2
 vim +PlugInstall! +PlugClean +qall
 
-echo "All done."
-echo "Enjoy the Ride!"
+echo 'All done.'
+echo 'Enjoy the Ride!'
