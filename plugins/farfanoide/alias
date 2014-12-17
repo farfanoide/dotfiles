@@ -1,45 +1,46 @@
 # ---------------------[ General Stuff ]----------------------------------------{{{
 alias v='vim'
 if _mac_osx ; then
-  alias ls="ls -h"
+  alias ls='ls -h'
 else
   alias ls='ls -h --color=auto'
 fi
 # alias para colorcitos y giladas
-alias l="ls -o"
-alias la="ls -lA"
-alias lg="la | grep -i"
-alias lr="ls -R "
-alias grep="grep --color=auto"
-alias up="cd .."
-alias c="clear"
-alias h="history"
-alias mplayer="mplayer -msgcolor"
-alias m="mplayer"
-alias df="df -h"
-alias tree="tree -C"
+alias l='ls -o'
+alias la='ls -lA'
+alias lg='la | grep -i'
+alias lr='ls -R '
+alias grep='grep --color=auto'
+alias up='cd ..'
+alias c='clear'
+alias h='history'
+alias f='fg'
+alias mplayer='mplayer -msgcolor'
+alias m='mplayer'
+alias df='df -h'
+alias tree='tree -C'
 # requires sudo pip install pygments
-alias hi="pygmentize -g"
-alias du="du -hs"
+alias hi='pygmentize -g'
+alias du='du -hs'
 # Show me the size of all the things. The bastard child of du and df ->  http://gyaresu.org/hacking/2012/08/02/alias-to-show-the-size-of-files-and-folders/
 alias duf='du -sk * | sort -nr | perl -ne '\''($s,$f)=split(m{\t});for (qw(K M G)) {if($s<1024) {printf("%.1f",$s);print "$_\t$f"; last};$s=$s/1024}'\'''
 # Kill all the tabs in Chrome to free up memory
 # [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
 alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 # folders and archives
-alias mv="mv -iv"
-alias srm="sudo rm -Rfv"
-alias mkdir="mkdir -p"
-alias pymulator="kivy ~/Develop/src/simuladorHDD/main.py"
+alias mv='mv -iv'
+alias srm='sudo rm -Rfv'
+alias mkdir='mkdir -p'
+alias pymulator='kivy ~/Develop/src/simuladorHDD/main.py'
 # requires brew install grc
-alias ctail="\grc tail"
-alias dateformat="date \"+%d-%m-%Y\""
+alias ctail='\grc tail'
+alias dateformat='date "+%d-%m-%Y"'
 
 # override cp with advanced copy http://beatex.org/web/advancedcopy.html#compile
 if [[ -f "$HOME/.bin/cp" ]] ; then
   alias cp='cp -rg'
 else
-  alias cp="rsync --append --progress -azvrE"
+  alias cp='rsync --append --progress -azvrE'
 fi
 # }}}
 # ---------------------[ Mac stuff ]----------------------------------------{{{
@@ -69,19 +70,19 @@ if _linux ; then
 fi
 # }}}
 # ---------------------[ Misc ]-----------------------------------------{{{
-alias musik="cd ~/Music/iTunes/iTunes\ Media/Music/"
-alias sitez="cd ~/Dropbox/Sites/"
-alias fuck="cd ~/Dropbox/compartidas/Facultad/2do/"
-alias youtube-dl="youtube-dl --max-quality url"
+alias musik='cd ~/Music/iTunes/iTunes\ Media/Music/'
+alias sitez='cd ~/Dropbox/Sites/'
+alias fuck='cd ~/Dropbox/compartidas/Facultad/2do/'
+alias youtube-dl='youtube-dl --max-quality url'
 alias cuevana="cd $srcdir/storm && npm start"
-alias getnormalize="wget https://raw.github.com/necolas/normalize.css/master/normalize.css"
+alias getnormalize='wget https://raw.github.com/necolas/normalize.css/master/normalize.css'
 alias shut='sudo shutdown -h now'
 alias t='todo.sh' # http://todotxt.com/
 # }}}
 # ---------------------[ MySQL ]----------------------------------------{{{
-alias my="mysql -uroot -p "
-alias mydump="mysqldump -uroot -p"
-alias mystart="mysql.server start"
+alias my='mysql -uroot -p '
+alias mydump='mysqldump -uroot -p'
+alias mystart='mysql.server start'
 # }}}
 # ---------------------[ Git ]----------------------------------------{{{
 # TODO: add these to git itself to get proper tab completion
@@ -150,7 +151,7 @@ alias vpr='vagrant provision'
 # ---------------------[ Symfony ]----------------------------------------{{{
 alias sy='./symfony'
 alias rmcl='rm -fr cache/* log/*'
-alias arreglarengine="vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php"
+alias arreglarengine='vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php'
 alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
 # }}}
 # ---------------------[ SSH ]----------------------------------------{{{
