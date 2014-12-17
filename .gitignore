@@ -5,3 +5,5 @@ bin/mv
 vim/bundle/*
 vim/plugged/*
 vim/.cache/*
+bin/*
+tmux/yat.sh/sessions/*
