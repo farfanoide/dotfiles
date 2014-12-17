@@ -53,15 +53,15 @@ set nowritebackup
 "   set undodir=~/.vim/undo
 " endif
 
-set shortmess=at   " Don't show 'Hit ENTER to continue' message
+" set shortmess=at   " Don't show 'Hit ENTER to continue' message
 set laststatus=2   " Always show status line (not needed when using airline)
 set mouse=a        " Enable mouse in all modes
 set noerrorbells   " Disable error bells
 set nostartofline  " Don’t reset cursor to start of line when moving around.
 set number         " Use normal numbers
 set relativenumber " and relative line numbers
-set autoread       " Automatically read a file when it is changed from the outside
 set autowriteall   " Write all buffers
+set autoread       " Automatically read a file when it is changed from the outside
 set lazyredraw     " Don't redraw while executing macros
 set showcmd        " Show commands as you type them
 set hidden         " allow unsaved changes to be hidden
@@ -94,7 +94,7 @@ Plug 'tpope/vim-eunuch' " nice UNIX helpers like SudoWrite, etc
 " Editing Plugins: ----------------------------------------
 Plug 'tomtom/tcomment_vim'          " easy code commenting
 Plug 'tpope/vim-surround'           " easy pair characters manipulation
-Plug 'jiangmiao/auto-pairs'         " easy quoting, etc. ie: insert ' -> ''; [ -> []
+Plug 'Raimondi/delimitMate'         " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
 Plug 'mattn/emmet-vim'              " new era of zencoding :)
 Plug 'Lokaltog/vim-easymotion'      " jump, jump, jump around
 Plug 'terryma/vim-multiple-cursors' " sublime multi cursors wannabe
@@ -161,6 +161,7 @@ Plug 'majutsushi/tagbar'
 
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
+nnoremap <LEADER>g :Gist<CR>
 "}}}--------------------[ end Various Bundles  ]----------------------------------------
 " Preprocessors: ------------------------------------------{{{
 Plug 'groenewege/vim-less'
@@ -202,6 +203,9 @@ Plug 'tpope/vim-endwise'
 Plug 'https://github.com/vim-ruby/vim-ruby'
 Plug 'tpope/vim-Bundler'
 Plug 'sunaku/vim-ruby-minitest'
+Plug 'ecomba/vim-ruby-refactoring'
+
+let g:ruby_refactoring_map_keys = 0
 
 
 " " Rails AutoCompletion (test)
@@ -236,10 +240,8 @@ Plug 'scrooloose/syntastic'             " Syntax check
 Plug 'suan/vim-instant-markdown'        " Preview markdown files
 Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evidens/vim-twig'                 " Twig support
+Plug 'rizzatti/dash.vim'                " Dash integration
 
-
-" Show smalltalk files as xml
-au BufNewFile,BufRead *.st setlocal filetype=xml
 " Org files
 au BufNewFile,BufRead *.org setlocal filetype=org
 " Treat .md files as Markdown
@@ -321,8 +323,8 @@ set noshowmode             " Remove second status bar when using powerline
 " --------------[Powerline]--------------------------------------------------
 Plug 'bling/vim-airline'          " vimscript airline, yay!
 let g:airline_powerline_fonts = 1 " use powerline fonts
-let g:airline_left_sep=' '
-let g:airline_right_sep=' '
+" let g:airline_left_sep=' '
+" let g:airline_right_sep=' '
 let g:airline_theme='bubblegum'   " nice theme
 let g:airline_theme='tomorrow'    " nice theme
 
@@ -472,7 +474,7 @@ inoremap <C-h> <left>
 " Join upper line at the end of current one
 nnoremap <leader>j ddkOpJ
 
-" send current's buffer full dir into clipboard 
+" send current's buffer full dir into clipboard
 " '%' = current buffer; ':p' = full path modifier
 function! CurrentBufferToPasteBoard()
  silent execute "!echo %:p | pbcopy"| redraw!
