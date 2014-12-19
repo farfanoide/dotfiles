@@ -218,7 +218,7 @@ let g:ruby_refactoring_map_keys = 0
 "}}}--------------------[ end Ruby ]----------------------------------------
 " PHP:---------------------------------------------------------------{{{
 " Plug 'shawncplus/phpcomplete.vim'
-" Plug 'vim-scripts/symfony.vim'
+"--with-lua Plug 'vim-scripts/symfony.vim'
 Plug 'spf13/PIV'
 " disable php auto-folding
 " let g:DisableAutoPHPFolding = 1
@@ -241,6 +241,7 @@ Plug 'suan/vim-instant-markdown'        " Preview markdown files
 Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evidens/vim-twig'                 " Twig support
 Plug 'rizzatti/dash.vim'                " Dash integration
+Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
 
 " Org files
 au BufNewFile,BufRead *.org setlocal filetype=org
@@ -298,7 +299,8 @@ Plug 'vim-scripts/apprentice.vim'
 Plug 'nanotech/jellybeans.vim'
 Plug 'AlxHnr/clear_colors'
 Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
-
+Plug 'abra/vim-abra'
+Plug 'freeo/vim-kalisi'
 
 "}}}
 
