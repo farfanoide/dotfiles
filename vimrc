@@ -68,6 +68,8 @@ set hidden         " allow unsaved changes to be hidden
 set scrolloff=3    " Start scrolling three lines before the horizontal window border
 set modeline       " enable modeline for per file configs
 
+" make Y work consistently to C and D
+nnoremap Y y$
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
 
 " Enable "bracketed paste mode"
@@ -242,6 +244,7 @@ Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evidens/vim-twig'                 " Twig support
 Plug 'rizzatti/dash.vim'                " Dash integration
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
+Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 
 " Org files
 au BufNewFile,BufRead *.org setlocal filetype=org
@@ -622,7 +625,8 @@ function! HideUnwantedBackgrounds()
   source ~/.vim/default_colors
 endfunction
 
-colorscheme Tomorrow-Night " This changes a lot
+set background=dark
+colorscheme kalisi " This changes a lot
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
