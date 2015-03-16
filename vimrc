@@ -125,11 +125,11 @@ Plug 'honza/vim-snippets'
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 " Plug key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
-
+" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+" xmap <C-k>     <Plug>(neosnippet_expand_target)
+" xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
+"
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
       \ "\<Plug>(neosnippet_expand_or_jump)"
@@ -471,10 +471,6 @@ let g:multi_line_jump=6
 execute "vnoremap J ".g:multi_line_jump."j"
 execute "vnoremap K ".g:multi_line_jump."k"
 
-" TODO: test vimrc to find where this breaks
-" change cursor position in insert mode
-inoremap <C-l> <right>
-inoremap <C-h> <left>
 
 " Join upper line at the end of current one
 nnoremap <leader>j ddkOpJ
@@ -607,7 +603,7 @@ let g:goyo_width = 80
 let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " Plug End: ------------------------------------------------------------------{{{
-Plug 'Shougo/unite.vim'
+" Plug 'Shougo/unite.vim'
 call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
 
@@ -632,4 +628,9 @@ colorscheme kalisi " This changes a lot
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
 noremap <c-s> :CtrlPBufTag<CR>
+
+" TODO: test vimrc to find where this breaks
+" change cursor position in insert mode
+inoremap <C-l> <right>
+inoremap <C-h> <left>
 "}}}
