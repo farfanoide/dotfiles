@@ -584,8 +584,8 @@ function! Delegate(command)
   call setpos('.', l:save_cursor)
 endfunction
 
-" Pascal Compile
-map <Leader>b :w<CR> :!fpc %<CR>
+" Compile current buffer
+" map <Leader>b :w<CR> :!your command here %<CR>
 
 
 " PDF auto conversion -> requires xpdf which in turn requires xquartz
