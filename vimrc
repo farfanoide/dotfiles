@@ -614,6 +614,8 @@ function! ResetColors()
   execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
   " kind of bored of same old yellow... let's use #E0B56E
   execute 'hi String ctermfg=yellow guifg=#E0B56E'
+  " remove underline from current line, and set background
+  execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
 endfunction
 autocmd ColorScheme * :call ResetColors()
 
@@ -622,7 +624,7 @@ function! HideUnwantedBackgrounds()
 endfunction
 
 set background=dark
-colorscheme kalisi " This changes a lot
+colorscheme mustang " This changes a lot
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
