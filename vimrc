@@ -53,7 +53,7 @@ set nowritebackup
 "   set undodir=~/.vim/undo
 " endif
 
-" set shortmess=at   " Don't show 'Hit ENTER to continue' message
+set shortmess=atI  " Don't show 'Hit ENTER to continue' message
 set laststatus=2   " Always show status line (not needed when using airline)
 set mouse=a        " Enable mouse in all modes
 set noerrorbells   " Disable error bells
@@ -62,7 +62,7 @@ set number         " Use normal numbers
 set relativenumber " and relative line numbers
 set autowriteall   " Write all buffers
 set autoread       " Automatically read a file when it is changed from the outside
-set lazyredraw     " Don't redraw while executing macros
+" set lazyredraw     " Don't redraw while executing macros
 set showcmd        " Show commands as you type them
 set hidden         " allow unsaved changes to be hidden
 set scrolloff=3    " Start scrolling three lines before the horizontal window border
@@ -357,6 +357,7 @@ map <Leader>tw :TrailerTrim<CR>
 
 set hlsearch   " Highlight searches
 set ignorecase " Ignore case of searches
+set smartcase  " ...unless at least one capital letter in search pattern
 set incsearch  " Highlight dynamically as pattern is typed
 set gdefault   " Add the g flag to search/replace by default
 " Map SPACE to remove search highlighting
@@ -396,6 +397,9 @@ nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
 nnoremap <C-l> <C-W><C-L>
 nnoremap <C-h> <C-W><C-H>
+
+nnoremap j gj
+nnoremap k gk
 
 " Maps Alt-[h,j,k,l] to resizing a window split
 " use actual characters in mac instead of <[A|M]-[h|j|k|l]>
@@ -473,14 +477,14 @@ execute "vnoremap K ".g:multi_line_jump."k"
 
 
 " Join upper line at the end of current one
-nnoremap <leader>j ddkOpJ
+nnoremap <LEADER>j ddkOpJ
 
 " send current's buffer full dir into clipboard
 " '%' = current buffer; ':p' = full path modifier
 function! CurrentBufferToPasteBoard()
  silent execute "!echo %:p | pbcopy"| redraw!
 endfunction
-nnoremap <Leader>cb call CurrentBufferToPasteBoard()
+nnoremap <LEADER>cb call CurrentBufferToPasteBoard()
 
 " cd into current buffer's directory
 nnoremap <LEADER>cd :cd %:p:h<CR>:pwd<CR>
@@ -491,8 +495,8 @@ nnoremap <LEADER>dp :diffput <CR>
 " nnoremap <Leader>nt :30vsp ~/.notes/notes.org<CR>
 " nnoremap <Leader>sh :30vsp ~/.notes/shortcuts.org<CR>
 
-nnoremap <Leader>lu YpVr-
-nnoremap <Leader>ul YpVr=
+nnoremap <LEADER>lu YpVr-
+nnoremap <LEADER>ul YpVr=
 
 "}}}--------------------[ end Faster Commands ]----------------------------------------
 " Indentation:------------------------------------{{{
@@ -624,12 +628,16 @@ function! HideUnwantedBackgrounds()
 endfunction
 
 set background=dark
-colorscheme mustang " This changes a lot
+colorscheme clear_colors_dark " This changes a lot
+call HideUnwantedBackgrounds()
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
 noremap <c-s> :CtrlPBufTag<CR>
+
+set shell=/usr/local/bin/zsh\ --login
+let g:is_bash=0
 
 " TODO: test vimrc to find where this breaks
 " change cursor position in insert mode
