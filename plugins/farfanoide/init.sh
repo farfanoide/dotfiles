@@ -19,6 +19,9 @@ env_file="$dir/env"
 path_file="$dir/path"
 [ -e $path_file ] && source $path_file
 
+bindings_file="$dir/bindings"
+[ -e $bindings_file ] && source $bindings_file
+
 # clean up after ourselves
 unset dir env_file alias_file func_file path_file
 
