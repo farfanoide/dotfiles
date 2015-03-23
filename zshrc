@@ -21,11 +21,11 @@ autoload -U compinit
 compinit
 
 # zaw -> C-r replacement for zsh
-source "$PLUGINS_DIR/zaw/zaw.zsh"
-zaw_file="$PLUGINS_DIR/zaw.zsh"
-[ -e $zaw_file ] && source $zaw_file
+# source "$PLUGINS_DIR/zaw/zaw.zsh"
+# zaw_file="$PLUGINS_DIR/zaw.zsh"
+# [ -e $zaw_file ] && source $zaw_file
 
-# Temporary workaround for brew mmysql not running correctly
+# Temporary workaround for brew mysql not running correctly
 export PATH="/usr/local/mysql/bin:${PATH}"
 unset zaw_file
 _mac_osx && eval "$(bd init)"
