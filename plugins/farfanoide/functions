@@ -1,15 +1,11 @@
-repo_root()      { git rev-parse --show-toplevel ;}
-grt()            { cd "$(repo_root)" ;}
-mystart()        { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
-myexec()         { mysql -uroot -p -e "$*;" ;}
-function lg()    { ls -lA . | grep -i $1 ;}
+# mystart()        { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
+# function lg()    { ls -lA . | grep -i $1 ;}
 md()             { mkdir -p $1 && cd $1 ;}
 current_shell()  { ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }' ;}
 reloadshell()    { exec $SHELL -l ;}
-strip_comments() { perl -pe 's/#.*$//' ;}
-vagrant_killall(){ vagrant global-status | awk '$3 == "running"{print $4}' | xargs -I '{}' sh -c 'cd "$1" && vagrant halt' }
 reloadshell()    { exec $SHELL -l ;}
 alias shellreload=reloadshell
+
 cr() {
   if [[ $# -ge 2 ]]; then
     cp $1 $2
@@ -28,6 +24,7 @@ _set_null_glob() {
     setopt NULL_GLOB
   fi
 }
+
 _unset_null_glob() {
   local cur_shell=$(current_shell)
   if [[ "$cur_shell" =~ 'bash' ]]; then
@@ -37,6 +34,14 @@ _unset_null_glob() {
   fi
 }
 
+# TODO: check why virtualenv breaks on zsh
+# TODO: make function to re-link executables after upgrading python in brew
+# http://wirtel.be/posts/en/2014/07/29/fix_virtualenv_python_brew/
+# cd $virtualenv_dir
+# find ${repos} -type l -delete
+# for repo in lsvirtualenv -b do virtualenv $repo
+
+
 enable_virtualenv(){
   # python -> virtualenv(wrapper)
   if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
@@ -45,44 +50,6 @@ enable_virtualenv(){
     export PROJECT_HOME=$HOME/Develop/sites
   fi
 }
-
-extract() {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2) tar xvjf $1    ;;
-      *.tar.gz)  tar xvzf $1    ;;
-      *.bz2)     bunzip2 $1     ;;
-      *.rar)     unrar $1       ;;
-      *.gz)      gunzip $1      ;;
-      *.tar)     tar xvf $1     ;;
-      *.tbz2)    tar xvjf $1    ;;
-      *.tgz)     tar xvzf $1    ;;
-      *.zip)     unzip $1       ;;
-      *.Z)       uncompress $1  ;;
-      *.7z)      7z x $1        ;;
-
-      *) echo "don't know how to extract '$1'..." ;;
-    esac
-  else
-    echo "'$1' is not a valid file!"
-  fi
-}
-
-
-githubrepo(){
-  if [[ $# -ge 1 ]]; then
-    local repo_name repo_url origin
-    repo_name=$1
-    repo_url="$(curl -u 'farfanoide' https://api.github.com/user/repos -d "{\"name\":\"$repo_name\"}" | grep ssh_url | cut -d\"  -f4 )"
-    origin="$(git remote -v | grep origin)"
-    if [ ! -z "$repo_url" -a -z "$origin" ]; then
-      git remote add origin $repo_url
-    fi
-  else
-    echo 'Need a repo name at least'
-  fi
-}
-
 
 # test this:
 # remote_gzip() {

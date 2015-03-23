@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+vagrant global-status |
+awk '$3 == "running"{print $4}' |
+xargs -I '{}' sh -c 'cd "$1" && vagrant halt'

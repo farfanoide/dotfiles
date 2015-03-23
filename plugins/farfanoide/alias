@@ -88,6 +88,7 @@ alias mystart='mysql.server start'
 # TODO: add these to git itself to get proper tab completion
 alias gs='git status -bs'
 alias ga='git add --all '
+alias ga.='ga .'
 alias gd='git diff '
 alias grv='git remote -v'
 # http://gyaresu.org/hacking/2012/06/19/a-better-git-log
@@ -96,6 +97,7 @@ alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%
 alias gc='git commit -v'
 alias gco='git checkout '
 alias gba='git branch -av'
+grt() { cd "$(repo_root)" ;}
 # }}}
 # ---------------------[ Tmux ]----------------------------------------{{{
 alias ta='tmux attach -t'
@@ -127,7 +129,7 @@ hr(){ heroku run $*; }
 # }}}
 # ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
 bes() { bundle exec rails server $args 2> /dev/null || bundle exec rackup $* ;}
-alias bec='bundle exec rails console 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh)'
+bec() {bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh);}
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'

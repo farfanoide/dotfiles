@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+ls -lA . | grep -i $1
+
+# TODO: add options to check other directories

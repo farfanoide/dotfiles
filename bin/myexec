@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[ $# -eq 0 ] && echo 'Gonna need some arguments here, cowboy!' && exit 1
+
+mysql -uroot -p -e "$*"
