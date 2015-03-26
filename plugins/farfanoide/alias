@@ -133,7 +133,7 @@ bec() {bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle e
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
-alias bed='bundle exec ralis db'
+alias bed='bundle exec rails db'
 alias beg='be guard'
 # get development db name from database.yml
 devdb()    { cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2; }
