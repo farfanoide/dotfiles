@@ -67,6 +67,7 @@ set showcmd        " Show commands as you type them
 set hidden         " allow unsaved changes to be hidden
 set scrolloff=3    " Start scrolling three lines before the horizontal window border
 set modeline       " enable modeline for per file configs
+set nojoinspaces   " dont add extra spaces when joining lines
 
 " make Y work consistently to C and D
 nnoremap Y y$
@@ -245,6 +246,8 @@ Plug 'evidens/vim-twig'                 " Twig support
 Plug 'rizzatti/dash.vim'                " Dash integration
 Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
+Plug 'stephpy/vim-yaml'
+Plug 'lmeijvogel/vim-yaml-helper'
 
 " Org files
 au BufNewFile,BufRead *.org setlocal filetype=org
@@ -364,6 +367,7 @@ set gdefault   " Add the g flag to search/replace by default
 noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
 
 Plug 'vim-scripts/SearchComplete' " Tab completion in searches
+Plug 'rking/ag.vim'
 "}}}--------------------[ end Search  ]------------------------------------
 " Windows Tabs:-----------------------------{{{
 set title " Show the filename in the window titlebar
