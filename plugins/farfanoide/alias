@@ -106,7 +106,7 @@ alias tdc='tmux detach-client -t'
 
 alias ts='echo usa ys puto'
 alias ys='yat.sh'
-alias ysl='ys ls'
+alias ysl='ys ls -a'
 alias yl='ysl'
 # }}}
 # ---------------------[ Bundler ]----------------------------------------{{{
