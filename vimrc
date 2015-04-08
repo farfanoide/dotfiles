@@ -611,6 +611,7 @@ let g:goyo_width = 80
 let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " Plug End: ------------------------------------------------------------------{{{
+Plug 'AndrewRadev/switch.vim'
 " Plug 'Shougo/unite.vim'
 call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
