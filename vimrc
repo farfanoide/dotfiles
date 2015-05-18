@@ -223,8 +223,6 @@ let g:ruby_refactoring_map_keys = 0
 " Plug 'shawncplus/phpcomplete.vim'
 "--with-lua Plug 'vim-scripts/symfony.vim'
 Plug 'spf13/PIV'
-" disable php auto-folding
-" let g:DisableAutoPHPFolding = 1
 Plug 'arnaud-lb/vim-php-namespace'
 "}}}--------------------[ end PHP  ]----------------------------------------
 " Syntax Plugins:--------------------------------------------------{{{
@@ -248,6 +246,7 @@ Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 Plug 'stephpy/vim-yaml'
 Plug 'lmeijvogel/vim-yaml-helper'
+Plug 'xsbeats/vim-blade'
 
 " Org files
 au BufNewFile,BufRead *.org setlocal filetype=org
@@ -265,6 +264,8 @@ let g:ctrlp_custom_ignore = {
       \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
       \ 'file': '\v\.(exe|so|dll|pyc)$'
       \ }
+
+map <c-s> :CtrlPTag<CR>
 
 Plug 'tacahiroy/ctrlp-funky'
 let g:ctrlp_extensions = ['funky']
@@ -473,6 +474,8 @@ nnoremap <Leader>tn :tabnew<CR>
 " Escape with jj
 inoremap jj <ESC>
 
+set formatprg=par\ -w80
+
 
 " Faster selections in visual mode
 let g:multi_line_jump=6
@@ -639,10 +642,10 @@ call HideUnwantedBackgrounds()
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
-noremap <c-s> :CtrlPBufTag<CR>
-
 set shell=/usr/local/bin/zsh\ --login
 let g:is_bash=0
+
+let g:DisableAutoPHPFolding = 1 " disable php auto-folding
 
 " TODO: test vimrc to find where this breaks
 " change cursor position in insert mode

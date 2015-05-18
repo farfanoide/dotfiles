@@ -1,9 +1,7 @@
 backups/*
-bin/cp
-bin/mv
-
 vim/bundle/*
 vim/plugged/*
 vim/.cache/*
 bin/*
 tmux/yat.sh/sessions/*
+vim/autoload/plug.vim

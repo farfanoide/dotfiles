@@ -18,7 +18,7 @@
 require 'net/http'
 require 'json'
 
-movies = JSON.parse(Net::HTTP.get(URI('http://yts.re/api/list.json?sort=date&order=desc')))['MovieList']
+movies = JSON.parse(Net::HTTP.get(URI('http://yts.to/api/list.json?sort=date&order=desc&limit=50')))['MovieList']
 movies.each_with_index { |movie, index| puts "[#{index}] #{movie['MovieTitle']} -- (#{movie['Quality']}) -- (#{movie['Size']}) -- (★ #{movie['MovieRating']})" }
 puts ''
 puts 'To select a movie to download, just enter the movie\'s index'
@@ -29,6 +29,6 @@ if indexes = gets
   indexes = indexes.split(' ').map {|index| index.to_i}
   indexes.each do |index|
     movie = movies[index]
-    `curl -S #{movie['TorrentUrl']} -o "$HOME/Downloads/#{movie['MovieTitle']}.torrent"`
+    `curl --progress -S #{movie['TorrentUrl']} -o "$HOME/Downloads/#{movie['MovieTitle']}.torrent"`
   end
 end

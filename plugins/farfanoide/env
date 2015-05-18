@@ -2,25 +2,7 @@
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
-# MANPAGER variables for less to have pretty colours
-export LESS_TERMCAP_mb=$(tput bold; tput setaf 2) # green
-export LESS_TERMCAP_md=$(tput bold; tput setaf 6) # cyan
-export LESS_TERMCAP_me=$(tput sgr0)
-export LESS_TERMCAP_so=$(tput bold; tput setaf 3; tput setab 4) # yellow on blue
-export LESS_TERMCAP_se=$(tput rmso; tput sgr0)
-export LESS_TERMCAP_us=$(tput smul; tput bold; tput setaf 7) # white
-export LESS_TERMCAP_ue=$(tput rmul; tput sgr0)
-export LESS_TERMCAP_mr=$(tput rev)
-export LESS_TERMCAP_mh=$(tput dim)
-export LESS_TERMCAP_ZN=$(tput ssubm)
-export LESS_TERMCAP_ZV=$(tput rsubm)
-export LESS_TERMCAP_ZO=$(tput ssupm)
-export LESS_TERMCAP_ZW=$(tput rsupm)
-
-# brew cask options
-# export HOMEBREW_CASK_OPTS="--appdir=/Applications"
-
-# directories
+# Directories
 export PROJ_DIR="$HOME/Develop/sites"
 export MUSIC_DIR="$HOME/Music/iTunes/iTunes\ Media/Music/"
 export DOWN_DIR="$HOME/Downloads"
@@ -30,15 +12,14 @@ export YATSH_DIR="$HOME/.tmux/yat.sh"
 export VISUAL='vim'
 export EDITOR='vim'
 
-
 # make vim and tmux play nicely regarding colors
-if [[ $TERM == xterm ]]; then
-    TERM=xterm-256color
-fi
+[ $TERM = xterm ] && export TERM=xterm-256color
 
 # _set_null_glob
 # for file in "/tmp/$(whoami)/env/"*; do source $file; done
 # _unset_null_glob
+
+export VAGRANT_DEFAULT_PROVIDER=virtualbox
 
 # ls options
 if _mac_osx; then export CLICOLOR=1; fi
