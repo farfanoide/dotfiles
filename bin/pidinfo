@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[ $# -eq 0 ] && echo "Usage: $(basename $0) <pid>" && exit 1
+
+ps -p $1 -o pid,vsz=MEMORY -o user,group=GROUP -o comm,args=ARGS
