@@ -27,8 +27,8 @@ set linebreak   " Break by word at end of line when wrap=true
 set showbreak=⇇ " Line break character
 set list        " Show special characters
 " set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:Ξ
-set listchars=tab:⇥\ ,extends:»\,precedes:«,trail:•
-" alternate tab ❯
+set listchars=tab:❯\ ,extends:»\,precedes:«,trail:•
+" alternate tab ⇥
 
 " Make vim more useful
 set clipboard=unnamed     " Use system wide clipboard by default
@@ -248,10 +248,6 @@ Plug 'stephpy/vim-yaml'
 Plug 'lmeijvogel/vim-yaml-helper'
 Plug 'xsbeats/vim-blade'
 
-" Org files
-au BufNewFile,BufRead *.org setlocal filetype=org
-" Treat .md files as Markdown
-au BufNewFile,BufRead *.md setlocal filetype=markdown
 "}}}
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
@@ -308,11 +304,11 @@ Plug 'AlxHnr/clear_colors'
 Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
 Plug 'abra/vim-abra'
 Plug 'freeo/vim-kalisi'
+Plug 'morhetz/gruvbox'
 
 "}}}
 
 syntax on " Enable syntax highligting
-
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
 set synmaxcol=300
@@ -321,13 +317,12 @@ if has('gui_running')
   set linespace=7
   if has("gui_gtk2")
     set guifont=Nimbus\ Mono\ L\ Bold\ 10
-  else
   endif
 endif
 
-set t_Co=256               " Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set cursorline             " Highlight current line
-set noshowmode             " Remove second status bar when using powerline
+set t_Co=256   " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set cursorline " Highlight current line
+set noshowmode " Remove second status bar when using powerline
 
 " --------------[Powerline]--------------------------------------------------
 Plug 'bling/vim-airline'          " vimscript airline, yay!
@@ -350,6 +345,23 @@ highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
 
 " Plug 'gorodinskiy/vim-coloresque' " preatty hex colors
+
+function! ResetColors()
+  " no background for those vertical splits, they look ugly
+  execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
+  " Custom colors for trailing whitespaces
+  execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
+  " kind of bored of same old yellow... let's use #E0B56E
+  execute 'hi String ctermfg=yellow guifg=#E0B56E'
+  " remove underline from current line, and set background
+  execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
+endfunction
+autocmd ColorScheme * :call ResetColors()
+
+function! HideUnwantedBackgrounds()
+  source ~/.vim/default_colors
+endfunction
+
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
 
@@ -364,6 +376,12 @@ set ignorecase " Ignore case of searches
 set smartcase  " ...unless at least one capital letter in search pattern
 set incsearch  " Highlight dynamically as pattern is typed
 set gdefault   " Add the g flag to search/replace by default
+
+nnoremap / /\v
+vnoremap / /\v
+nnoremap ? ?\v
+vnoremap ? ?\v
+
 " Map SPACE to remove search highlighting
 noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
 
@@ -598,15 +616,17 @@ endfunction
 " Compile current buffer
 " map <Leader>b :w<CR> :!your command here %<CR>
 
-
 " PDF auto conversion -> requires xpdf which in turn requires xquartz
 Plug 'rhysd/open-pdf.vim'
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
+
 " AutoCommands:
-" Auto-reload vimrc on save
-autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors()
 nmap <Leader>v :vsp $MYVIMRC<CR>
+
+autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
+au BufNewFile,BufRead *.org setlocal filetype=org                " Org files
+au BufNewFile,BufRead *.md setlocal filetype=markdown            " Treat .md files as Markdown
 
 Plug 'junegunn/goyo.vim'
 Plug 'junegunn/limelight.vim'
@@ -619,24 +639,9 @@ Plug 'AndrewRadev/switch.vim'
 call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
 
-function! ResetColors()
-  " no background for those vertical splits, they look ugly
-  execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
-  " Custom colors for trailing whitespaces
-  execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
-  " kind of bored of same old yellow... let's use #E0B56E
-  execute 'hi String ctermfg=yellow guifg=#E0B56E'
-  " remove underline from current line, and set background
-  execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
-endfunction
-autocmd ColorScheme * :call ResetColors()
-
-function! HideUnwantedBackgrounds()
-  source ~/.vim/default_colors
-endfunction
 
 set background=dark
-colorscheme clear_colors_dark " This changes a lot
+colorscheme gruvbox
 call HideUnwantedBackgrounds()
 
 " dont comment out next line (dont know why this must go last)
