@@ -252,6 +252,9 @@ Plug 'xsbeats/vim-blade'
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
 Plug 'kien/ctrlp.vim'
+
+let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_use_caching = 1
 let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>', '<c-h>'],
       \ }
@@ -593,8 +596,13 @@ command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 " }}}
 " Folding: ------------------------------------------{{{
 set foldenable
-set foldmethod=marker
-set foldlevelstart=0
+" set foldmethod=marker
+" set foldlevelstart=0
+
+let ruby_fold=1
+set foldmethod=indent
+set foldcolumn=0
+set foldlevel=99
 
 " Toggle folds
 nnoremap <Leader><Space> za
@@ -647,7 +655,7 @@ call HideUnwantedBackgrounds()
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 
-set shell=/usr/local/bin/zsh\ --login
+" set shell=/usr/local/bin/zsh\ --login
 let g:is_bash=0
 
 let g:DisableAutoPHPFolding = 1 " disable php auto-folding
