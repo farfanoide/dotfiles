@@ -1,4 +1,6 @@
-bindkey "^R" history-incremental-search-backward
-bindkey "^E" end-of-line
-bindkey "^A" beginning-of-line
-bindkey "^U" kill-whole-line
+if [[ $SHELL =~ 'zsh' ]]; then
+  bindkey "^R" history-incremental-search-backward
+  bindkey "^E" end-of-line
+  bindkey "^A" beginning-of-line
+  bindkey "^U" kill-whole-line
+fi
