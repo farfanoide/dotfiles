@@ -1,4 +1,4 @@
-if [[ $SHELL =~ 'zsh' ]]; then
+if [[ $(current_shell) =~ 'zsh' ]]; then
   bindkey "^R" history-incremental-search-backward
   bindkey "^E" end-of-line
   bindkey "^A" beginning-of-line

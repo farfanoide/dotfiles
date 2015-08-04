@@ -128,7 +128,7 @@ hr(){ heroku run $*; }
 # }}}
 # ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
 bes() { bundle exec rails server $args 2> /dev/null || bundle exec rackup $* ;}
-bec() {bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh);}
+bec() { bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh) ;}
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'

@@ -3,7 +3,6 @@
 md()             { mkdir -p $1 && cd $1 ;}
 current_shell()  { ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }' ;}
 reloadshell()    { exec $SHELL -l ;}
-reloadshell()    { exec $SHELL -l ;}
 alias shellreload=reloadshell
 
 cr() {
