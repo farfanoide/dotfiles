@@ -1,4 +1,4 @@
-" Plug Init: ------------------------------------------------------------------{{{
+" Plugins: ------------------------------------------------------------------{{{
 set nocompatible    " be iMproved, required
 filetype off        " required
 
@@ -6,6 +6,122 @@ filetype off        " required
 " set rtp+=~/.vim/bundle/vundle/
 " call vundle#begin()
 call plug#begin('~/.vim/plugged')
+
+Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
+Plug 'tpope/vim-repeat' " enable repeating supported plugin maps with .
+Plug 'tpope/vim-unimpaired' " Some nice text object manipulation mappings
+Plug 'tpope/vim-eunuch' " nice UNIX helpers like SudoWrite, etc
+Plug 'tomtom/tcomment_vim'          " easy code commenting
+Plug 'tpope/vim-surround'           " easy pair characters manipulation
+Plug 'Raimondi/delimitMate'         " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
+Plug 'mattn/emmet-vim'              " new era of zencoding :)
+Plug 'Lokaltog/vim-easymotion'      " jump, jump, jump around
+Plug 'terryma/vim-multiple-cursors' " sublime multi cursors wannabe
+Plug 'matchit.zip'                  " match tags :)
+
+" Text Objects: --------------------------------------------
+Plug 'https://github.com/kana/vim-textobj-user/'         " text object plugin, add abstraction layer for other plugins
+Plug 'https://github.com/nelstrom/vim-textobj-rubyblock' " adds {ar/ir} text objects
+Plug 'https://github.com/akiyan/vim-textobj-php'         " adds {aP/iP}
+Plug 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
+" adds {af/if} and  {ac/ic} function/class
+
+" Neocomplete: --------------------------------------------
+Plug 'Shougo/vimproc.vim' " enable async stuff for Shougo's plugins
+Plug 'Shougo/context_filetype.vim' " enable context_filetype
+Plug 'Shougo/neocomplete.vim'
+
+" NeoSnippets: -----------------------------------------------
+Plug 'honza/vim-snippets'
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+Plug 'majutsushi/tagbar'
+
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim' " Gist from withing vim :)
+
+Plug 'groenewege/vim-less'
+Plug 'cakebaker/scss-syntax.vim'
+Plug 'kchmck/vim-coffee-script'
+
+Plug 'klen/python-mode'
+Plug 'farfanoide/vim-kivy'
+
+" Ruby: -----------------------------------------------------------
+Plug 'tpope/rbenv-ctags'
+Plug 'tpope/vim-rails'
+Plug 'tpope/vim-endwise'
+Plug 'https://github.com/vim-ruby/vim-ruby'
+Plug 'tpope/vim-Bundler'
+Plug 'sunaku/vim-ruby-minitest'
+Plug 'ecomba/vim-ruby-refactoring'
+
+" PHP: -----------------------------------------------------------
+Plug 'spf13/PIV'
+Plug 'arnaud-lb/vim-php-namespace'
+
+Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
+
+" Syntax Plugins:--------------------------------------------------
+Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
+Plug 'tejr/vim-tmux'                    " tmux conf files support
+Plug 'vim-scripts/bats.vim'             " Bats support
+Plug 'plasticboy/vim-markdown'          " Markdown support
+Plug 'jceb/vim-orgmode'                 " OrgMode support
+Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
+Plug 'elixir-lang/vim-elixir'           " Elixir support
+Plug 'scrooloose/syntastic'             " Syntax check
+Plug 'suan/vim-instant-markdown'        " Preview markdown files
+Plug 'honza/dockerfile.vim'             " Dockerfile support
+Plug 'evidens/vim-twig'                 " Twig support
+Plug 'rizzatti/dash.vim'                " Dash integration
+Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
+Plug 'evanmiller/nginx-vim-syntax'      " Nginx
+Plug 'stephpy/vim-yaml'
+Plug 'lmeijvogel/vim-yaml-helper'
+Plug 'xsbeats/vim-blade'
+Plug 'chase/vim-ansible-yaml'
+
+Plug 'kien/ctrlp.vim'
+Plug 'tacahiroy/ctrlp-funky'
+Plug 'scrooloose/nerdtree'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'AndrewRadev/switch.vim'
+
+" Themes: -----------------------------------------------------
+Plug 'junegunn/seoul256.vim'
+Plug 'farfanoide/vim-facebook'
+Plug 'w0ng/vim-hybrid'
+Plug 'baskerville/bubblegum'
+Plug 'tomasr/molokai'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jpo/vim-railscasts-theme'
+Plug '29decibel/codeschool-vim-theme'
+Plug 'vim-scripts/apprentice.vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'AlxHnr/clear_colors'
+Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
+Plug 'abra/vim-abra'
+Plug 'freeo/vim-kalisi'
+Plug 'morhetz/gruvbox'
+" Plug 'Shougo/unite.vim'
+
+Plug 'bling/vim-airline'          " vimscript airline, yay!
+Plug 'csexton/trailertrash.vim' " Trailing whitespaces
+Plug 'christoomey/vim-tmux-navigator' " seamless vim/tmux navigation
+Plug 'rking/ag.vim'
+
+" Plug 'vim-scripts/SearchComplete' " Tab completion in searches
+Plug 'rhysd/open-pdf.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
+
+call plug#end()               " any plugis should be before this
+filetype plugin indent on     " required
 "}}}
 "Editor:---------------------------------------------------------------{{{
 
@@ -71,7 +187,6 @@ set nojoinspaces   " dont add extra spaces when joining lines
 
 " make Y work consistently to C and D
 nnoremap Y y$
-Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
 
 " Enable "bracketed paste mode"
 " http://stackoverflow.com/a/7053522/31493
@@ -91,40 +206,16 @@ endif
 "}}}--------------------[ end Editor  ]-----------------------------------
 " Various Bundles:---------------------------------------------------------------{{{
 " General:
-Plug 'tpope/vim-repeat' " enable repeating supported plugin maps with .
-Plug 'tpope/vim-eunuch' " nice UNIX helpers like SudoWrite, etc
 
 " Editing Plugins: ----------------------------------------
-Plug 'tomtom/tcomment_vim'          " easy code commenting
-Plug 'tpope/vim-surround'           " easy pair characters manipulation
-Plug 'Raimondi/delimitMate'         " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
-Plug 'mattn/emmet-vim'              " new era of zencoding :)
-Plug 'Lokaltog/vim-easymotion'      " jump, jump, jump around
-Plug 'terryma/vim-multiple-cursors' " sublime multi cursors wannabe
-Plug 'matchit.zip'                  " match tags :)
 " Faster matching
 nmap <Tab> %
 vmap <Tab> %
 
-" Text Objects: --------------------------------------------
-Plug 'https://github.com/kana/vim-textobj-user/'         " text object plugin, add abstraction layer for other plugins
-Plug 'https://github.com/nelstrom/vim-textobj-rubyblock' " adds {ar/ir} text objects
-Plug 'https://github.com/akiyan/vim-textobj-php'         " adds {aP/iP}
-Plug 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
-" adds {af/if} and  {ac/ic} function/class
-
 
 " Neocomplete: --------------------------------------------
-Plug 'Shougo/vimproc.vim' " enable async stuff for Shougo's plugins
-" enable context_filetype
-
-Plug 'Shougo/context_filetype.vim'
-Plug 'Shougo/neocomplete.vim'
 let g:neocomplete#enable_at_startup=1
 " NeoSnippets: -----------------------------------------------{{{
-Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
 " Plug key-mappings.
 " imap <C-k>     <Plug>(neosnippet_expand_or_jump)
 " smap <C-k>     <Plug>(neosnippet_expand_or_jump)
@@ -153,23 +244,13 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " open snippets dir
 map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
 "}}}
-" CSM:
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-" Tags:
-Plug 'majutsushi/tagbar'
 " map <Leader>s :TagbarOpenAutoClose<CR>
 " TODO: replace with https://github.com/h1mesuke/unite-outline
 
 
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim' " Gist from withing vim :)
 nnoremap <LEADER>g :Gist<CR>
 "}}}--------------------[ end Various Bundles  ]----------------------------------------
 " Preprocessors: ------------------------------------------{{{
-Plug 'groenewege/vim-less'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'kchmck/vim-coffee-script'
 " CSS and LessCSS -------------------------------------{{{
 
 augroup ft_css
@@ -189,24 +270,15 @@ augroup END
 " }}}
 " }}} ------------[end preprocessors]------------
 " Python:---------------------------------------------------------------{{{
-Plug 'klen/python-mode'
 
 let g:pymode_virtualenv = 1
 let g:pymode_virtualenv_path = $VIRTUAL_ENV
 let g:pymode_run_bind = '<leader>pr'
 nnoremap <Leader>pl :PymodeLintAuto<CR>
 
-Plug 'farfanoide/vim-kivy'
 "}}}--------------------[ end Python ]----------------------------------------
 " Ruby:---------------------------------------------------------------{{{
 
-Plug 'tpope/rbenv-ctags'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-endwise'
-Plug 'https://github.com/vim-ruby/vim-ruby'
-Plug 'tpope/vim-Bundler'
-Plug 'sunaku/vim-ruby-minitest'
-Plug 'ecomba/vim-ruby-refactoring'
 
 let g:ruby_refactoring_map_keys = 0
 
@@ -222,36 +294,11 @@ let g:ruby_refactoring_map_keys = 0
 " PHP:---------------------------------------------------------------{{{
 " Plug 'shawncplus/phpcomplete.vim'
 "--with-lua Plug 'vim-scripts/symfony.vim'
-Plug 'spf13/PIV'
-Plug 'arnaud-lb/vim-php-namespace'
 "}}}--------------------[ end PHP  ]----------------------------------------
-" Syntax Plugins:--------------------------------------------------{{{
 
-Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <Leader>t :Tabularize<CR>
-
-Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
-Plug 'tejr/vim-tmux'                    " tmux conf files support
-Plug 'vim-scripts/bats.vim'             " Bats support
-Plug 'plasticboy/vim-markdown'          " Markdown support
-Plug 'jceb/vim-orgmode'                 " OrgMode support
-Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
-Plug 'elixir-lang/vim-elixir'           " Elixir support
-Plug 'scrooloose/syntastic'             " Syntax check
-Plug 'suan/vim-instant-markdown'        " Preview markdown files
-Plug 'honza/dockerfile.vim'             " Dockerfile support
-Plug 'evidens/vim-twig'                 " Twig support
-Plug 'rizzatti/dash.vim'                " Dash integration
-Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
-Plug 'evanmiller/nginx-vim-syntax'      " Nginx
-Plug 'stephpy/vim-yaml'
-Plug 'lmeijvogel/vim-yaml-helper'
-Plug 'xsbeats/vim-blade'
-
-"}}}
 " Files:---------------------------------------------------------------{{{
 " Fuzzy file/buffer/mru finder
-Plug 'kien/ctrlp.vim'
 
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 1
@@ -266,13 +313,11 @@ let g:ctrlp_custom_ignore = {
 
 map <c-s> :CtrlPTag<CR>
 
-Plug 'tacahiroy/ctrlp-funky'
 let g:ctrlp_extensions = ['funky']
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
 map <Leader>s :CtrlPFunky<CR>
 
-Plug 'scrooloose/nerdtree'
 " TODO: autoreload when creating new files with nerdtree
 
 " Show/Hide NerdTree
@@ -283,7 +328,6 @@ let g:NERDTreeMapOpenVSplit='v'      " keep mappings between ctrlp and nerdtree 
 let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap files
 set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
 
-Plug 'jistr/vim-nerdtree-tabs'
 " Replace previous options with yet another plugn:
 let g:nerdtree_tabs_open_on_console_startup=0
 let g:nerdtree_tabs_open_on_gui_startup=0
@@ -292,24 +336,6 @@ let g:nerdtree_tabs_focus_on_files=1
 
 "}}}--------------------[ end Files  ]----------------------------------------
 " Eye Candy:---------------------------------------------------------------{{{
-" --------------[Themes]-----------------------------------------------------"{{{
-Plug 'junegunn/seoul256.vim'
-Plug 'farfanoide/vim-facebook'
-Plug 'w0ng/vim-hybrid'
-Plug 'baskerville/bubblegum'
-Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
-Plug 'jpo/vim-railscasts-theme'
-Plug '29decibel/codeschool-vim-theme'
-Plug 'vim-scripts/apprentice.vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'AlxHnr/clear_colors'
-Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
-Plug 'abra/vim-abra'
-Plug 'freeo/vim-kalisi'
-Plug 'morhetz/gruvbox'
-
-"}}}
 
 syntax on " Enable syntax highligting
 
@@ -328,7 +354,6 @@ set cursorline " Highlight current line
 set noshowmode " Remove second status bar when using powerline
 
 " --------------[Powerline]--------------------------------------------------
-Plug 'bling/vim-airline'          " vimscript airline, yay!
 let g:airline_powerline_fonts = 1 " use powerline fonts
 " let g:airline_left_sep=' '
 " let g:airline_right_sep=' '
@@ -368,7 +393,6 @@ endfunction
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
 " History:---------------------------------------------------------------{{{
 
-Plug 'csexton/trailertrash.vim' " Trailing whitespaces
 map <Leader>tw :TrailerTrim<CR>
 
 "}}}--------------------[ end History  ]----------------------------------------
@@ -388,8 +412,6 @@ vnoremap ? ?\v
 " Map SPACE to remove search highlighting
 noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
 
-Plug 'vim-scripts/SearchComplete' " Tab completion in searches
-Plug 'rking/ag.vim'
 "}}}--------------------[ end Search  ]------------------------------------
 " Windows Tabs:-----------------------------{{{
 set title " Show the filename in the window titlebar
@@ -417,7 +439,6 @@ function! ToggleMaxWins()
 endfunction
 nnoremap <Leader>z :call ToggleMaxWins()<CR>
 
-Plug 'christoomey/vim-tmux-navigator' " seamless vim/tmux navigation
 " Window Navigation:
 nnoremap <C-j> <C-W><C-J>
 nnoremap <C-k> <C-W><C-K>
@@ -547,7 +568,6 @@ execute "set softtabstop=".tabsize
 set expandtab " Use spaces instead of tabs
 
 
-Plug 'tpope/vim-unimpaired' " Some nice text object manipulation mappings
 
 " Terminal Bubbling:-------------------
 " Bubble multiple lines
@@ -625,7 +645,6 @@ endfunction
 " map <Leader>b :w<CR> :!your command here %<CR>
 
 " PDF auto conversion -> requires xpdf which in turn requires xquartz
-Plug 'rhysd/open-pdf.vim'
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
 
@@ -636,16 +655,10 @@ autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload v
 au BufNewFile,BufRead *.org setlocal filetype=org                " Org files
 au BufNewFile,BufRead *.md setlocal filetype=markdown            " Treat .md files as Markdown
 
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
 let g:goyo_width = 80
 let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 " Plug End: ------------------------------------------------------------------{{{
-Plug 'AndrewRadev/switch.vim'
-" Plug 'Shougo/unite.vim'
-call plug#end()               " any plugis should be before this
-filetype plugin indent on     " required
 
 
 set background=dark
