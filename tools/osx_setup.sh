@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Vim macro to convert comment line and command line into ansible task
+#<jI- name: dl.jIosx_wi€kb: wcWdomain€kr€kb=Wikey=Wcltype=Wivalue=A state=present
+
 # Ask for the administrator password upfront
 sudo -v
 
@@ -199,6 +202,9 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
   # Hurry those animations the hell up!
   defaults write com.apple.dock expose-animation-duration -float 0.12
 
+  # disable the focus ring animation (10.10+)
+  defaults write -globalDomain NSUseAnimatedFocusRing -bool false
+
   # Disable Dashboard
   defaults write com.apple.dashboard mcx-disabled -bool true
 
@@ -297,6 +303,10 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
   # Open and save files as UTF-8 in TextEdit
   defaults write com.apple.TextEdit PlainTextEncoding -int 4
   defaults write com.apple.TextEdit PlainTextEncodingForWrite -int 4
+  # }}}
+  # [ Sound ] {{{
+  # TODO: this breaks sound prefpane
+  # defaults write com.apple.systemsound com.apple.sound.beep.volume -string "0.4719998240470886"
   # }}}
   # [ TODO ] {{{
   #https://github.com/mathiasbynens/dotfiles/blob/master/.osx
