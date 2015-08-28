@@ -163,6 +163,9 @@ alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pu
 alias scp='scp -r'
 alias sshfixpermissions='chmod -R 700 "$HOME/.ssh" && chmod 600 "$HOME/.ssh/*rsa" && chmod 644 "$HOME/.ssh/*pub"'
 # }}}
+# ---------------------[ Docker ]-------------------------------------{{{
+alias dm='docker-machine'
+# }}}
 # ---------------------[ Modeline ]-----------------------------------{{{
 # _*_ mode: sh _*_
 # vi: set ft=sh :

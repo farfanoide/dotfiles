@@ -15,11 +15,19 @@ export EDITOR='vim'
 # make vim and tmux play nicely regarding colors
 [ $TERM = xterm ] && export TERM=xterm-256color
 
-# _set_null_glob
-# for file in "/tmp/$(whoami)/env/"*; do source $file; done
-# _unset_null_glob
-
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 
+# Python stuff --------------{{{
+export WORKON_HOME=$HOME/.virtualenvs
+export PROJECT_HOME=$HOME/Develop/src
+export VIRTUALENVWRAPPER_SCRIPT="$(brew --prefix)/bin/virtualenvwrapper.sh"
+export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
+gpip() { PIP_REQUIRE_VIRTUALENV="" /usr/local/bin/pip2 $* ;} # unless explicit call
+# end Python stuff -----------}}}
+
+source $(brew --prefix)/bin/virtualenvwrapper_lazy.sh
+
 # ls options
-if _mac_osx; then export CLICOLOR=1; fi
+if _mac_osx; then
+  export CLICOLOR=1
+fi

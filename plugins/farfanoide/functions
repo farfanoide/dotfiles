@@ -41,12 +41,11 @@ _unset_null_glob() {
 # for repo in lsvirtualenv -b do virtualenv $repo
 
 
-enable_virtualenv(){
-  # python -> virtualenv(wrapper)
-  if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
-    export WORKON_HOME="$HOME/.virtualenvs"
-    source /usr/local/bin/virtualenvwrapper.sh
-    export PROJECT_HOME=$HOME/Develop/sites
+enable_machine() {
+  if [ $# -ge 1 ]; then
+    eval "$(docker-machine env $*)"
+  else
+    eval "$(docker-machine env default)"
   fi
 }
 

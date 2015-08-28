@@ -25,7 +25,4 @@ bindings_file="$dir/bindings"
 # clean up after ourselves
 unset dir env_file alias_file func_file path_file
 
-# enable virtualenv custom function
-enable_virtualenv
-
 chpwd () { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ;}
