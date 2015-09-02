@@ -2,9 +2,6 @@
 set nocompatible    " be iMproved, required
 filetype off        " required
 
-" Set the runtime path to include Vundle and initialize
-" set rtp+=~/.vim/bundle/vundle/
-" call vundle#begin()
 call plug#begin('~/.vim/plugged')
 
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
@@ -62,7 +59,6 @@ Plug 'ecomba/vim-ruby-refactoring'
 
 " PHP: -----------------------------------------------------------
 Plug 'spf13/PIV'
-Plug 'arnaud-lb/vim-php-namespace'
 
 Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 
@@ -83,12 +79,13 @@ Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 Plug 'stephpy/vim-yaml'
 Plug 'lmeijvogel/vim-yaml-helper'
-Plug 'xsbeats/vim-blade'
 Plug 'chase/vim-ansible-yaml'
+Plug 'xsbeats/vim-blade'
+Plug 'Chiel92/vim-autoformat'
 
 Plug 'kien/ctrlp.vim'
 Plug 'tacahiroy/ctrlp-funky'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'AndrewRadev/switch.vim'
 
@@ -159,15 +156,6 @@ set binary                " Don’t add empty newlines at the end of files
 set noswapfile
 set nobackup
 set nowritebackup
-" set backupdir=~/.vim/backups//
-" set directory=~/.vim/swaps//
-" double slashes for saving swaps/backups with full path
-
-" Tell Vim to use an undo file
-" if exists("&undodir")
-"   set undofile
-"   set undodir=~/.vim/undo
-" endif
 
 set shortmess=atI  " Don't show 'Hit ENTER to continue' message
 set laststatus=2   " Always show status line (not needed when using airline)
@@ -178,7 +166,7 @@ set number         " Use normal numbers
 set relativenumber " and relative line numbers
 set autowriteall   " Write all buffers
 set autoread       " Automatically read a file when it is changed from the outside
-" set lazyredraw     " Don't redraw while executing macros
+set lazyredraw     " Don't redraw while executing macros
 set showcmd        " Show commands as you type them
 set hidden         " allow unsaved changes to be hidden
 set scrolloff=3    " Start scrolling three lines before the horizontal window border
@@ -204,10 +192,6 @@ if &term =~ "xterm.*"
   cmap <Esc>[201~ <nop>
 endif
 "}}}--------------------[ end Editor  ]-----------------------------------
-" Various Bundles:---------------------------------------------------------------{{{
-" General:
-
-" Editing Plugins: ----------------------------------------
 " Faster matching
 nmap <Tab> %
 vmap <Tab> %
@@ -216,12 +200,6 @@ vmap <Tab> %
 " Neocomplete: --------------------------------------------
 let g:neocomplete#enable_at_startup=1
 " NeoSnippets: -----------------------------------------------{{{
-" Plug key-mappings.
-" imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-" xmap <C-k>     <Plug>(neosnippet_expand_target)
-" xmap <C-l>     <Plug>(neosnippet_start_unite_snippet_target)
-"
 " SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?
       \ "\<Plug>(neosnippet_expand_or_jump)"
@@ -236,70 +214,35 @@ if has('conceal')
 endif
 
 " Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
+let g:neosnippet#enable_snipmate_compatibility=1
 
 " add custom snippets
 " let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets,~/.vim/snippets'
 
-" open snippets dir
-map <Leader>h :vsp ~/.vim/Bundle/vim-snippets/snippets/<CR>
 "}}}
-" map <Leader>s :TagbarOpenAutoClose<CR>
+" map <LEADER>s :TagbarOpenAutoClose<CR>
 " TODO: replace with https://github.com/h1mesuke/unite-outline
 
-
 nnoremap <LEADER>g :Gist<CR>
-"}}}--------------------[ end Various Bundles  ]----------------------------------------
-" Preprocessors: ------------------------------------------{{{
-" CSS and LessCSS -------------------------------------{{{
 
-augroup ft_css
-  au!
+" CSS: ------------------------------------------{{{
+au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <LEADER>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+" }}} ------------[end CSS ]---------------------
 
-  au BufNewFile,BufRead *.less setlocal filetype=less
-
-  au Filetype less,css setlocal foldmethod=marker
-  au Filetype less,css setlocal foldmarker={,}
-  au Filetype less,css setlocal omnifunc=csscomplete#CompleteCSS
-  au Filetype less,css setlocal iskeyword+=-
-
-  " Use <leader>S to sort properties.
-  au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <leader>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
-augroup END
-
-" }}}
-" }}} ------------[end preprocessors]------------
 " Python:---------------------------------------------------------------{{{
 
+let g:pymode_doc = 0
 let g:pymode_virtualenv = 1
 let g:pymode_virtualenv_path = $VIRTUAL_ENV
-let g:pymode_run_bind = '<leader>pr'
-nnoremap <Leader>pl :PymodeLintAuto<CR>
+let g:pymode_run_bind = '<LEADER>pr'
+nnoremap <LEADER>pl :PymodeLintAuto<CR>
 
 "}}}--------------------[ end Python ]----------------------------------------
 " Ruby:---------------------------------------------------------------{{{
-
-
 let g:ruby_refactoring_map_keys = 0
-
-
-" " Rails AutoCompletion (test)
-" let g:rubycomplete_buffer_loading = 1
-" let g:rubycomplete_rails = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_buffer_loading = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_classes_in_global = 1
-" autocmd FileType ruby,eruby let g:rubycomplete_rails = 1
-"
 "}}}--------------------[ end Ruby ]----------------------------------------
-" PHP:---------------------------------------------------------------{{{
-" Plug 'shawncplus/phpcomplete.vim'
-"--with-lua Plug 'vim-scripts/symfony.vim'
-"}}}--------------------[ end PHP  ]----------------------------------------
-
-map <Leader>t :Tabularize<CR>
+map <LEADER>t :Tabularize<CR>
 " Files:---------------------------------------------------------------{{{
-" Fuzzy file/buffer/mru finder
-
 let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
 let g:ctrlp_use_caching = 1
 let g:ctrlp_prompt_mappings = {
@@ -313,20 +256,21 @@ let g:ctrlp_custom_ignore = {
 
 map <c-s> :CtrlPTag<CR>
 
-let g:ctrlp_extensions = ['funky']
+let g:ctrlp_extensions = ['funky', 'tag']
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
-map <Leader>s :CtrlPFunky<CR>
+map <LEADER>s :CtrlPFunky<CR>
 
 " TODO: autoreload when creating new files with nerdtree
 
 " Show/Hide NerdTree
-map <Leader>n :NERDTreeToggle<CR>
+map <LEADER>n :NERDTreeToggle<CR>
 " Find current buffer in nerdtree
-noremap <Leader>r :NERDTreeFind<CR>
+noremap <LEADER>r :NERDTreeFind<CR>
 let g:NERDTreeMapOpenVSplit='v'      " keep mappings between ctrlp and nerdtree concise
 let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap files
 set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
+set guioptions-=R                    " Hide nerdtree's window scrollbar on macvim
 
 " Replace previous options with yet another plugn:
 let g:nerdtree_tabs_open_on_console_startup=0
@@ -340,7 +284,7 @@ let g:nerdtree_tabs_focus_on_files=1
 syntax on " Enable syntax highligting
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
-set synmaxcol=300
+set synmaxcol=130
 if has('gui_running')
   set guifont=PragmataPro\ for\ Powerline:h14
   set linespace=7
@@ -358,7 +302,7 @@ let g:airline_powerline_fonts = 1 " use powerline fonts
 " let g:airline_left_sep=' '
 " let g:airline_right_sep=' '
 let g:airline_theme='bubblegum'   " nice theme
-let g:airline_theme='tomorrow'    " nice theme
+" let g:airline_theme='tomorrow'    " nice theme
 
 set linespace=5
 " if has('gui_running')
@@ -390,20 +334,16 @@ function! HideUnwantedBackgrounds()
   source ~/.vim/default_colors
 endfunction
 
+map <LEADER>tw :TrailerTrim<CR>
 "}}}--------------------[ end Eye Candy  ]-----------------------------------
-" History:---------------------------------------------------------------{{{
-
-map <Leader>tw :TrailerTrim<CR>
-
-"}}}--------------------[ end History  ]----------------------------------------
 " Search:---------------------------------------------------------------{{{
-
 set hlsearch   " Highlight searches
 set ignorecase " Ignore case of searches
 set smartcase  " ...unless at least one capital letter in search pattern
 set incsearch  " Highlight dynamically as pattern is typed
 set gdefault   " Add the g flag to search/replace by default
 
+" Use {very}magix regexes by default
 nnoremap / /\v
 vnoremap / /\v
 nnoremap ? ?\v
@@ -415,8 +355,6 @@ noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
 "}}}--------------------[ end Search  ]------------------------------------
 " Windows Tabs:-----------------------------{{{
 set title " Show the filename in the window titlebar
-
-" sane splitting
 set splitbelow            " hsplits below by default
 set splitright            " vsplits right by default
 au VimResized * :wincmd = " Resize splits when the window is resized
@@ -437,7 +375,7 @@ function! ToggleMaxWins()
     let g:windowMax=1
   endif
 endfunction
-nnoremap <Leader>z :call ToggleMaxWins()<CR>
+nnoremap <LEADER>z :call ToggleMaxWins()<CR>
 
 " Window Navigation:
 nnoremap <C-j> <C-W><C-J>
@@ -461,11 +399,8 @@ noremap <silent> ¬ <C-w>5>
 
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
-" ctrl+a -> select all
-" nnoremap <C-a> ggVG
-" format paragraph and restor cursor position
-map <Leader>fp gwap
-" format as html
+" format paragraph and restore cursor position
+map <LEADER>fp gwap
 function! s:FormatAsHtml()
   let l:save_cursor = getpos(".")
   let l:file_type = &filetype
@@ -475,7 +410,7 @@ function! s:FormatAsHtml()
   call setpos('.', l:save_cursor)
 endf
 command! -range=% FormatAsHtml call <SID>FormatAsHtml()
-map <Leader>fh :FormatAsHtml<CR>
+map <LEADER>fh :FormatAsHtml<CR>
 
 function! s:TrimCR()
   let l:save_cursor = getpos(".")
@@ -483,21 +418,20 @@ function! s:TrimCR()
   call setpos('.', l:save_cursor)
 endfunction
 command! -range=% TrimCR call <SID>TrimCR()
-map <Leader>tc :TrimCR<CR>
+map <LEADER>tc :TrimCR<CR>
 " Trim all
-map <Leader>ta :TrailerTrim <cr>:TrimCR <cr>
+map <LEADER>ta :TrailerTrim <cr>:TrimCR <cr>
 " Trim all and format
-map <Leader>taf :TrailerTrim <cr>:TrimCR <cr> :IndentBuffer<cr>
+map <LEADER>taf :TrailerTrim <cr>:TrimCR <cr> :IndentBuffer<cr>
 
 " extract let  to isntance variable. ie:
 "   let(:something) { create :something }
 " turns into:
 "   @something = create :something
-map <Leader>ei ^diwds(xea =wds{I@
+map <LEADER>ei ^diwds(xea =wds{I@
 
 " TODO: consider instance variables
 " s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
-
 
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
 " Faster Commands:---------------------------------------------------------------{{{
@@ -509,21 +443,18 @@ if has("autocmd")
   " TODO: |echo 'Directory created =>'expand("%:h")
 end
 " Faster save
-nnoremap <Leader>w :w!<CR>
-nnoremap <Leader>tn :tabnew<CR>
-
+nnoremap <LEADER>w :w!<CR>
+nnoremap <LEADER>tn :tabnew<CR>
 
 " Escape with jj
 inoremap jj <ESC>
 
 set formatprg=par\ -w80
 
-
 " Faster selections in visual mode
 let g:multi_line_jump=6
 execute "vnoremap J ".g:multi_line_jump."j"
 execute "vnoremap K ".g:multi_line_jump."k"
-
 
 " Join upper line at the end of current one
 nnoremap <LEADER>j ddkOpJ
@@ -540,9 +471,6 @@ nnoremap <LEADER>cd :cd %:p:h<CR>:pwd<CR>
 
 nnoremap <LEADER>dg :diffget <CR>
 nnoremap <LEADER>dp :diffput <CR>
-" nnoremap <Leader>note :30vsp ~/.notes/notes.org<CR>
-" nnoremap <Leader>nt :30vsp ~/.notes/notes.org<CR>
-" nnoremap <Leader>sh :30vsp ~/.notes/shortcuts.org<CR>
 
 nnoremap <LEADER>lu YpVr-
 nnoremap <LEADER>ul YpVr=
@@ -559,15 +487,12 @@ command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
 set autoindent
 set smartindent
 
-
 " Tab expansion settings
 let tabsize = 2
 execute "set tabstop=".tabsize
 execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
 set expandtab " Use spaces instead of tabs
-
-
 
 " Terminal Bubbling:-------------------
 " Bubble multiple lines
@@ -599,7 +524,7 @@ function! s:IndentBuffer()
   silent! execute 'normal! gg=G``'
 endfunction
 command! -range=% IndentBuffer call <SID>IndentBuffer()
-nnoremap <leader>i :normal! gg=G``<CR>
+nnoremap <LEADER>i :normal! gg=G``<CR>
 
 function! SetTabSize(size)
   execute "set tabstop=".a:size
@@ -608,11 +533,6 @@ function! SetTabSize(size)
 endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
-" Plug 'Yggdroot/indentLine'
-" let g:indentLine_char='│'
-" iterm2 cant handle unicode chars :(
-" let g:indentLine_char='|'
-" map <Leader>it :IndentLinesToggle<CR>
 " }}}
 " Folding: ------------------------------------------{{{
 set foldenable
@@ -620,18 +540,18 @@ set foldenable
 " set foldlevelstart=0
 
 let ruby_fold=1
-set foldmethod=indent
+set foldmethod=syntax
 set foldcolumn=0
 set foldlevel=99
 
 " Toggle folds
-nnoremap <Leader><Space> za
-vnoremap <Leader><Space> za
+nnoremap <LEADER><Space> za
+vnoremap <LEADER><Space> za
 
 " Make zO recursively open whatever fold we're in, even if it's partially open.
 nnoremap zO zczO
 " fold tag
-nnoremap <leader>ft Vatzf
+nnoremap <LEADER>ft Vatzf
 " }}}
 "Miscellaneous:---------------------------------------------------------------{{{
 
@@ -642,14 +562,14 @@ function! Delegate(command)
 endfunction
 
 " Compile current buffer
-" map <Leader>b :w<CR> :!your command here %<CR>
+" map <LEADER>b :w<CR> :!your command here %<CR>
 
 " PDF auto conversion -> requires xpdf which in turn requires xquartz
 let g:pdf_convert_on_edit=1
 let g:pdf_convert_on_read=1
 
 " AutoCommands:
-nmap <Leader>v :vsp $MYVIMRC<CR>
+nmap <LEADER>v :vsp $MYVIMRC<CR>
 
 autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 au BufNewFile,BufRead *.org setlocal filetype=org                " Org files
@@ -658,8 +578,6 @@ au BufNewFile,BufRead *.md setlocal filetype=markdown            " Treat .md fil
 let g:goyo_width = 80
 let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
-" Plug End: ------------------------------------------------------------------{{{
-
 
 set background=dark
 colorscheme gruvbox
@@ -677,4 +595,3 @@ let g:DisableAutoPHPFolding = 1 " disable php auto-folding
 " change cursor position in insert mode
 inoremap <C-l> <right>
 inoremap <C-h> <left>
-"}}}
