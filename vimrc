@@ -143,8 +143,17 @@ set list        " Show special characters
 set listchars=tab:❯\ ,extends:»\,precedes:«,trail:•
 " alternate tab ⇥
 
+if has("unix")
+  let s:uname = system("uname -s")
+
+  if s:uname == "Darwin"
+    set clipboard=unnamed
+  else
+    set clipboard=unnamedplus
+  endif
+endif
+
 " Make vim more useful
-set clipboard=unnamed     " Use system wide clipboard by default
 set wildmenu              " Enhance command-line completion
 set wildmode=list:full    " Show complete list of options and navigation too
 set esckeys               " Allow cursor keys in insert mode
