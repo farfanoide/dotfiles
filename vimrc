@@ -83,9 +83,10 @@ Plug 'chase/vim-ansible-yaml'
 Plug 'xsbeats/vim-blade'
 Plug 'Chiel92/vim-autoformat'
 
-Plug 'kien/ctrlp.vim'
-Plug 'tacahiroy/ctrlp-funky'
-Plug 'scrooloose/nerdtree', { 'on':  ['NERDTreeToggle', 'NERDTreeFind'] }
+Plug 'ctrlpvim/ctrlp.vim'      " Fuzzy file search
+Plug 'FelikZ/ctrlp-py-matcher' " Improved matcher for ctrlp based on python
+Plug 'tacahiroy/ctrlp-funky'   " Symbol plugin for ctrlp
+Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'AndrewRadev/switch.vim'
 
@@ -144,9 +145,7 @@ set listchars=tab:❯\ ,extends:»\,precedes:«,trail:•
 " alternate tab ⇥
 
 if has("unix")
-  let s:uname = system("uname -s")
-
-  if s:uname == "Darwin"
+  if system('uname -s') =~ "Darwin"
     set clipboard=unnamed
   else
     set clipboard=unnamedplus
@@ -252,8 +251,17 @@ let g:ruby_refactoring_map_keys = 0
 "}}}--------------------[ end Ruby ]----------------------------------------
 map <LEADER>t :Tabularize<CR>
 " Files:---------------------------------------------------------------{{{
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-let g:ctrlp_use_caching = 1
+
+let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "**/*.pyc"
+      \ -g ""'
+
+let g:ctrlp_use_caching = 0
 let g:ctrlp_prompt_mappings = {
       \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>', '<c-h>'],
       \ }
@@ -269,8 +277,6 @@ let g:ctrlp_extensions = ['funky', 'tag']
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
 map <LEADER>s :CtrlPFunky<CR>
-
-" TODO: autoreload when creating new files with nerdtree
 
 " Show/Hide NerdTree
 map <LEADER>n :NERDTreeToggle<CR>
@@ -302,16 +308,15 @@ if has('gui_running')
   endif
 endif
 
-set t_Co=256   " Use 256 colours (Use this setting only if your terminal supports 256 colours)
+set t_Co=256   " Use 256 colours
 set cursorline " Highlight current line
 set noshowmode " Remove second status bar when using powerline
 
 " --------------[Powerline]--------------------------------------------------
 let g:airline_powerline_fonts = 1 " use powerline fonts
-" let g:airline_left_sep=' '
-" let g:airline_right_sep=' '
+let g:airline_left_sep=' '
+let g:airline_right_sep=' '
 let g:airline_theme='bubblegum'   " nice theme
-" let g:airline_theme='tomorrow'    " nice theme
 
 set linespace=5
 " if has('gui_running')
