@@ -2,123 +2,8 @@
 set nocompatible    " be iMproved, required
 filetype off        " required
 
-call plug#begin('~/.vim/plugged')
+source ~/.vim/plugins.vim
 
-Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
-Plug 'tpope/vim-repeat' " enable repeating supported plugin maps with .
-Plug 'tpope/vim-unimpaired' " Some nice text object manipulation mappings
-Plug 'tpope/vim-eunuch' " nice UNIX helpers like SudoWrite, etc
-Plug 'tomtom/tcomment_vim'          " easy code commenting
-Plug 'tpope/vim-surround'           " easy pair characters manipulation
-Plug 'Raimondi/delimitMate'         " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
-Plug 'mattn/emmet-vim'              " new era of zencoding :)
-Plug 'Lokaltog/vim-easymotion'      " jump, jump, jump around
-Plug 'terryma/vim-multiple-cursors' " sublime multi cursors wannabe
-Plug 'matchit.zip'                  " match tags :)
-
-" Text Objects: --------------------------------------------
-Plug 'https://github.com/kana/vim-textobj-user/'         " text object plugin, add abstraction layer for other plugins
-Plug 'https://github.com/nelstrom/vim-textobj-rubyblock' " adds {ar/ir} text objects
-Plug 'https://github.com/akiyan/vim-textobj-php'         " adds {aP/iP}
-Plug 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
-" adds {af/if} and  {ac/ic} function/class
-
-" Neocomplete: --------------------------------------------
-Plug 'Shougo/vimproc.vim' " enable async stuff for Shougo's plugins
-Plug 'Shougo/context_filetype.vim' " enable context_filetype
-Plug 'Shougo/neocomplete.vim'
-
-" NeoSnippets: -----------------------------------------------
-Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-
-Plug 'majutsushi/tagbar'
-
-Plug 'mattn/webapi-vim'
-Plug 'mattn/gist-vim' " Gist from withing vim :)
-
-Plug 'groenewege/vim-less'
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'kchmck/vim-coffee-script'
-
-Plug 'klen/python-mode'
-Plug 'farfanoide/vim-kivy'
-
-" Ruby: -----------------------------------------------------------
-Plug 'tpope/rbenv-ctags'
-Plug 'tpope/vim-rails'
-Plug 'tpope/vim-endwise'
-Plug 'https://github.com/vim-ruby/vim-ruby'
-Plug 'tpope/vim-Bundler'
-Plug 'sunaku/vim-ruby-minitest'
-Plug 'ecomba/vim-ruby-refactoring'
-
-" PHP: -----------------------------------------------------------
-Plug 'spf13/PIV'
-
-Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
-
-" Syntax Plugins:--------------------------------------------------
-Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
-Plug 'tejr/vim-tmux'                    " tmux conf files support
-Plug 'vim-scripts/bats.vim'             " Bats support
-Plug 'plasticboy/vim-markdown'          " Markdown support
-Plug 'jceb/vim-orgmode'                 " OrgMode support
-Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
-Plug 'elixir-lang/vim-elixir'           " Elixir support
-Plug 'scrooloose/syntastic'             " Syntax check
-Plug 'suan/vim-instant-markdown'        " Preview markdown files
-Plug 'honza/dockerfile.vim'             " Dockerfile support
-Plug 'evidens/vim-twig'                 " Twig support
-Plug 'rizzatti/dash.vim'                " Dash integration
-Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
-Plug 'evanmiller/nginx-vim-syntax'      " Nginx
-Plug 'stephpy/vim-yaml'
-Plug 'lmeijvogel/vim-yaml-helper'
-Plug 'chase/vim-ansible-yaml'
-Plug 'xsbeats/vim-blade'
-Plug 'Chiel92/vim-autoformat'
-
-Plug 'ctrlpvim/ctrlp.vim'      " Fuzzy file search
-Plug 'FelikZ/ctrlp-py-matcher' " Improved matcher for ctrlp based on python
-Plug 'tacahiroy/ctrlp-funky'   " Symbol plugin for ctrlp
-Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
-Plug 'jistr/vim-nerdtree-tabs'
-Plug 'AndrewRadev/switch.vim'
-
-" Themes: -----------------------------------------------------
-Plug 'junegunn/seoul256.vim'
-Plug 'farfanoide/vim-facebook'
-Plug 'w0ng/vim-hybrid'
-Plug 'baskerville/bubblegum'
-Plug 'tomasr/molokai'
-Plug 'altercation/vim-colors-solarized'
-Plug 'jpo/vim-railscasts-theme'
-Plug '29decibel/codeschool-vim-theme'
-Plug 'vim-scripts/apprentice.vim'
-Plug 'nanotech/jellybeans.vim'
-Plug 'AlxHnr/clear_colors'
-Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
-Plug 'abra/vim-abra'
-Plug 'freeo/vim-kalisi'
-Plug 'morhetz/gruvbox'
-" Plug 'Shougo/unite.vim'
-
-Plug 'bling/vim-airline'          " vimscript airline, yay!
-Plug 'csexton/trailertrash.vim' " Trailing whitespaces
-Plug 'christoomey/vim-tmux-navigator' " seamless vim/tmux navigation
-Plug 'rking/ag.vim'
-
-" Plug 'vim-scripts/SearchComplete' " Tab completion in searches
-Plug 'rhysd/open-pdf.vim'
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-
-call plug#end()               " any plugis should be before this
 filetype plugin indent on     " required
 "}}}
 "Editor:---------------------------------------------------------------{{{
@@ -144,13 +29,8 @@ set list        " Show special characters
 set listchars=tab:❯\ ,extends:»\,precedes:«,trail:•
 " alternate tab ⇥
 
-if has("unix")
-  if system('uname -s') =~ "Darwin"
-    set clipboard=unnamed
-  else
-    set clipboard=unnamedplus
-  endif
-endif
+set clipboard=unnamed
+set clipboard+=unnamedplus
 
 " Make vim more useful
 set wildmenu              " Enhance command-line completion
@@ -235,6 +115,7 @@ nnoremap <LEADER>g :Gist<CR>
 
 " CSS: ------------------------------------------{{{
 au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <LEADER>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
+au BufRead *.html.twig setlocal filetype=html.twig
 " }}} ------------[end CSS ]---------------------
 
 " Python:---------------------------------------------------------------{{{
@@ -299,7 +180,7 @@ let g:nerdtree_tabs_focus_on_files=1
 syntax on " Enable syntax highligting
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
-set synmaxcol=130
+set synmaxcol=230
 if has('gui_running')
   set guifont=PragmataPro\ for\ Powerline:h14
   set linespace=7
@@ -356,12 +237,6 @@ set ignorecase " Ignore case of searches
 set smartcase  " ...unless at least one capital letter in search pattern
 set incsearch  " Highlight dynamically as pattern is typed
 set gdefault   " Add the g flag to search/replace by default
-
-" Use {very}magix regexes by default
-nnoremap / /\v
-vnoremap / /\v
-nnoremap ? ?\v
-vnoremap ? ?\v
 
 " Map SPACE to remove search highlighting
 noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
@@ -588,13 +463,14 @@ nmap <LEADER>v :vsp $MYVIMRC<CR>
 autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 au BufNewFile,BufRead *.org setlocal filetype=org                " Org files
 au BufNewFile,BufRead *.md setlocal filetype=markdown            " Treat .md files as Markdown
+au BufNewFile,BufRead *.md setlocal textwidth=90                 " Break line after 90 chars
 
 let g:goyo_width = 80
 let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 
 set background=dark
-colorscheme gruvbox
+colorscheme hybrid
 call HideUnwantedBackgrounds()
 
 " dont comment out next line (dont know why this must go last)
