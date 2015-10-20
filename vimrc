@@ -238,6 +238,10 @@ set smartcase  " ...unless at least one capital letter in search pattern
 set incsearch  " Highlight dynamically as pattern is typed
 set gdefault   " Add the g flag to search/replace by default
 
+" Find and copy all occurrences of pattern into register
+" http://superuser.com/a/818607
+" %s/pattern/\=setreg('A', submatch(0), 'V')/gn
+
 " Map SPACE to remove search highlighting
 noremap <silent> <SPACE> :noh<cr>:call clearmatches()<cr>
 
@@ -460,7 +464,7 @@ let g:pdf_convert_on_read=1
 " AutoCommands:
 nmap <LEADER>v :vsp $MYVIMRC<CR>
 
-autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
+au BufWritePost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 au BufNewFile,BufRead *.org setlocal filetype=org                " Org files
 au BufNewFile,BufRead *.md setlocal filetype=markdown            " Treat .md files as Markdown
 au BufNewFile,BufRead *.md setlocal textwidth=90                 " Break line after 90 chars
