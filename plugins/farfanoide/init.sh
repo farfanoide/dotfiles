@@ -5,24 +5,14 @@ _linux()   { [ $(uname) = 'Linux' ] ;}
 # directory from which the plugins is being invoked
 dir="$PLUGINS_DIR/farfanoide"
 
-alias_file="$dir/alias"
-[ -e $alias_file ] && source $alias_file
+source "$dir/alias"
+source "$dir/functions" # load functions after alias so that they can be inherited
+source "$dir/env"       # load env vars after functions too use them
+source "$dir/path"
+source "$dir/bindings"
 
-# load functions after alias so that they can be inherited
-func_file="$dir/functions"
-[ -e $func_file ] && source $func_file
+# [[ $(current_shell) =~ "zsh" ]] && source "$dir/zsh"
 
-# load env vars after functions too use them
-env_file="$dir/env"
-[ -e $env_file ] && source $env_file
-
-path_file="$dir/path"
-[ -e $path_file ] && source $path_file
-
-bindings_file="$dir/bindings"
-[ -e $bindings_file ] && source $bindings_file
-
-# clean up after ourselves
-unset dir env_file alias_file func_file path_file
+unset dir # clean up after ourselves
 
 chpwd () { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ;}

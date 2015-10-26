@@ -5,6 +5,7 @@ if _mac_osx ; then
 else
   alias ls='ls -h --color=auto'
 fi
+alias d='dirs -v'
 # alias para colorcitos y giladas
 alias l='ls -o'
 alias la='ls -lA'
