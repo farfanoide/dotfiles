@@ -6,6 +6,15 @@ source ~/.vim/plugins.vim
 
 filetype plugin indent on     " required
 "}}}
+
+"Spell Checking:---------------------------------------------------------------{{{
+
+set spelllang=es
+set spelllang+=en
+set spellfile=~/.vim/dict.add
+au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
+
+"}}}
 "Editor:---------------------------------------------------------------{{{
 
 " Change Leader
@@ -211,8 +220,6 @@ set guioptions-=T " Dont show toolbar on gui
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
 
-" Plug 'gorodinskiy/vim-coloresque' " preatty hex colors
-
 function! ResetColors()
   " no background for those vertical splits, they look ugly
   execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
@@ -223,7 +230,6 @@ function! ResetColors()
   " remove underline from current line, and set background
   execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
 endfunction
-autocmd ColorScheme * :call ResetColors()
 
 function! HideUnwantedBackgrounds()
   source ~/.vim/default_colors
@@ -276,14 +282,15 @@ nnoremap j gj
 nnoremap k gk
 
 " Maps Alt-[h,j,k,l] to resizing a window split
-" use actual characters in mac instead of <[A|M]-[h|j|k|l]>
 " noremap <silent> <M-h> <C-w><
-noremap <silent> ˙ <C-w>5<
 " noremap <silent> <M-j> <C-W>-
-noremap <silent> ∆ <C-W5>-
 " noremap <silent> <M-k> <C-W>+
-noremap <silent> ˚ <C-W>5+
 " noremap <silent> <M-l> <C-w>>
+
+" use actual characters in mac instead of <[A|M]-[h|j|k|l]>
+noremap <silent> ˙ <C-w>5<
+noremap <silent> ∆ <C-W5>-
+noremap <silent> ˚ <C-W>5+
 noremap <silent> ¬ <C-w>5>
 
 " }}}
@@ -351,7 +358,7 @@ nnoremap <LEADER>j ddkOpJ
 " send current's buffer full dir into clipboard
 " '%' = current buffer; ':p' = full path modifier
 function! CurrentBufferToPasteBoard()
- silent execute "!echo %:p | pbcopy"| redraw!
+  silent execute "!echo %:p | pbcopy"| redraw!
 endfunction
 nnoremap <LEADER>cb call CurrentBufferToPasteBoard()
 
@@ -463,15 +470,28 @@ nmap <LEADER>v :vsp $MYVIMRC<CR>
 autocmd bufwritepost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 au BufNewFile,BufRead *.org setlocal filetype=org                " Org files
 au BufNewFile,BufRead *.md setlocal filetype=markdown            " Treat .md files as Markdown
-au BufNewFile,BufRead *.md setlocal textwidth=90                 " Break line after 90 chars
+au BufNewFile,BufRead *.md setlocal textwidth=80                 " Automatically break line after 80 chars
 
-let g:goyo_width = 80
-let g:goyo_linenr = 1
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 
-set background=dark
-colorscheme hybrid
-call HideUnwantedBackgrounds()
+
+"Screencasting:---------------------------------------------------------------{{{
+
+" TODO: check why iterm doesnt auto set ITERM_PROFILE with auto profile switching
+" If invoked with SC=1 light colors will be applied
+if $PWD == expand("$SRC_DIR/vim_thoughts")
+  set background=light
+  colorscheme solarized
+  let g:airline_theme='solarized'
+else
+  set background=dark
+  colorscheme hybrid
+  call HideUnwantedBackgrounds()
+  autocmd ColorScheme * :call ResetColors()
+endif
+
+"}}}--------------------[ end Screencasting  ]----------------------------------------
+
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
@@ -480,8 +500,12 @@ autocmd FileType * setlocal formatoptions-=o formatoptions-=r
 let g:is_bash=0
 
 let g:DisableAutoPHPFolding = 1 " disable php auto-folding
+let g:php_cs_fixer_path = '~/.bin/php-cs-fixer'
 
 " TODO: test vimrc to find where this breaks
 " change cursor position in insert mode
 inoremap <C-l> <right>
 inoremap <C-h> <left>
+" Search Colors
+execute 'hi Search ctermbg=green ctermfg=black'
+execute 'hi IncSearch ctermbg=white ctermfg=green'
