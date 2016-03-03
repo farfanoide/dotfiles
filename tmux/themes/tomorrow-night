@@ -1,14 +1,16 @@
-# tomorrow night theme
+# Tomorrow Night Theme
+
 set -g status-bg "#373b41"
 set -g status-fg "#c5c8c6"
+
 ### highlight active window
 setw -g window-status-current-fg "#373b41"
 setw -g window-status-current-bg "#81a2be"
 
 setw -g window-status-activity-bg "#373b41"
 setw -g window-status-activity-fg "#81a2be"
-## highlight activity in status bar
 
+## highlight activity in status bar
 setw -g window-status-activity-fg yellow
 setw -g window-status-activity-bg "#373b41"
 
@@ -27,9 +29,9 @@ set -g message-fg "#c5c8c6"
 set -g message-command-bg "#373b41"
 set -g message-command-fg "#c5c8c6"
 
-
 set-window-option -g window-status-activity-fg "#373b41"
 set-window-option -g window-status-activity-bg yellow
+
 set -g window-status-bell-fg red
 set -g window-status-bell-bg white
 
