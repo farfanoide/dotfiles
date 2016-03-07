@@ -115,20 +115,20 @@ call plug#end()               " any plugis should be before this
 " EndPlugins: -----------------------------------------------------------}}}
 " CtrlP: ----------------------------------------------------------------{{{
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup --vimgrep
+let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup
+      \ --ignore .git
+      \ --ignore .svn
+      \ --ignore .hg
+      \ --ignore .DS_Store
+      \ --ignore "*.pyc"
+      \ --ignore "*.woff"
+      \ --ignore "*.ttf"
+      \ --ignore "*.svg"
+      \ --ignore "*.jpg"
+      \ --ignore "*.eot"
       \ --ignore "*.jpg"
       \ --ignore "*.png"
       \ -g ""'
-      " \ --ignore .git
-      " \ --ignore .svn
-      " \ --ignore .hg
-      " \ --ignore .DS_Store
-      " \ --ignore "*.pyc"
-      " \ --ignore "*.woff"
-      " \ --ignore "*.ttf"
-      " \ --ignore "*.svg"
-      " \ --ignore "*.jpg"
-      " \ --ignore "*.eot"
 
 let g:ctrlp_use_caching = 0
 let g:ctrlp_prompt_mappings = {
