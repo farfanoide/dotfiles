@@ -1,6 +1,7 @@
 backups/*
 vim/bundle/*
 vim/plugged/*
+nvim/plugged/*
 vim/.cache/*
 bin/*
 tmux/yat.sh/sessions/*
