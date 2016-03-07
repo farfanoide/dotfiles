@@ -15,4 +15,9 @@ source "$dir/bindings"
 
 unset dir # clean up after ourselves
 
-chpwd () { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ;}
+chpwd () { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ; }
+
+eval "$(rbenv init - --no-rehash zsh)"
+
+# allow <c-h> mappings in nvim -> https://github.com/neovim/neovim/wiki/Troubleshooting#my-ctrl-h-mapping-doesnt-work
+infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > /tmp/$TERM.ti && tic /tmp/$TERM.ti
