@@ -20,10 +20,14 @@ Plug 'matchit.zip'                   " match tags :)
 Plug 'Shougo/deoplete.nvim'
 let g:deoplete#enable_at_startup=1
 
+" TODO: try fzf
+" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+" Plug 'junegunn/fzf.vim'
 Plug 'ctrlpvim/ctrlp.vim'      " Fuzzy file search
 Plug 'FelikZ/ctrlp-py-matcher' " Improved matcher for ctrlp based on python
 Plug 'tacahiroy/ctrlp-funky'   " Symbol plugin for ctrlp
 Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
+
 
 Plug 'bling/vim-airline'              " vimscript airline, yay!
 Plug 'vim-airline/vim-airline-themes'
@@ -35,6 +39,8 @@ map <LEADER>t :Tabularize<CR>
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
+Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
 " Plug 'junegunn/seoul256.vim'
@@ -52,6 +58,7 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'abra/vim-obsidian'
 " Plug 'freeo/vim-kalisi'
 Plug 'morhetz/gruvbox'
+Plug 'easysid/mod8.vim'
 
 
 " Plug 'rking/ag.vim'
@@ -76,7 +83,7 @@ Plug 'Shougo/neosnippet-snippets'
 " Syntax Plugins: --------------------------------------------------
 
 " Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
-" Plug 'tejr/vim-tmux'                    " tmux conf files support
+Plug 'tejr/vim-tmux'                    " tmux conf files support
 " Plug 'vim-scripts/bats.vim'             " Bats support
 " Plug 'jceb/vim-orgmode'                 " OrgMode support
 " Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
@@ -88,13 +95,15 @@ autocmd! BufWritePost * Neomake
 " Plug 'evidens/vim-twig'                 " Twig support
 " Plug 'rizzatti/dash.vim'                " Dash integration
 " Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
-" Plug 'evanmiller/nginx-vim-syntax'      " Nginx
+Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 " Plug 'stephpy/vim-yaml'
 " Plug 'lmeijvogel/vim-yaml-helper'
 " Plug 'xsbeats/vim-blade'
 " Plug 'Chiel92/vim-autoformat'
 Plug 'ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
+let g:vim_json_syntax_conceal = 0
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 
 
 " Text Objects: --------------------------------------------
@@ -113,6 +122,9 @@ Plug 'vim-utils/vim-man'
 Plug 'ryanoasis/vim-devicons'
 call plug#end()               " any plugis should be before this
 " EndPlugins: -----------------------------------------------------------}}}
+" fzf: ----------------------------------------------------------------{{{
+" TODO
+" Endfzf: -------------------------------------------------------------}}}
 " CtrlP: ----------------------------------------------------------------{{{
 let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
 let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup
@@ -145,7 +157,7 @@ map <c-s> :CtrlPTag<CR>
 let g:ctrlp_extensions = ['funky', 'tag']
 let g:ctrlp_funky_matchtype = 'path'
 let g:ctrlp_funky_syntax_highlight = 1
-map <LEADER>s :CtrlPFunky<CR>
+nmap <LEADER>s :CtrlPFunky<CR>
 " EndCtrlP: -------------------------------------------------------------}}}
 " Spell Checking:---------------------------------------------------------------{{{
 
@@ -156,7 +168,7 @@ au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
 
 " EndSpellChecking: -----------------------------------------------------}}}
 " Airline: --------------------------------------------------------------{{{
-let g:airline_extensions      = ['branch', 'ctrlp', 'hunks', 'tabline']
+let g:airline_extensions      = ['branch', 'ctrlp', 'hunks']
 let g:airline_powerline_fonts = 1
 " let g:airline_left_sep        = ' '
 " let g:airline_right_sep       = ' '
@@ -168,8 +180,8 @@ syntax on " Enable syntax highligting
 filetype plugin indent on     " required
 
 " Change Leader
-let mapleader=','
-let maplocalleader='\'
+" let mapleader=','
+" let maplocalleader='\'
 
 " Basically this makes terminal Vim work sanely.
 set backspace=2 " Make backspace work like most other apps
@@ -417,7 +429,7 @@ map <LEADER>ei ^diwds(xea =wds{I@
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
 " Faster Commands:---------------------------------------------------------------{{{
 " One less key to get to command mode
-map ; :
+" map ; :
 "
 " if has("autocmd")
 "   autocmd BufWritePre * :silent !mkdir -p %:p:h
@@ -570,7 +582,7 @@ au BufNewFile,BufRead *.org  setlocal filetype=org      " Org files
 au BufNewFile,BufRead *.md   setlocal filetype=markdown " Treat .md files as   Markdown
 au BufNewFile,BufRead *.md   setlocal textwidth=80      " Automatically break   line   after   80   chars
 au BufNewFile,BufRead *.vim* setlocal filetype=vim      " Org files
-au BufNewFile,BufRead *.vim  setlocal foldmethod=marker " Org files
+au BufNewFile,BufRead *.vim  setlocal foldmethod=marker " Fold
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
