@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
+
+if [ "$(pmset -g batt | grep -o 'AC Power')" ]; then
+  icon="#[fg=green]#[fg=white]"
+else
+  if (( $battery_capacity >= 90 )); then
+    icon="#[fg=green]#[fg=white]"
+  elif (( $battery_capacity >= 60 )); then
+    icon="#[fg=green]#[fg=white]"
+  elif (( $battery_capacity >= 40 )); then
+    icon="#[fg=green]#[fg=white]"
+  elif (( $battery_capacity >= 20 )); then
+    icon="#[fg=yellow]#[fg=white]"
+  elif (( $battery_capacity >= 0 )); then
+    icon="#[fg=red]#[fg=white]"
+  fi
+fi
+
+echo "${icon}  ${battery_capacity}%"
+
