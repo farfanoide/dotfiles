@@ -17,15 +17,10 @@ Plug 'Raimondi/delimitMate'          " easy quoting, etc. ie: insert ' -> ''; [ 
 Plug 'mattn/emmet-vim'               " new era of zencoding :)
 Plug 'matchit.zip'                   " match tags :)
 
-Plug 'Shougo/deoplete.nvim'
-let g:deoplete#enable_at_startup=1
+Plug 'Valloric/YouCompleteMe', {'do': './install.py --tern-completer'}
 
-" TODO: try fzf
-" Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-" Plug 'junegunn/fzf.vim'
-Plug 'ctrlpvim/ctrlp.vim'      " Fuzzy file search
-Plug 'FelikZ/ctrlp-py-matcher' " Improved matcher for ctrlp based on python
-Plug 'tacahiroy/ctrlp-funky'   " Symbol plugin for ctrlp
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+
 Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
 
 
@@ -36,14 +31,18 @@ Plug 'csexton/trailertrash.vim'       " Trailing whitespaces
 Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <LEADER>t :Tabularize<CR>
 
+Plug 'mattn/webapi-vim'
+Plug 'mattn/gist-vim' " Gist from withing vim :)
+
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+" Plug 'airblade/vim-gitgutter'
+Plug 'mhinz/vim-signify'
 Plug 'junegunn/gv.vim'
 Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
-" Plug 'junegunn/seoul256.vim'
+Plug 'junegunn/seoul256.vim'
 " Plug 'farfanoide/vim-facebook'
 Plug 'w0ng/vim-hybrid'
 " Plug 'baskerville/bubblegum'
@@ -59,12 +58,15 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'freeo/vim-kalisi'
 Plug 'morhetz/gruvbox'
 Plug 'easysid/mod8.vim'
+Plug 'chriskempson/base16-vim'
 
+Plug 'ryanoasis/vim-devicons'
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
 
-" Plug 'rking/ag.vim'
-" EndThemes: ------------------------------------------------------------}}}
+" end themes ------------------------------------------------------------}}}
 
-" Ruby: -----------------------------------------------------------
+" Ruby: -----------------------------------------------------------{{{
 
 Plug 'tpope/rbenv-ctags'
 Plug 'tpope/vim-rails'
@@ -75,12 +77,14 @@ Plug 'sunaku/vim-ruby-minitest'
 Plug 'ecomba/vim-ruby-refactoring'
 let g:ruby_refactoring_map_keys = 0
 Plug 'kmdsbng/vim-ruby-eval'
+" EndRuby: --------------------------------------------------------}}}
 
+" Snippets: -------------------------------------------------------{{{
 Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'SirVer/ultisnips'
+" end snippets ----------------------------------------------------}}}
 
-" Syntax Plugins: --------------------------------------------------
+" Syntax Plugins: --------------------------------------------------{{{
 
 " Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'tejr/vim-tmux'                    " tmux conf files support
@@ -91,74 +95,66 @@ Plug 'tejr/vim-tmux'                    " tmux conf files support
 Plug 'benekastah/neomake'             " Syntax check
 autocmd! BufWritePost * Neomake
 
-" Plug 'honza/dockerfile.vim'             " Dockerfile support
-" Plug 'evidens/vim-twig'                 " Twig support
-" Plug 'rizzatti/dash.vim'                " Dash integration
-" Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
+Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
-" Plug 'stephpy/vim-yaml'
-" Plug 'lmeijvogel/vim-yaml-helper'
-" Plug 'xsbeats/vim-blade'
-" Plug 'Chiel92/vim-autoformat'
 Plug 'ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+" Plug 'evidens/vim-twig'                 " Twig support
+" Plug 'rizzatti/dash.vim'                " Dash integration
+" Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
+" Plug 'stephpy/vim-yaml'
+" Plug 'lmeijvogel/vim-yaml-helper'
+" Plug 'xsbeats/vim-blade'
+" Plug 'Chiel92/vim-autoformat'
 
+" end syntaxt plugins ----------------------------------------------}}}
 
-" Text Objects: --------------------------------------------
+" Python: ---------------------------------------------------------{{{
+" Plug 'zchee/deoplete-jedi'
+" Plug 'klen/python-mode'
+" Plug '~/Develop/src/python-mode'
+" Plug '~/Develop/src/python-mode/'
+Plug 'mjbrownie/vim-htmldjango_omnicomplete'
+" end pypthon ------------------------------------------------------}}}
+
+" Text Objects: --------------------------------------------{{{
 
 Plug 'https://github.com/kana/vim-textobj-user/'         " text object plugin, add abstraction layer for other plugins
 " Plug 'https://github.com/nelstrom/vim-textobj-rubyblock' " adds {ar/ir} text objects
 " Plug 'https://github.com/akiyan/vim-textobj-php'         " adds {aP/iP}
 " Plug 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
 Plug 'whatyouhide/vim-textobj-erb', {'for': 'eruby'}                       " E for erb tags
-
 " adds {af/if} and  {ac/ic} function/class
+" end text objects -----------------------------------------}}}
 
-
-
+" Misc: ----------------------------------------------------{{{
 Plug 'vim-utils/vim-man'
-Plug 'ryanoasis/vim-devicons'
+" end misc -------------------------------------------------}}}
+
 call plug#end()               " any plugis should be before this
 " EndPlugins: -----------------------------------------------------------}}}
-" fzf: ----------------------------------------------------------------{{{
-" TODO
-" Endfzf: -------------------------------------------------------------}}}
-" CtrlP: ----------------------------------------------------------------{{{
-let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-let g:ctrlp_user_command = 'ag %s -i --nocolor --nogroup
-      \ --ignore .git
-      \ --ignore .svn
-      \ --ignore .hg
-      \ --ignore .DS_Store
-      \ --ignore "*.pyc"
-      \ --ignore "*.woff"
-      \ --ignore "*.ttf"
-      \ --ignore "*.svg"
-      \ --ignore "*.jpg"
-      \ --ignore "*.eot"
-      \ --ignore "*.jpg"
-      \ --ignore "*.png"
-      \ -g ""'
-
-let g:ctrlp_use_caching = 0
-let g:ctrlp_prompt_mappings = {
-      \ 'AcceptSelection("h")': ['<c-x>', '<c-cr>', '<c-s>', '<c-h>'],
-      \ }
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*
-let g:ctrlp_custom_ignore = {
-      \ 'dir':  '\v[\/]\.(git|hg|svn|source_maps)$',
-      \ 'file': '\v\.(exe|so|dll|pyc|ttf|png|gif|jpg)$'
-      \ }
-
-map <c-s> :CtrlPTag<CR>
-
-let g:ctrlp_extensions = ['funky', 'tag']
-let g:ctrlp_funky_matchtype = 'path'
-let g:ctrlp_funky_syntax_highlight = 1
-nmap <LEADER>s :CtrlPFunky<CR>
-" EndCtrlP: -------------------------------------------------------------}}}
+" NeoMake: ------------------------------------------------------------{{{
+let g:neomake_open_list = 0
+" EndNeoMake: ---------------------------------------------------------}}}
+" PythonMode: ---------------------------------------------------------{{{
+let g:pymode_lint = 0
+let g:pymode_lint_on_write = 0
+let g:pymode_lint_on_fly = 0
+let g:pymode_rope = 0
+let g:pymode_lint_checkers = []
+" EndPythonMode: ------------------------------------------------------}}}
+" Fzf: ----------------------------------------------------------------{{{
+let g:fzf_command_prefix = 'Fzf'
+nmap <c-p><c-p> :FzfFiles<cr>
+nmap <c-p><c-t> :FzfTags<cr>
+nmap <c-p><c-s> :FzfBTags<cr>
+let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit' }
+" end fzf -------------------------------------------------------------}}}
 " Spell Checking:---------------------------------------------------------------{{{
 
 set spelllang=es
@@ -166,13 +162,13 @@ set spelllang+=en
 set spellfile=~/.vim/dict.add
 au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
 
-" EndSpellChecking: -----------------------------------------------------}}}
+" end spell checking -----------------------------------------------------------}}}
 " Airline: --------------------------------------------------------------{{{
-let g:airline_extensions      = ['branch', 'ctrlp', 'hunks']
+let g:airline_extensions      = ['branch', 'hunks']
 let g:airline_powerline_fonts = 1
-" let g:airline_left_sep        = ' '
-" let g:airline_right_sep       = ' '
-let g:airline_theme           = 'gruvbox'
+let g:airline_left_sep        = ' '
+let g:airline_right_sep       = ' '
+let g:airline_theme           = 'base16_mocha'
 " EndAirline: -----------------------------------------------------------}}}
 " Editor: ---------------------------------------------------------------{{{
 
@@ -180,8 +176,8 @@ syntax on " Enable syntax highligting
 filetype plugin indent on     " required
 
 " Change Leader
-" let mapleader=','
-" let maplocalleader='\'
+let mapleader=','
+let maplocalleader='\'
 
 " Basically this makes terminal Vim work sanely.
 set backspace=2 " Make backspace work like most other apps
@@ -267,30 +263,54 @@ set guioptions-=R                    " Hide nerdtree's window scrollbar on macvi
 "
 "
 " EndEditor: ------------------------------------------------------------}}}
+" Indentation:------------------------------------{{{
+
+set smartindent " Smart indentation of new lines
+
+" Tab expansion settings
+let tabsize = 2
+execute "set tabstop=".tabsize
+execute "set shiftwidth=".tabsize
+execute "set softtabstop=".tabsize
+set expandtab " Use spaces instead of tabs
+
+" Terminal Bubbling:-------------------
+vnoremap <c-k> [egv
+vnoremap <c-j> ]egv
+vnoremap <c-h> <gv
+vnoremap <c-l> >gv
+
+" or alternatively
+vnoremap < <gv
+vnoremap > >gv
+
+" Paste and Indent
+nnoremap <esc>p p'[v']=
+nnoremap <esc>P P'[v']=
+
+" Indent entire document
+function! s:IndentBuffer()
+  silent! execute 'normal! gg=G``'
+endfunction
+command! -range=% IndentBuffer call <SID>IndentBuffer()
+nnoremap <LEADER>i :normal! gg=G``<CR>
+
+function! SetTabSize(size)
+  execute "set tabstop=".a:size
+  execute "set shiftwidth=".a:size
+  execute "set softtabstop=".a:size
+endfunction
+command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
+
+" }}}
 " Snippets: -------------------------------------------------------------{{{
-" Plugin key-mappings.
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
 
-" SuperTab like snippets behavior.
-imap <expr><TAB>
-\ pumvisible() ? "\<C-n>" :
-\ neosnippet#expandable_or_jumpable() ?
-\    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" For snippet_complete marker.
-if has('conceal')
-  set conceallevel=2 concealcursor=i
-endif
+let g:ycm_key_list_select_completion = ['<c-n>', '<down']
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 
-" Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility=1
-
-" add custom snippets
-let g:neosnippet#snippets_directory='~/.config/nvim/plugged/vim-snippets/snippets,~/.vim/snippets'
-
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " EndSnippets: ----------------------------------------------------------}}}
 " Eye Candy:---------------------------------------------------------------{{{
@@ -379,18 +399,21 @@ nnoremap j gj
 nnoremap k gk
 
 " Maps Alt-[h,j,k,l] to resizing a window split
-" noremap <silent> <M-h> <C-w><
-" noremap <silent> <M-j> <C-W>-
-" noremap <silent> <M-k> <C-W>+
-" noremap <silent> <M-l> <C-w>>
-"
-" " use actual characters in mac instead of <[A|M]-[h|j|k|l]>
-" noremap <silent> ˙ <C-w>5<
-" noremap <silent> ∆ <C-W5>-
-" noremap <silent> ˚ <C-W>5+
-" noremap <silent> ¬ <C-w>5>
-"
-" " }}}
+if has('mac')
+  " use actual characters in mac instead of <[A|M]-[h|j|k|l]>
+  noremap <silent> ˙ <C-w>5<
+  noremap <silent> ∆ <C-W5>-
+  noremap <silent> ˚ <C-W>5+
+  noremap <silent> ¬ <C-w>5>
+else
+  noremap <silent> <M-h> <C-w><
+  noremap <silent> <M-j> <C-W>-
+  noremap <silent> <M-k> <C-W>+
+  noremap <silent> <M-l> <C-w>>
+endif
+
+
+" }}}
 " Code Formatting:---------------------------------------------------------------{{{
 " format paragraph and restore cursor position
 map <LEADER>fp gwap
@@ -429,7 +452,7 @@ map <LEADER>ei ^diwds(xea =wds{I@
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
 " Faster Commands:---------------------------------------------------------------{{{
 " One less key to get to command mode
-" map ; :
+map ; :
 "
 " if has("autocmd")
 "   autocmd BufWritePre * :silent !mkdir -p %:p:h
@@ -475,57 +498,6 @@ nnoremap <LEADER>lu YpVr-
 nnoremap <LEADER>ul YpVr=
 
 "}}}--------------------[ end Faster Commands ]----------------------------------------
-" Indentation:------------------------------------{{{
-
-set smartindent " Smart indentation of new lines
-
-" Tab expansion settings
-let tabsize = 2
-execute "set tabstop=".tabsize
-execute "set shiftwidth=".tabsize
-execute "set softtabstop=".tabsize
-set expandtab " Use spaces instead of tabs
-
-" " Terminal Bubbling:-------------------
-" Bubble multiple lines
-vmap <C-k> [egv
-vmap <C-j> ]egv
-vmap <C-h> <gv
-vmap <C-l> >gv
-" or alternatively
-vnoremap < <gv
-vnoremap > >gv
-
-" GUI Bubbling: [single line]-----------
-" nmap <C-Up> [e
-" nmap <C-Down> ]e
-" nmap <C-Left> <<
-" nmap <C-Right> >>
-" [ multi line ]------------------------
-" vmap <C-Up> [egv
-" vmap <C-Down> ]egv
-" vmap <C-Left> <gv
-" vmap <C-Right> >gv
-"
-" Paste and Indent
-nnoremap <esc>p p'[v']=
-nnoremap <esc>P P'[v']=
-
-" Indent entire document
-function! s:IndentBuffer()
-  silent! execute 'normal! gg=G``'
-endfunction
-command! -range=% IndentBuffer call <SID>IndentBuffer()
-nnoremap <LEADER>i :normal! gg=G``<CR>
-
-function! SetTabSize(size)
-  execute "set tabstop=".a:size
-  execute "set shiftwidth=".a:size
-  execute "set softtabstop=".a:size
-endfunction
-command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
-
-" }}}
 " Folding: ------------------------------------------{{{
 set foldenable
 " set foldmethod=marker
