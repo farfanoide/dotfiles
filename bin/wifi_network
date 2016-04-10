@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+# ---------------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#
+#  Script to show current wifi network in tmux under Mac OS X
+#
+# ---------------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ---------------------------------------------------------------------------------------
+
+network=$(networksetup -getairportnetwork en0 | head -1)
+
+no_internet="\uf193"
+connected="\uf1eb"
+
+if [ "${network}" = 'You are not associated with an AirPort network.' ]; then
+  echo -e "#[fg=red]${no_internet} #[fg=white] No Internet"
+else
+  echo -e "#[fg=blue,nobold]${connected} #[fg=white]$(echo $network | cut -d ':' -f 2)"
+fi
