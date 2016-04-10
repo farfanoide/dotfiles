@@ -1,22 +1,42 @@
 #!/usr/bin/env bash
+# ---------------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#
+#  Script to show battery info in mac os x inside tmux statusbar
+#
+# ---------------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ---------------------------------------------------------------------------------------
 
 battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
 
-if [ "$(pmset -g batt | grep -o 'AC Power')" ]; then
-  icon="#[fg=green]#[fg=white]"
+plugged=;
+full=
+mid_full=
+mid=
+mid_empty=
+empty=
+
+if  pmset -g batt | grep -qo 'AC Power' ; then
+  icon="#[fg=green]${plugged}#[fg=white]"
 else
-  if (( $battery_capacity >= 90 )); then
-    icon="#[fg=green]#[fg=white]"
-  elif (( $battery_capacity >= 60 )); then
-    icon="#[fg=green]#[fg=white]"
-  elif (( $battery_capacity >= 40 )); then
-    icon="#[fg=green]#[fg=white]"
-  elif (( $battery_capacity >= 20 )); then
-    icon="#[fg=yellow]#[fg=white]"
-  elif (( $battery_capacity >= 0 )); then
-    icon="#[fg=red]#[fg=white]"
+  if (( battery_capacity >= 90 )); then
+    icon="#[fg=green]${full}#[fg=white]"
+  elif (( battery_capacity >= 60 )); then
+    icon="#[fg=green]${mid_full}#[fg=white]"
+  elif (( battery_capacity >= 40 )); then
+    icon="#[fg=green]${mid}#[fg=white]"
+  elif (( battery_capacity >= 20 )); then
+    icon="#[fg=yellow]${mid_empty}#[fg=white]"
+  elif (( battery_capacity >= 0 )); then
+    icon="#[fg=red]${empty}#[fg=white]"
   fi
 fi
 
 echo "${icon}  ${battery_capacity}%"
-

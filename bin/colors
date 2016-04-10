@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+_expand_spaces() {
+  times=$((3 - $1))
+  [ $times -gt 0 ] && printf ' %.s' $(seq 1 $times)
+}
+
+for color in {0..256} ; do #Colors
+  #Display the color
+  echo -en "\e[48;5;${color}m  ${color}$(_expand_spaces ${#color}) \t\e[0m"
+  #Display 10 colors per lines
+  if [ $(((color + 1) % 10)) == 0 ] ; then
+    echo #New line
+  fi
+done
