@@ -16,27 +16,27 @@
 
 battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
 
-plugged=;
-full=
-mid_full=
-mid=
-mid_empty=
-empty=
+plugged="\uf1e6"    # 
+full_batt="\uf240"  # 
+mid_full="\uf241"   # 
+mid_batt="\uf242"   # 
+mid_empty="\uf243"  # 
+empty_batt="\uf244" # 
 
-if  pmset -g batt | grep -qo 'AC Power' ; then
+if pmset -g batt | grep -qo 'AC Power' ; then
   icon="#[fg=green]${plugged}#[fg=white]"
 else
   if (( battery_capacity >= 90 )); then
-    icon="#[fg=green]${full}#[fg=white]"
+    icon="#[fg=green]${full_batt}#[fg=white]"
   elif (( battery_capacity >= 60 )); then
     icon="#[fg=green]${mid_full}#[fg=white]"
   elif (( battery_capacity >= 40 )); then
-    icon="#[fg=green]${mid}#[fg=white]"
+    icon="#[fg=green]${mid_batt}#[fg=white]"
   elif (( battery_capacity >= 20 )); then
     icon="#[fg=yellow]${mid_empty}#[fg=white]"
   elif (( battery_capacity >= 0 )); then
-    icon="#[fg=red]${empty}#[fg=white]"
+    icon="#[fg=red]${empty_batt}#[fg=white]"
   fi
 fi
 
-echo "${icon}  ${battery_capacity}%"
+echo -e "${icon}  ${battery_capacity}%"
