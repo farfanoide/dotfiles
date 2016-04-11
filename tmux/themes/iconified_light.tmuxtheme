@@ -1,5 +1,5 @@
 # ----------------------------------------------------------------------------
-# Iconified - Tmux Theme
+# Iconified Light - Tmux Theme
 # Created by Farfanoide <ivan6258@gmail.com>.
 # ----------------------------------------------------------------------------
 #
@@ -21,11 +21,13 @@ setw -g monitor-activity on
 # Windows: ------------------------------------{{{
 
 setw -g window-status-activity-attr none
-setw -g window-status-current-fg colour15
-setw -g window-status-current-bg black
-setw -g window-status-activity-bg black
-setw -g window-status-activity-fg white
-set -g window-status-format " #I:#W#{?window_linked, ,}#{?window_zoomed_flag, ,}#{?window_silence_flag, ,}#{?window_last_flag, ,}#{?window_activity_flag,#[fg=red] ,} "
+setw -g window-status-bg white
+setw -g window-status-fg colour14
+setw -g window-status-current-fg black
+setw -g window-status-current-bg white
+setw -g window-status-activity-bg white
+setw -g window-status-activity-fg colour14
+set -g window-status-format " #I:#W#{?window_linked, ,}#{?window_zoomed_flag, ,}#{?window_silence_flag, ,}#{?window_last_flag, #[fg=black],}#[default]#{?window_activity_flag,#[fg=red] ,}#[default] "
 set -g window-status-current-format "#I:#W #{?pane_synchronized, ,}#{?window_zoomed_flag, ,}"
 
 # end windows ---------------------------------}}}
@@ -50,23 +52,24 @@ set -g window-status-current-format "#I:#W #{?pane_synchronized, ,}#{?window_
 # end segments --------------------------------}}}
 # Status: -------------------------------------{{{
 
-set -g status-bg black
-set -g status-fg white
+set -g status-bg white
+set -g status-fg black
 set -g status-justify centre
 set -g status-interval 2
 set -g status-left-length 100
 set -g status-right-length 240
-set -g status-left-bg black
-set -g status-right-bg black
-set -g status-right-fg colour15
+set -g status-left-bg white
+set -g status-left-fg black
+set -g status-right-bg white
+set -g status-right-fg black
 
-set -g status-left "   #S #{?client_prefix, #[fg=red], #[fg=green]}  #[fg=white]#{?session_many_attached,   #{session_attached} clients attached ,}"
+set -g status-left "   #S #{?client_prefix, #[fg=red], #[fg=blue]}  #[default]#{?session_many_attached,   #{session_attached} clients attached ,}"
 set -g status-right " #(battery) | #(wifi_network) |   %H:%M |   #h "
 
 # end status ----------------------------------}}}
 # Panes: --------------------------------------{{{
 
-set -g pane-border-fg black
+set -g pane-border-fg colour14
 set -g pane-active-border-fg blue
 
 # end panes -----------------------------------}}}
