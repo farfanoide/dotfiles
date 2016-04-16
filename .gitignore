@@ -6,4 +6,5 @@ nvim/autoload/plug.vim
 vim/.cache/*
 bin/*
 tmux/yat.sh/sessions/*
+tmux/history
 vim/autoload/plug.vim
