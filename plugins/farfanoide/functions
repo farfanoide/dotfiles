@@ -49,6 +49,10 @@ enable_machine() {
   fi
 }
 
+add_apt_key() {
+  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $*
+}
+
 # test this:
 # remote_gzip() {
 #     parallel -S $1 --cleanup --return {/}.gz "gzip --best {} -c &gt; {/}.gz" ::: $2
