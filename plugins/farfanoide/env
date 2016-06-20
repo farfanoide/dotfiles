@@ -20,12 +20,16 @@ export VAGRANT_DEFAULT_PROVIDER=virtualbox
 # Python stuff --------------{{{
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Develop/src
-_mac_osx && export VIRTUALENVWRAPPER_SCRIPT="$(brew --prefix)/bin/virtualenvwrapper.sh"
+if _mac_osx; then
+  export VIRTUALENVWRAPPER_SCRIPT="$(brew --prefix)/bin/virtualenvwrapper.sh"
+else
+  export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
+fi
 export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
 gpip() { PIP_REQUIRE_VIRTUALENV="" /usr/local/bin/pip2 $* ;} # unless explicit call
 # end Python stuff -----------}}}
 
-_mac_osx && source "$(brew --prefix)/bin/virtualenvwrapper_lazy.sh"
+source "$(which virtualenvwrapper_lazy.sh)"
 
 # ls options
 if _mac_osx; then
