@@ -1,10 +1,8 @@
 # ---------------------[ General Stuff ]----------------------------------------{{{
-alias v='vim'
-if _mac_osx ; then
-  alias ls='ls -h'
-else
-  alias ls='ls -h --color=auto'
-fi
+alias v='nvim'
+alias vi='nvim'
+alias vim='nvim'
+_mac_osx && alias ls='ls -h' || alias ls='ls -h --color=auto'
 alias d='dirs -v'
 # alias para colorcitos y giladas
 alias l='ls -o'
@@ -36,6 +34,7 @@ alias pymulator='kivy ~/Develop/src/simuladorHDD/main.py'
 # requires brew install grc
 alias ctail='\grc tail'
 alias dateformat='date "+%d-%m-%Y"'
+alias pm='python manage.py'
 
 # override cp with advanced copy http://beatex.org/web/advancedcopy.html#compile
 if [[ -f "$HOME/.bin/cp" ]] ; then
@@ -43,6 +42,11 @@ if [[ -f "$HOME/.bin/cp" ]] ; then
 else
   alias cp='rsync --append --progress -azvrE'
 fi
+
+stream() {
+  peerflix $(pbpaste);
+}
+
 # }}}
 # ---------------------[ Mac stuff ]----------------------------------------{{{
 if _mac_osx ; then
@@ -91,9 +95,24 @@ alias ga='git add --all '
 alias ga.='ga .'
 alias gd='git diff '
 alias grv='git remote -v'
-# http://gyaresu.org/hacking/2012/06/19/a-better-git-log
-#alias gl="git log --pretty=oneline --abbrev-commit --graph --decorate"
-alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --"
+alias gcm='git commit -m'
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ' --abbrev-commit --"
+alias gfc='git clone'
+alias gc='git commit -v'
+alias gco='git checkout '
+alias gba='git branch -av'
+grt() { cd "$(repo_root)" ;}
+# }}}
+# ---------------------[ Mercurial ]----------------------------------{{{
+# TODO: add these to git itself to get proper tab completion
+alias hgs='hg status'
+alias ga='git add --all '
+alias ga.='ga .'
+alias gd='git diff '
+alias grv='git remote -v'
+alias gcm='git commit -m'
+alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ' --abbrev-commit --"
+alias gfc='git clone'
 alias gc='git commit -v'
 alias gco='git checkout '
 alias gba='git branch -av'
@@ -128,8 +147,8 @@ alias hl='heroku logs -t'
 hr(){ heroku run $*; }
 # }}}
 # ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
-bes() { bundle exec rails server $args 2> /dev/null || bundle exec rackup $* ;}
-bec() { bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh) ;}
+bes() { bundle exec rails server $* 2> /dev/null || bundle exec rackup $* ; }
+bec() { bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh) ; }
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
@@ -137,7 +156,7 @@ alias bed='bundle exec rails db'
 alias beg='be guard'
 # get development db name from database.yml
 devdb()    { cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2; }
-getdevdb() { echo "$(devdb)" | pbcopy;}
+getdevdb() { echo "$(devdb)" | pbcopy; }
 # }}}
 # ---------------------[ Vagrant ]----------------------------------------{{{
 alias vup='vagrant up'
@@ -153,7 +172,7 @@ alias vpr='vagrant provision'
 # ---------------------[ Symfony ]----------------------------------------{{{
 alias sy='./symfony'
 alias rmcl='rm -fr cache/* log/*'
-alias arreglarengine='vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php'
+alias arreglarengine='vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php +156'
 alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
 # }}}
 # ---------------------[ SSH ]----------------------------------------{{{
@@ -166,8 +185,16 @@ alias sshfixpermissions='chmod -R 700 "$HOME/.ssh" && chmod 600 "$HOME/.ssh/*rsa
 # }}}
 # ---------------------[ Docker ]-------------------------------------{{{
 alias dm='docker-machine'
+alias dr='docker run -it --rm'
+alias dv='docker version'
+alias dp='docker ps'
+alias dpa='docker ps -a'
+name_this() {
+  echo "$(whoami)/$(basename $(pwd))"
+}
 # }}}
 # ---------------------[ Modeline ]-----------------------------------{{{
 # _*_ mode: sh _*_
 # vi: set ft=sh :
+# vi: set fdm=marker :
 #}}}

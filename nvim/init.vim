@@ -1,15 +1,21 @@
-"                        _
-"  _ __ ___  _   ___   _(_)_ __ ___  _ __ ___
-" | '_ ` _ \| | | \ \ / / | '_ ` _ \| '__/ __|
-" | | | | | | |_| |\ V /| | | | | | | | | (__
-" |_| |_| |_|\__, | \_/ |_|_| |_| |_|_|  \___|
+" ====================================================
+
+"                               _
+"  _ __ ___  _   _   _ ____   _(_)_ __ ___  _ __ ___
+" | '_ ` _ | | | | | '_ \ \ / / | '_ ` _ \| '__/ __|
+" | | | | | | |_| | | | | \ V /| | | | | | | | | (__
+" |_| |_| |_|\__, | |_| |_|\_/ |_|_| |_| |_|_|  \___|
 "            |___/
+" ====================================================
+
+
 " Plugins: --------------------------------------------------------------{{{
 call plug#begin('~/.config/nvim/plugged')
 
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
 Plug 'tpope/vim-repeat'              " enable repeating supported plugin maps with .
 Plug 'tpope/vim-unimpaired'          " Some nice text object manipulation mappings
+
 Plug 'tpope/vim-eunuch'              " nice UNIX helpers like SudoWrite, etc
 Plug 'tomtom/tcomment_vim'           " easy code commenting
 Plug 'tpope/vim-surround'            " easy pair characters manipulation
@@ -17,7 +23,22 @@ Plug 'Raimondi/delimitMate'          " easy quoting, etc. ie: insert ' -> ''; [ 
 Plug 'mattn/emmet-vim'               " new era of zencoding :)
 Plug 'matchit.zip'                   " match tags :)
 
-Plug 'Valloric/YouCompleteMe', {'do': './install.py --tern-completer'}
+
+" Deoplete: -------------------------------------------------------{{{
+" Plug 'Valloric/YouCompleteMe', {'do': './install.py --tern-completer'}
+Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/neopairs.vim' " Auto insert pairs when complete done
+Plug 'Shougo/neco-vim'
+Plug 'Shougo/neoinclude.vim'
+" Plug 'zchee/deoplete-jedi'
+Plug 'Shougo/neco-syntax'
+Plug 'carlitux/deoplete-ternjs'
+Plug 'Konfekt/FastFold'
+Plug 'Shougo/vimproc.vim', {'do': 'make'} " enable async stuff for Shougo's plugins
+Plug 'm2mdas/phpcomplete-extended'
+Plug 'Shougo/echodoc.vim'
+Plug 'osyo-manga/vim-monster'
+" end deoplete ----------------------------------------------------}}}
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 
@@ -28,8 +49,17 @@ Plug 'bling/vim-airline'              " vimscript airline, yay!
 Plug 'vim-airline/vim-airline-themes'
 Plug 'csexton/trailertrash.vim'       " Trailing whitespaces
 
+Plug 'junegunn/vim-easy-align'
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+
 Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <LEADER>t :Tabularize<CR>
+Plug 'plasticboy/vim-markdown'          " Markdown support
+
+let g:vim_markdown_new_list_item_indent = 0
 
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
@@ -38,6 +68,8 @@ Plug 'mattn/gist-vim' " Gist from withing vim :)
 Plug 'tpope/vim-fugitive'
 " Plug 'airblade/vim-gitgutter'
 Plug 'mhinz/vim-signify'
+let g:signify_sign_delete = '-'
+
 Plug 'junegunn/gv.vim'
 Plug 'jlfwong/vim-mercenary'
 
@@ -45,6 +77,8 @@ Plug 'jlfwong/vim-mercenary'
 Plug 'junegunn/seoul256.vim'
 " Plug 'farfanoide/vim-facebook'
 Plug 'w0ng/vim-hybrid'
+Plug 'kristijanhusak/vim-hybrid-material'
+let g:enable_bold_font = 1
 " Plug 'baskerville/bubblegum'
 " Plug 'tomasr/molokai'
 Plug 'altercation/vim-colors-solarized'
@@ -53,7 +87,7 @@ Plug 'altercation/vim-colors-solarized'
 " Plug 'vim-scripts/apprentice.vim'
 " Plug 'nanotech/jellybeans.vim'
 " Plug 'AlxHnr/clear_colors'
-" Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
+Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
 " Plug 'abra/vim-obsidian'
 " Plug 'freeo/vim-kalisi'
 Plug 'morhetz/gruvbox'
@@ -81,6 +115,7 @@ Plug 'kmdsbng/vim-ruby-eval'
 
 " Snippets: -------------------------------------------------------{{{
 Plug 'honza/vim-snippets'
+" Plug 'Shougo/neosnippet-snippets'
 Plug 'SirVer/ultisnips'
 " end snippets ----------------------------------------------------}}}
 
@@ -88,7 +123,8 @@ Plug 'SirVer/ultisnips'
 
 " Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'tejr/vim-tmux'                    " tmux conf files support
-" Plug 'vim-scripts/bats.vim'             " Bats support
+Plug 'kchmck/vim-coffee-script'
+Plug 'vim-scripts/bats.vim'             " Bats support
 " Plug 'jceb/vim-orgmode'                 " OrgMode support
 " Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
 " Plug 'elixir-lang/vim-elixir'           " Elixir support
@@ -100,8 +136,10 @@ Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 Plug 'ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-" Plug 'evidens/vim-twig'                 " Twig support
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx' " JSX support
+let g:jsx_ext_required = 0 " Allow JSX in normal JS files
+Plug 'evidens/vim-twig'                 " Twig support
 " Plug 'rizzatti/dash.vim'                " Dash integration
 " Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
 " Plug 'stephpy/vim-yaml'
@@ -112,11 +150,11 @@ Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 " end syntaxt plugins ----------------------------------------------}}}
 
 " Python: ---------------------------------------------------------{{{
-" Plug 'zchee/deoplete-jedi'
-" Plug 'klen/python-mode'
+Plug 'klen/python-mode'
 " Plug '~/Develop/src/python-mode'
 " Plug '~/Develop/src/python-mode/'
 Plug 'mjbrownie/vim-htmldjango_omnicomplete'
+
 " end pypthon ------------------------------------------------------}}}
 
 " Text Objects: --------------------------------------------{{{
@@ -124,8 +162,9 @@ Plug 'mjbrownie/vim-htmldjango_omnicomplete'
 Plug 'https://github.com/kana/vim-textobj-user/'         " text object plugin, add abstraction layer for other plugins
 " Plug 'https://github.com/nelstrom/vim-textobj-rubyblock' " adds {ar/ir} text objects
 " Plug 'https://github.com/akiyan/vim-textobj-php'         " adds {aP/iP}
-" Plug 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
+Plug 'https://github.com/bps/vim-textobj-python'         " adds {]pf/[pf} and {[pc/]pc} motions previos/next function/class
 Plug 'whatyouhide/vim-textobj-erb', {'for': 'eruby'}                       " E for erb tags
+Plug 'kana/vim-textobj-fold'
 " adds {af/if} and  {ac/ic} function/class
 " end text objects -----------------------------------------}}}
 
@@ -134,27 +173,81 @@ Plug 'vim-utils/vim-man'
 " end misc -------------------------------------------------}}}
 
 call plug#end()               " any plugis should be before this
-" EndPlugins: -----------------------------------------------------------}}}
+" end plugins -----------------------------------------------------------}}}
+" Deoplete: -----------------------------------------------------------{{{
+let g:neopairs#enable = 1
+" inoremap <expr><c-k>
+"       \ deoplete#mappings#smart_close_popup()."\<c-k>"
+" autocmd CompleteDone * pclose!
+"
+" let g:deoplete#enable_at_startup = 1
+"
+" let g:echodoc_enable_at_startup = 1
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-k> deoplete#mappings#smart_close_popup()."\<C-k>"
+" inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
+
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#mappings#close_popup() . "\<CR>"
+endfunction
+" end deoplete --------------------------------------------------------}}}
 " NeoMake: ------------------------------------------------------------{{{
 let g:neomake_open_list = 0
-" EndNeoMake: ---------------------------------------------------------}}}
+" let g:neomake_airline = 1
+" end neomake ---------------------------------------------------------}}}
 " PythonMode: ---------------------------------------------------------{{{
+let g:pymode_doc = 0
+let g:pymode_doc_bind = ''
 let g:pymode_lint = 0
 let g:pymode_lint_on_write = 0
 let g:pymode_lint_on_fly = 0
 let g:pymode_rope = 0
 let g:pymode_lint_checkers = []
+let g:pymode_run = 0
 " EndPythonMode: ------------------------------------------------------}}}
-" Fzf: ----------------------------------------------------------------{{{
-let g:fzf_command_prefix = 'Fzf'
-nmap <c-p><c-p> :FzfFiles<cr>
-nmap <c-p><c-t> :FzfTags<cr>
-nmap <c-p><c-s> :FzfBTags<cr>
+" FZF: ----------------------------------------------------------------{{{
+nmap <c-p> :Files<cr>
+" nmap <c-p><c-t> :Tags<cr>
+nmap <c-s> :BTags<cr>
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
-" end fzf -------------------------------------------------------------}}}
+
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+command! FZFMru call fzf#run({
+            \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
+            \'sink' : 'e ',
+            \ 'down':    '~40%',
+            \'options' : '-m',
+            \})
+
+command! Plugs call fzf#run({
+  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+  \ 'options': '--delimiter / --nth -1',
+  \ 'down':    '~40%',
+  \ 'sink':    'Explore'})
+" end FZF -------------------------------------------------------------}}}
 " Spell Checking:---------------------------------------------------------------{{{
 
 set spelllang=es
@@ -166,14 +259,16 @@ au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
 " Airline: --------------------------------------------------------------{{{
 let g:airline_extensions      = ['branch', 'hunks']
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep        = ' '
-let g:airline_right_sep       = ' '
-let g:airline_theme           = 'base16_mocha'
-" EndAirline: -----------------------------------------------------------}}}
+" let g:airline_left_sep        = ' '
+" let g:airline_right_sep       = ' '
+let g:airline_theme           = 'base16'
+" end airline -----------------------------------------------------------}}}
 " Editor: ---------------------------------------------------------------{{{
 
 syntax on " Enable syntax highligting
 filetype plugin indent on     " required
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*source_maps*,.git,.svn,*/public/assets/*,*.orig
 
 " Change Leader
 let mapleader=','
@@ -238,20 +333,17 @@ if &term =~ "xterm.*"
   cmap <Esc>[201~ <nop>
 endif
 
-" Faster matching
-nmap <Tab> %
-vmap <Tab> %
 
 
 " " map <LEADER>s :TagbarOpenAutoClose<CR>
 " " TODO: replace with https://github.com/h1mesuke/unite-outline
-"
 " nnoremap <LEADER>g :Gist<CR>
-"
 " CSS: ------------------------------------------------------------------{{{
 au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <LEADER>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
 au BufRead *.html.twig setlocal filetype=html.twig
-" EndCSS: ---------------------------------------------------------------}}}
+au BufRead *.tmuxtheme setlocal filetype=tmux foldmethod=marker
+" end css ---------------------------------------------------------------}}}
+
 " Show/Hide NerdTree
 map <LEADER>n :NERDTreeToggle<CR>
 " Find current buffer in nerdtree
@@ -260,10 +352,8 @@ let g:NERDTreeMapOpenVSplit='v'      " keep mappings between ctrlp and nerdtree 
 let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap files
 set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
 set guioptions-=R                    " Hide nerdtree's window scrollbar on macvim
-"
-"
-" EndEditor: ------------------------------------------------------------}}}
-" Indentation:------------------------------------{{{
+" end editor ------------------------------------------------------------}}}
+" Indentation: ----------------------------------------------------------{{{
 
 set smartindent " Smart indentation of new lines
 
@@ -275,14 +365,18 @@ execute "set softtabstop=".tabsize
 set expandtab " Use spaces instead of tabs
 
 " Terminal Bubbling:-------------------
-vnoremap <c-k> [egv
-vnoremap <c-j> ]egv
-vnoremap <c-h> <gv
-vnoremap <c-l> >gv
+vnoremap <C-J> ]egv
+vnoremap <C-H> <gv
+vnoremap <C-K> [egv
+vnoremap <C-L> >gv
 
 " or alternatively
 vnoremap < <gv
 vnoremap > >gv
+" Faster matching
+nnoremap <TAB> %
+vnoremap <TAB> %
+
 
 " Paste and Indent
 nnoremap <esc>p p'[v']=
@@ -302,17 +396,14 @@ function! SetTabSize(size)
 endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
-" }}}
+" end indentation -------------------------------------------------------}}}
 " Snippets: -------------------------------------------------------------{{{
-
-let g:ycm_key_list_select_completion = ['<c-n>', '<down']
-let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
 
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
-" EndSnippets: ----------------------------------------------------------}}}
+" end snippets ----------------------------------------------------------}}}
 " Eye Candy:---------------------------------------------------------------{{{
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
@@ -346,11 +437,11 @@ function! ResetColors()
 endfunction
 
 function! HideUnwantedBackgrounds()
-  source ~/.vim/default_colors
+  source ~/.vim/default_colors.vim
 endfunction
 
 map <LEADER>tw :TrailerTrim<CR>
-"}}}--------------------[ end Eye Candy  ]-----------------------------------
+" end eye candy ---------------------------------------------------------}}}
 " Search:---------------------------------------------------------------{{{
 set ignorecase " Ignore case of searches
 set smartcase  " ...unless at least one capital letter in search pattern
@@ -390,10 +481,10 @@ endfunction
 nnoremap <LEADER>z :call ToggleMaxWins()<CR>
 
 " Window Navigation:
-nnoremap <C-j> <C-W><C-J>
-nnoremap <C-k> <C-W><C-K>
-nnoremap <C-l> <C-W><C-L>
-nnoremap <C-h> <C-W><C-H>
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
 
 nnoremap j gj
 nnoremap k gk
@@ -415,6 +506,7 @@ endif
 
 " }}}
 " Code Formatting:---------------------------------------------------------------{{{
+" au BufNewFile,BufRead,BufEnter *.html setlocal shiftwidth=4 | setlocal softtabstop=4 | setlocal tabstop=4
 " format paragraph and restore cursor position
 map <LEADER>fp gwap
 function! s:FormatAsHtml()
@@ -452,7 +544,7 @@ map <LEADER>ei ^diwds(xea =wds{I@
 "}}}--------------------[ end Code Formatting  ]----------------------------------------
 " Faster Commands:---------------------------------------------------------------{{{
 " One less key to get to command mode
-map ; :
+" map ; :
 "
 " if has("autocmd")
 "   autocmd BufWritePre * :silent !mkdir -p %:p:h
@@ -516,18 +608,18 @@ nnoremap <LEADER>ft Vatzf
 
 " TODO: check why iterm doesnt auto set ITERM_PROFILE with auto profile switching
 " If invoked with SC=1 light colors will be applied
-if $PWD == expand("$SRC_DIR/vim_thoughts")
-  set background=light
-  colorscheme solarized
-  let g:airline_theme='solarized'
-else
-  set background=dark
-  let g:hybrid_custom_term_colors = 1
-  let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-  colorscheme hybrid
-  call HideUnwantedBackgrounds()
-  autocmd ColorScheme * :call ResetColors()
-endif
+" if $PWD == expand("$SRC_DIR/vim_thoughts")
+"   set background=light
+"   colorscheme solarized
+"   let g:airline_theme='solarized'
+" else
+set background=dark
+let g:hybrid_custom_term_colors = 1
+let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+colorscheme hybrid
+call HideUnwantedBackgrounds()
+autocmd ColorScheme * :call ResetColors()
+" endif
 
 "}}}--------------------[ end Screencasting  ]----------------------------------------
 " Miscellaneous:---------------------------------------------------------------{{{
@@ -551,8 +643,8 @@ nmap <LEADER>v :vsp $MYVIMRC<CR>
 " au BufWritePost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 
 au BufNewFile,BufRead *.org  setlocal filetype=org      " Org files
-au BufNewFile,BufRead *.md   setlocal filetype=markdown " Treat .md files as   Markdown
-au BufNewFile,BufRead *.md   setlocal textwidth=80      " Automatically break   line   after   80   chars
+au BufNewFile,BufRead *.md   setlocal filetype=markdown " Treat.md files as Markdown
+au BufNewFile,BufRead *.md   setlocal textwidth=80      " Automatically break line after 80 chars
 au BufNewFile,BufRead *.vim* setlocal filetype=vim      " Org files
 au BufNewFile,BufRead *.vim  setlocal foldmethod=marker " Fold
 
@@ -573,3 +665,5 @@ inoremap <C-h> <left>
 execute 'hi Search ctermbg=green ctermfg=black'
 execute 'hi IncSearch ctermbg=white ctermfg=green'
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
+
+execute "vnoremap <c-k> [egv"

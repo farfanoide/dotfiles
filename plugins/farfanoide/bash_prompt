@@ -30,25 +30,24 @@ CYAN_BOLD="\[\033[01;36m\]"
 
 # scm
 function parse_git_dirty {
-if [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit"* ]]; then
-  echo "*"
-fi
+  [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit"* ]] && echo "*"
 }
+
 function parse_git_branch {
-git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ [git::\1$(parse_git_dirty)]/"
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ [git::\1$(parse_git_dirty)]/"
 }
 
-parse_svn_branch() {
-  parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk '{print " (svn::"$1")" }'
-}
-parse_svn_url() {
-  svn info 2>/dev/null | sed -ne 's#^URL: ##p'
-}
-parse_svn_repository_root() {
-  svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
-}
+# parse_svn_branch() {
+#   parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk '{print " (svn::"$1")" }'
+# }
+# parse_svn_url() {
+#   svn info 2>/dev/null | sed -ne 's#^URL: ##p'
+# }
+# parse_svn_repository_root() {
+#   svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
+# }
 
-PS1="$BLUE_BOLD [\W]$GREEN_BOLD\$(parse_git_branch)\$(parse_svn_branch) $RED_BOLD-> $BASH_WHITE";
+PS1="$BLUE_BOLD [\W]$GREEN_BOLD\$(parse_git_branch) $RED_BOLD-> $BASH_WHITE";
 
 # _*_ mode: sh _*_
 # vi: set ft=sh :
