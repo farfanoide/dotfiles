@@ -35,7 +35,7 @@ Plug 'Shougo/neco-syntax'
 Plug 'carlitux/deoplete-ternjs'
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/vimproc.vim', {'do': 'make'} " enable async stuff for Shougo's plugins
-Plug 'm2mdas/phpcomplete-extended'
+Plug 'm2mdas/phpcomplete-extended', {'for': 'php'}
 Plug 'Shougo/echodoc.vim'
 Plug 'osyo-manga/vim-monster'
 " end deoplete ----------------------------------------------------}}}
@@ -261,7 +261,7 @@ let g:airline_extensions      = ['branch', 'hunks']
 let g:airline_powerline_fonts = 1
 " let g:airline_left_sep        = ' '
 " let g:airline_right_sep       = ' '
-let g:airline_theme           = 'base16'
+let g:airline_theme           = 'bubblegum'
 " end airline -----------------------------------------------------------}}}
 " Editor: ---------------------------------------------------------------{{{
 
