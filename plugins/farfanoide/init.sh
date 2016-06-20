@@ -17,7 +17,9 @@ unset dir # clean up after ourselves
 
 chpwd () { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ; }
 
-eval "$(rbenv init - --no-rehash zsh)"
+if rbenv --version 2> /dev/null; then
+  eval "$(rbenv init - --no-rehash zsh)"
+fi
 
 # allow <c-h> mappings in nvim -> https://github.com/neovim/neovim/wiki/Troubleshooting#my-ctrl-h-mapping-doesnt-work
-infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > /tmp/$TERM.ti && tic /tmp/$TERM.ti
+[ ! -e /tmp/$TERM.ti ] && infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > /tmp/$TERM.ti && tic /tmp/$TERM.ti
