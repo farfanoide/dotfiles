@@ -213,6 +213,7 @@ let g:pymode_lint_checkers = []
 let g:pymode_run = 0
 " EndPythonMode: ------------------------------------------------------}}}
 " FZF: ----------------------------------------------------------------{{{
+
 nmap <c-p> :Files<cr>
 " nmap <c-p><c-t> :Tags<cr>
 nmap <c-s> :BTags<cr>
@@ -222,31 +223,32 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit' }
 
 let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'Normal'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+      \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
 
 command! FZFMru call fzf#run({
-            \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
-            \'sink' : 'e ',
-            \ 'down':    '~40%',
-            \'options' : '-m',
-            \})
+      \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
+      \'sink' : 'e ',
+      \ 'down':    '~40%',
+      \'options' : '-m',
+      \})
 
 command! Plugs call fzf#run({
-  \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-  \ 'options': '--delimiter / --nth -1',
-  \ 'down':    '~40%',
-  \ 'sink':    'Explore'})
+      \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+      \ 'options': '--delimiter / --nth -1',
+      \ 'down':    '~40%',
+      \ 'sink':    'Explore'})
+
 " end FZF -------------------------------------------------------------}}}
 " Spell Checking:---------------------------------------------------------------{{{
 
