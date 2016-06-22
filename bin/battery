@@ -14,7 +14,29 @@
 #
 # ---------------------------------------------------------------------------------------
 
-battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
+distro=$(uname)
+
+if [ $distro = Linux ];then
+  battery_path=/sys/class/power_supply/BAT0
+
+  _charging() {
+    cat $battery_path/status | grep -qi ^charging
+  }
+
+  _battery_state() {
+    local now full
+    now=$(cat $battery_path/charge_now)
+    full=$(cat $battery_path/charge_full)
+    echo $((100 * now / full ))
+  }
+
+  battery_capacity=$(_battery_state)
+else
+  _charging() {
+    pmset -g batt | grep -qo 'AC Power'
+  }
+  battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
+fi
 
 plugged="\uf1e6"    # 
 full_batt="\uf240"  # 
@@ -23,7 +45,7 @@ mid_batt="\uf242"   # 
 mid_empty="\uf243"  # 
 empty_batt="\uf244" # 
 
-if pmset -g batt | grep -qo 'AC Power' ; then
+if _charging ; then
   icon="#[fg=green]${plugged}#[fg=white]"
 else
   if (( battery_capacity >= 90 )); then
