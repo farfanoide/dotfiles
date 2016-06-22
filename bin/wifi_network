@@ -14,13 +14,28 @@
 #
 # ---------------------------------------------------------------------------------------
 
-network=$(networksetup -getairportnetwork en0 | head -1)
+if [ $(uname) = Linux ];then
+
+  bssid=" $(iwconfig wlp58s0 | grep ESSID | cut -d ':' -f 2 | tr -d '"')"
+  _connected() {
+    [ ! $bssid = 'off/any' ]
+  }
+
+else
+
+  network=$(networksetup -getairportnetwork en0 | head -1)
+  bssid="$(echo $network | cut -d ':' -f 2)"
+  _connected() {
+    [ "${network}" = 'You are not associated with an AirPort network.' ]
+  }
+
+fi
 
 no_internet="\uf193"
 connected="\uf1eb"
 
-if [ "${network}" = 'You are not associated with an AirPort network.' ]; then
-  echo -e "#[fg=red]${no_internet} #[fg=white] No Internet"
+if _connected; then
+  echo -e "#[fg=blue,nobold]${connected} #[fg=white]${bssid}"
 else
-  echo -e "#[fg=blue,nobold]${connected} #[fg=white]$(echo $network | cut -d ':' -f 2)"
+  echo -e "#[fg=red]${no_internet} #[fg=white] No Internet"
 fi
