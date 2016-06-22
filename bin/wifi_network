@@ -4,7 +4,7 @@
 # -----------
 #
 #
-#  Script to show current wifi network in tmux under Mac OS X
+#  Script to show current wifi network in tmux under Mac OS X and Linux
 #
 # ---------------------------------------------------------------------------------------
 # Author
@@ -16,7 +16,8 @@
 
 if [ $(uname) = Linux ];then
 
-  bssid=" $(iwconfig wlp58s0 | grep ESSID | cut -d ':' -f 2 | tr -d '"')"
+  wifi_adapter=wlp58s0 # TODO: get this dinamically
+  bssid=" $(iwconfig ${wifi_adapter} | grep ESSID | cut -d ':' -f 2 | tr -d '"')"
   _connected() {
     [ ! $bssid = 'off/any' ]
   }
