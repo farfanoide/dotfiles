@@ -19,13 +19,13 @@ if [ $(uname) = Linux ];then
   wifi_adapter=wlp58s0 # TODO: get this dinamically
   bssid=" $(iwconfig ${wifi_adapter} | grep ESSID | cut -d ':' -f 2 | tr -d '"')"
   _connected() {
-    [ ! $bssid = 'off/any' ]
+    [ ! "${bssid}" = 'off/any' ]
   }
 
 else
 
   network=$(networksetup -getairportnetwork en0 | head -1)
-  bssid="$(echo $network | cut -d ':' -f 2)"
+  bssid="$(echo "${network}" | cut -d ':' -f 2)"
   _connected() {
     [ "${network}" = 'You are not associated with an AirPort network.' ]
   }
