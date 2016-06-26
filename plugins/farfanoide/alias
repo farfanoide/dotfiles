@@ -35,6 +35,11 @@ alias pymulator='kivy ~/Develop/src/simuladorHDD/main.py'
 alias ctail='\grc tail'
 alias dateformat='date "+%d-%m-%Y"'
 alias pm='python manage.py'
+if _linux; then
+  alias open='xdg-open'
+fi
+alias o='open'
+alias o.='open .'
 
 # override cp with advanced copy http://beatex.org/web/advancedcopy.html#compile
 if [[ -f "$HOME/.bin/cp" ]] ; then
@@ -49,9 +54,8 @@ stream() {
 
 # }}}
 # ---------------------[ Mac stuff ]----------------------------------------{{{
+
 if _mac_osx ; then
-  alias o='open'
-  alias o.='open .'
   alias optimize='o -a ImageOptim'
   alias optim='optimize'
   alias brup='brew update && brew upgrade --all && brew cleanup'
@@ -65,12 +69,13 @@ fi
 if _linux ; then
   alias sai='sudo apt-get install -y '
   alias sar='sudo apt-get purge -y '
+  alias sud='sudo apt-get update'
   alias sup='sudo apt-get update && \
              sudo apt-get -y dist-upgrade && \
              sudo apt-get -y autoremove && \
              sudo apt-get -y autoclean'
-  alias pbcopy='xclip -selection clipboard'
-  alias pbpaste='xclip -selection clipboard -o'
+  alias pbcopy='xsel -a'
+  alias pbpaste='xsel -o'
   # alias cp='cp -rg'
 fi
 # }}}

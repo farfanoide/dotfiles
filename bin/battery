@@ -20,7 +20,7 @@ if [ $distro = Linux ];then
   battery_path=/sys/class/power_supply/BAT0
 
   _charging() {
-    cat $battery_path/status | grep -qi ^charging
+    cat $battery_path/status | grep -qi '^charging\|full'
   }
 
   _battery_state() {
