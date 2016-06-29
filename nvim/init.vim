@@ -1,10 +1,9 @@
 " ====================================================
-
-"                               _
-"  _ __ ___  _   _   _ ____   _(_)_ __ ___  _ __ ___
-" | '_ ` _ | | | | | '_ \ \ / / | '_ ` _ \| '__/ __|
-" | | | | | | |_| | | | | \ V /| | | | | | | | | (__
-" |_| |_| |_|\__, | |_| |_|\_/ |_|_| |_| |_|_|  \___|
+"                        _
+"  _ __ ___  _   ___   _(_)_ __ ___  _ __ ___
+" | '_ ` _ \| | | \ \ / / | '_ ` _ \| '__/ __|
+" | | | | | | |_| |\ V /| | | | | | | | | (__
+" |_| |_| |_|\__, | \_/ |_|_| |_| |_|_|  \___|
 "            |___/
 " ====================================================
 
@@ -66,14 +65,13 @@ Plug 'mattn/gist-vim' " Gist from withing vim :)
 
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
-" Plug 'airblade/vim-gitgutter'
-Plug 'mhinz/vim-signify'
-let g:signify_sign_delete = '-'
+Plug 'airblade/vim-gitgutter'
 
 Plug 'junegunn/gv.vim'
 Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
+" Plug 'chrisbra/Colorizer', {'on': 'ColorHilight'} " i dont use it that much...
 Plug 'junegunn/seoul256.vim'
 " Plug 'farfanoide/vim-facebook'
 Plug 'w0ng/vim-hybrid'
@@ -122,7 +120,6 @@ Plug 'SirVer/ultisnips'
 " Syntax Plugins: --------------------------------------------------{{{
 
 " Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
-Plug 'tejr/vim-tmux'                    " tmux conf files support
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
 " Plug 'jceb/vim-orgmode'                 " OrgMode support
@@ -261,8 +258,8 @@ au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
 " Airline: --------------------------------------------------------------{{{
 let g:airline_extensions      = ['branch', 'hunks']
 let g:airline_powerline_fonts = 1
-" let g:airline_left_sep        = ' '
-" let g:airline_right_sep       = ' '
+let g:airline_left_sep        = ' '
+let g:airline_right_sep       = ' '
 let g:airline_theme           = 'bubblegum'
 " end airline -----------------------------------------------------------}}}
 " Editor: ---------------------------------------------------------------{{{
@@ -335,6 +332,8 @@ if &term =~ "xterm.*"
   cmap <Esc>[201~ <nop>
 endif
 
+
+nmap <LEADER>td :vsp $SRC_DIR/encode/todo.md<CR>
 
 
 " " map <LEADER>s :TagbarOpenAutoClose<CR>
@@ -430,12 +429,15 @@ call matchadd('ColorColumn', '\%120v', 100)
 function! ResetColors()
   " no background for those vertical splits, they look ugly
   execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
+  " Make sure TODO's look nice
+  execute 'hi Todo ctermfg=green ctermbg=NONE'
   " Custom colors for trailing whitespaces
   execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
   " kind of bored of same old yellow... let's use #E0B56E
   execute 'hi String ctermfg=yellow guifg=#E0B56E'
   " remove underline from current line, and set background
   execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
+  execute 'hi Folded ctermbg=237  guibg=#353b4a   term=underline'
 endfunction
 
 function! HideUnwantedBackgrounds()
@@ -618,9 +620,9 @@ nnoremap <LEADER>ft Vatzf
 set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-colorscheme hybrid
-call HideUnwantedBackgrounds()
 autocmd ColorScheme * :call ResetColors()
+colorscheme default
+call HideUnwantedBackgrounds()
 " endif
 
 "}}}--------------------[ end Screencasting  ]----------------------------------------
