@@ -15,23 +15,18 @@ cr() {
   fi
 }
 
-_set_null_glob() {
-  local cur_shell=$(current_shell)
-  if [[ "$cur_shell" =~ 'bash' ]]; then
-    shopt -s nullglob
-  elif [[ "$cur_shell" =~ 'zsh' ]]; then
-    setopt NULL_GLOB
-  fi
-}
+if [[ "$(current_shell)" =~ 'bash' ]]; then
 
-_unset_null_glob() {
-  local cur_shell=$(current_shell)
-  if [[ "$cur_shell" =~ 'bash' ]]; then
-    shopt -u nullglob
-  elif [[ "$cur_shell" =~ 'zsh' ]]; then
-    unsetopt NULL_GLOB
-  fi
-}
+  _set_null_glob()   { shopt -s nullglob ;}
+  _unset_null_glob() { shopt -u nullglob ;}
+
+elif [[ "$(current_shell)" =~ 'zsh' ]]; then
+
+  _set_null_glob()   { setopt NULL_GLOB ;}
+  _unset_null_glob() { unsetopt NULL_GLOB ;}
+
+fi
+
 
 # TODO: check why virtualenv breaks on zsh
 # TODO: make function to re-link executables after upgrading python in brew
@@ -42,11 +37,7 @@ _unset_null_glob() {
 
 
 enable_machine() {
-  if [ $# -ge 1 ]; then
-    eval "$(docker-machine env $*)"
-  else
-    eval "$(docker-machine env default)"
-  fi
+  eval "$(docker-machine env ${1:-default})"
 }
 
 add_apt_key() {
