@@ -1,4 +1,3 @@
-
 # colors
 BASH_NEWLINE="\n"
 
@@ -36,16 +35,6 @@ function parse_git_dirty {
 function parse_git_branch {
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ [git::\1$(parse_git_dirty)]/"
 }
-
-# parse_svn_branch() {
-#   parse_svn_url | sed -e 's#^'"$(parse_svn_repository_root)"'##g' | awk '{print " (svn::"$1")" }'
-# }
-# parse_svn_url() {
-#   svn info 2>/dev/null | sed -ne 's#^URL: ##p'
-# }
-# parse_svn_repository_root() {
-#   svn info 2>/dev/null | sed -ne 's#^Repository Root: ##p'
-# }
 
 PS1="$BLUE_BOLD [\W]$GREEN_BOLD\$(parse_git_branch) $RED_BOLD-> $BASH_WHITE";
 
