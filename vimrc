@@ -232,7 +232,7 @@ function! ResetColors()
 endfunction
 
 function! HideUnwantedBackgrounds()
-  source ~/.vim/default_colors
+  source ~/.vim/default_colors.vim
 endfunction
 
 map <LEADER>tw :TrailerTrim<CR>
