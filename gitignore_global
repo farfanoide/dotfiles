@@ -58,3 +58,4 @@ tramp
 # cask packages
 .cask/
 
+pip-selfcheck.json
