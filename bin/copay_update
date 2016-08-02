@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#   Simple script to update copay desktop for linux.
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
+
+
+APP_DIR=~/Develop/apps/copay
+VERSIONS_DIR="${APP_DIR}/versions"
+ENDPOINT='https://api.github.com/repos/bitpay/copay/releases/latest'
+
+RELEASE_DATA="$(curl --silent $ENDPOINT)"
+
+_get_latest_version() {
+  echo $RELEASE_DATA | jq -r .tag_name
+}
+
+LATEST_VERSION=$(_get_latest_version)
+LATEST_VERSION_DIR="${VERSIONS_DIR}/${LATEST_VERSION}"
+
+#------------------------------------
+#= jq selectors
+#------------------------------------
+LATEST_RELEASE_DATA_SELECTOR='.assets[] | select(.name | test("linux*.zip$" ; "i"))'
+DOWNLOAD_URL_SELECTOR='.browser_download_url'
+
+LATEST_RELEASE_DATA=$(echo $RELEASE_DATA | jq "${LATEST_RELEASE_DATA_SELECTOR}")
+
+_latest_download_url(){
+  echo $LATEST_RELEASE_DATA | jq -r "${DOWNLOAD_URL_SELECTOR}"
+}
+
+_latest_download_url
+
+if [ ! -d "${LATEST_VERSION_DIR}" ]; then
+
+  mkdir -p "${LATEST_VERSION_DIR}" && cd ${LATEST_VERSION_DIR}
+  curl -LS --progress "$(_latest_download_url)" -o copay.zip
+  unzip copay.zip
+  mv copay-linux/* .
+  rm -rf copay.zip copay-linux
+  rm -f $VERSIONS_DIR/current
+  ln -s $LATEST_VERSION_DIR $VERSIONS_DIR/current
+fi
