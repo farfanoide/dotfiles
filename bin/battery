@@ -4,7 +4,7 @@
 # -----------
 #
 #
-#  Script to show battery info in mac os x inside tmux statusbar
+#  Script to show battery info in OS X/Linux inside tmux statusbar
 #
 # ---------------------------------------------------------------------------------------
 # Author
@@ -56,6 +56,8 @@ else
     icon="#[fg=green]${mid_batt}#[fg=white]"
   elif (( battery_capacity >= 20 )); then
     icon="#[fg=yellow]${mid_empty}#[fg=white]"
+  elif (( battery_capacity >= 10 )); then
+    icon="#[fg=red]${mid_empty}#[fg=white]"
   elif (( battery_capacity >= 0 )); then
     icon="#[fg=red]${empty_batt}#[fg=white]"
   fi
