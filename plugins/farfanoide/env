@@ -7,6 +7,7 @@ export PROJ_DIR="$HOME/Develop/sites"
 export MUSIC_DIR="$HOME/Music/iTunes/iTunes\ Media/Music/"
 export DOWN_DIR="$HOME/Downloads"
 export SRC_DIR="$HOME/Develop/src"
+export APPS_DIR="$HOME/Develop/apps"
 export YATSH_DIR="$HOME/.tmux/yat.sh"
 
 export VISUAL='nvim'
@@ -18,6 +19,7 @@ export EDITOR='nvim'
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 
 # Python stuff --------------{{{
+export PYENV_VIRTUALENV_DISABLE_PROMPT=0
 export WORKON_HOME=$HOME/.virtualenvs
 export PROJECT_HOME=$HOME/Develop/src
 if _mac_osx; then
@@ -29,15 +31,13 @@ export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
 gpip() { PIP_REQUIRE_VIRTUALENV="" /usr/local/bin/pip2 $* ;} # unless explicit call
 # end Python stuff -----------}}}
 
-source "$(which virtualenvwrapper_lazy.sh)"
-
 # ls options
 if _mac_osx; then
   export CLICOLOR=1
 fi
 
 
-export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_77.jdk/Contents/Home
+export BONITA_INSTALL_DIR=~/Develop/apps/bonita/current
 
 # _*_ mode: sh _*_
 # vi: set ft=sh :

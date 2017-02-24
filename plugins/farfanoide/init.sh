@@ -3,21 +3,26 @@ _mac_osx() { [ $(uname) = 'Darwin' ] ;}
 _linux()   { [ $(uname) = 'Linux' ] ;}
 
 # directory from which the plugins is being invoked
-dir="$PLUGINS_DIR/farfanoide"
+dir="${PLUGINS_DIR}/farfanoide"
 
-source "$dir/alias"
-source "$dir/functions" # load functions after alias so that they can be inherited
-source "$dir/env"       # load env vars after functions too use them
-source "$dir/path"
-source "$dir/bindings"
+source "${dir}/alias"
+source "${dir}/functions" # load functions after alias so that they can be inherited
+source "${dir}/env"       # load env vars after functions too use them
+source "${dir}/path"
+source "${dir}/bindings"
 
 # [[ $(current_shell) =~ "zsh" ]] && source "$dir/zsh"
 
 unset dir # clean up after ourselves
 
-chpwd () { [ $(ls -l | wc -l) -gt 30 ] && ls || ls -l ; }
+chpwd ()
+{
+  # If all files can be listed in the available rows, do so with item details,
+  # otherwise do a normal `ls` splitting into columns
+  [ $(ls -l | wc -l) -gt $(tput lines) ] && ls || ls -l
+}
 
-if rbenv --version 2> /dev/null; then
+if rbenv --version > /dev/null; then
   eval "$(rbenv init - --no-rehash zsh)"
 fi
 

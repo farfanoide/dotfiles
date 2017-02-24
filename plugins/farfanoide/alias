@@ -30,14 +30,11 @@ alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v exten
 alias mv='mv -iv'
 alias srm='sudo rm -Rfv'
 alias mkdir='mkdir -p'
-alias pymulator='kivy ~/Develop/src/simuladorHDD/main.py'
 # requires brew install grc
 alias ctail='\grc tail'
 alias dateformat='date "+%d-%m-%Y"'
 alias pm='python manage.py'
-if _linux; then
-  alias open='xdg-open'
-fi
+_linux && alias open='xdg-open'
 alias o='open'
 alias o.='open .'
 
@@ -48,23 +45,21 @@ else
   alias cp='rsync --append --progress -azvrE'
 fi
 
-stream() {
-  peerflix $(pbpaste);
-}
-
 # }}}
-# ---------------------[ Mac stuff ]----------------------------------------{{{
 
+# ---------------------[ Mac stuff ]----------------------------------------{{{
 if _mac_osx ; then
   alias optimize='o -a ImageOptim'
   alias optim='optimize'
-  alias brup='brew update && brew upgrade --all && brew cleanup'
+  alias brup='brew update && brew upgrade && brew cleanup'
+  alias sup=brup
   alias airport='/System/Library/PrivateFrameworks/Apple80211.framework/Versions/Current/Resources/airport'
   alias mf='mdfind'
   alias wt='wifi_toggle'
   alias bt='bluetooth_toggle'
 fi
 # }}}
+
 # ---------------------[ Linux stuff ]----------------------------------------{{{
 if _linux ; then
   alias sai='sudo apt-get install -y '
@@ -76,25 +71,22 @@ if _linux ; then
              sudo apt-get -y autoclean'
   alias pbcopy='xsel -a'
   alias pbpaste='xsel -o'
-  # alias cp='cp -rg'
 fi
 # }}}
+
 # ---------------------[ Misc ]-----------------------------------------{{{
-alias musik='cd ~/Music/iTunes/iTunes\ Media/Music/'
-alias sitez='cd ~/Dropbox/Sites/'
-alias fuck='cd ~/Dropbox/compartidas/Facultad/2do/'
-alias cuevana="cd $srcdir/storm && npm start"
-alias getnormalize='wget https://raw.github.com/necolas/normalize.css/master/normalize.css'
+alias musik='cd $MUSIC_DIR'
+alias fuck='cd ~/Dropbox/compartidas/Facultad/'
 alias shut='sudo shutdown -h now'
-alias t='todo.sh' # http://todotxt.com/
 # }}}
+
 # ---------------------[ MySQL ]----------------------------------------{{{
 alias my='mysql -uroot -p '
 alias mydump='mysqldump -uroot -p'
 alias mystart='mysql.server start'
 # }}}
+
 # ---------------------[ Git ]----------------------------------------{{{
-# TODO: add these to git itself to get proper tab completion
 alias gs='git status -bs'
 alias ga='git add --all '
 alias ga.='ga .'
@@ -106,33 +98,24 @@ alias gfc='git clone'
 alias gc='git commit -v'
 alias gco='git checkout '
 alias gba='git branch -av'
-grt() { cd "$(repo_root)" ;}
+grt()
+{
+    # Requires `repo_root` shell script which basically asks the scm executable
+    # the root path for the current repository
+    cd "$(repo_root)"
+}
 # }}}
-# ---------------------[ Mercurial ]----------------------------------{{{
-# TODO: add these to git itself to get proper tab completion
-alias hgs='hg status'
-alias ga='git add --all '
-alias ga.='ga .'
-alias gd='git diff '
-alias grv='git remote -v'
-alias gcm='git commit -m'
-alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ' --abbrev-commit --"
-alias gfc='git clone'
-alias gc='git commit -v'
-alias gco='git checkout '
-alias gba='git branch -av'
-grt() { cd "$(repo_root)" ;}
-# }}}
+
 # ---------------------[ Tmux ]----------------------------------------{{{
 alias ta='tmux attach -t'
 alias tk='tmux kill-session -t'
 alias tdc='tmux detach-client -t'
-
-alias ts='echo usa ys puto'
+# Yat.sh shortcuts (https://github.com/farfanoide/yat.sh)
 alias ys='yat.sh'
 alias ysl='ys ls -a'
 alias yl='ysl'
 # }}}
+
 # ---------------------[ Bundler ]----------------------------------------{{{
 alias be='bundle exec'
 alias bl='bundle list'
@@ -141,28 +124,47 @@ alias bo='bundle open'
 alias bu='bundle update'
 alias bi='bundle check; bundle install'
 # }}}
+
 # ---------------------[ Heroku ]-----------------------------------------{{{
-herokup() {
+herokup()
+{
   local dotenv="$(repo_root)/.env"
   git push heroku master && [ -e $dotenv ] && heroku config:set $(cat $dotenv) && heroku apps:open
 }
 alias hup=herokup
 alias ho='heroku open'
 alias hl='heroku logs -t'
-hr(){ heroku run $*; }
+hr()
+{
+    heroku run $*
+}
 # }}}
+
 # ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
-bes() { bundle exec rails server $* 2> /dev/null || bundle exec rackup $* ; }
-bec() { bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh) ; }
+bes()
+{
+    bundle exec rails server $* 2> /dev/null || bundle exec rackup $*
+}
+bec()
+{
+    bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh)
+}
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
 alias bemr='bundle exec rake db:rollback'
 alias bed='bundle exec rails db'
 alias beg='be guard'
 # get development db name from database.yml
-devdb()    { cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2; }
-getdevdb() { echo "$(devdb)" | pbcopy; }
+devdb()
+{
+    cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2
+}
+getdevdb()
+{
+    echo "$(devdb)" | pbcopy
+}
 # }}}
+
 # ---------------------[ Vagrant ]----------------------------------------{{{
 alias vup='vagrant up'
 alias vsh='vagrant ssh'
@@ -174,30 +176,25 @@ alias vha='vagrant halt'
 alias vsu='vagrant suspend'
 alias vpr='vagrant provision'
 # }}}
-# ---------------------[ Symfony ]----------------------------------------{{{
-alias sy='./symfony'
-alias rmcl='rm -fr cache/* log/*'
-alias arreglarengine='vim lib/vendor/symfony/lib/plugins/sfPropelPlugin/lib/vendor/propel-generator/classes/propel/engine/builder/sql/mysql/MysqlDDLBuilder.php +156'
-alias infcc='cd $projdir/docpik/infomedica-app/ ; s cc ; cd -'
-# }}}
+
 # ---------------------[ SSH ]----------------------------------------{{{
 alias s='ssh'
-alias docup="ssh docpik 'cd /var/www/html/docpik ; git pull'"
-alias infup="ssh latinman 'cd proyectos/docpik_dev/infomedica-app/ && git pull && ./symfony cc'"
-alias stageup="ssh latinman 'cd proyectos/docpik_stage/infomedica-app/  ; git pull'"
 alias scp='scp -r'
 alias sshfixpermissions='chmod -R 700 "$HOME/.ssh" && chmod 600 "$HOME/.ssh/*rsa" && chmod 644 "$HOME/.ssh/*pub"'
 # }}}
+
 # ---------------------[ Docker ]-------------------------------------{{{
 alias dm='docker-machine'
 alias dr='docker run -it --rm'
 alias dv='docker version'
 alias dp='docker ps'
 alias dpa='docker ps -a'
-name_this() {
+name_this()
+{
   echo "$(whoami)/$(basename $(pwd))"
 }
 # }}}
+
 # ---------------------[ Modeline ]-----------------------------------{{{
 # _*_ mode: sh _*_
 # vi: set ft=sh :

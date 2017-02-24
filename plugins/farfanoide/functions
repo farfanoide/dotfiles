@@ -1,19 +1,19 @@
-# mystart()        { [[ "$(mysql.server status)" =~ "ERROR"* ]] && mysql.server start ;}
-# function lg()    { ls -lA . | grep -i $1 ;}
-md()             { mkdir -p $1 && cd $1 ;}
-current_shell()  { ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }' ;}
-reloadshell()    { exec $SHELL -l ;}
-alias shellreload=reloadshell
-
-cr() {
-  if [[ $# -ge 2 ]]; then
-    cp $1 $2
-    echo "Removing $1"
-    rm -f $1
-  else
-    echo "2 arguments needed."
-  fi
+md()
+{
+    local dir=$1
+    mkdir -p $dir && cd $dir
 }
+
+current_shell()
+{
+    ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }'
+}
+
+reloadshell()
+{
+    exec $SHELL -l
+}
+alias shellreload=reloadshell
 
 if [[ "$(current_shell)" =~ 'bash' ]]; then
 
@@ -28,20 +28,9 @@ elif [[ "$(current_shell)" =~ 'zsh' ]]; then
 fi
 
 
-# TODO: check why virtualenv breaks on zsh
-# TODO: make function to re-link executables after upgrading python in brew
-# http://wirtel.be/posts/en/2014/07/29/fix_virtualenv_python_brew/
-# cd $virtualenv_dir
-# find ${repos} -type l -delete
-# for repo in lsvirtualenv -b do virtualenv $repo
-
-
-enable_machine() {
-  eval "$(docker-machine env ${1:-default})"
-}
-
-add_apt_key() {
-  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $*
+stream()
+{
+  peerflix $(pbpaste) "$*"
 }
 
 # test this:

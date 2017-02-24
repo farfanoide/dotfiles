@@ -24,12 +24,14 @@ Plug 'matchit.zip'                   " match tags :)
 
 
 " Deoplete: -------------------------------------------------------{{{
-" Plug 'Valloric/YouCompleteMe', {'do': './install.py --tern-completer'}
-Plug 'Shougo/deoplete.nvim'
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neopairs.vim' " Auto insert pairs when complete done
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neoinclude.vim'
-" Plug 'zchee/deoplete-jedi'
+Plug 'davidhalter/jedi-vim' | Plug 'lambdalisue/vim-pyenv'
+let g:jedi#rename_command = ""
+let g:jedi#usages_command = ""
+Plug 'zchee/deoplete-jedi'
 Plug 'Shougo/neco-syntax'
 Plug 'carlitux/deoplete-ternjs'
 Plug 'Konfekt/FastFold'
@@ -37,6 +39,7 @@ Plug 'Shougo/vimproc.vim', {'do': 'make'} " enable async stuff for Shougo's plug
 Plug 'm2mdas/phpcomplete-extended', {'for': 'php'}
 Plug 'Shougo/echodoc.vim'
 Plug 'osyo-manga/vim-monster'
+Plug 'Shougo/deoplete-zsh'
 " end deoplete ----------------------------------------------------}}}
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
@@ -53,6 +56,8 @@ Plug 'junegunn/vim-easy-align'
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
+
+Plug 'christoomey/vim-sort-motion' " Sort text objects
 
 Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <LEADER>t :Tabularize<CR>
@@ -147,10 +152,9 @@ Plug 'evidens/vim-twig'                 " Twig support
 " end syntaxt plugins ----------------------------------------------}}}
 
 " Python: ---------------------------------------------------------{{{
-Plug 'klen/python-mode'
-" Plug '~/Develop/src/python-mode'
-" Plug '~/Develop/src/python-mode/'
+" Plug 'klen/python-mode'
 Plug 'mjbrownie/vim-htmldjango_omnicomplete'
+Plug 'Vimjas/vim-python-pep8-indent'
 
 " end pypthon ------------------------------------------------------}}}
 
@@ -200,16 +204,36 @@ let g:neomake_open_list = 0
 " let g:neomake_airline = 1
 " end neomake ---------------------------------------------------------}}}
 " PythonMode: ---------------------------------------------------------{{{
-let g:pymode_doc = 0
-let g:pymode_doc_bind = ''
-let g:pymode_lint = 0
-let g:pymode_lint_on_write = 0
-let g:pymode_lint_on_fly = 0
-let g:pymode_rope = 0
-let g:pymode_lint_checkers = []
-let g:pymode_run = 0
+" let g:pymode_doc = 0
+" let g:pymode_doc_bind = ''
+" let g:pymode_lint = 1
+" let g:pymode_lint_on_write = 0
+" let g:pymode_lint_on_fly = 0
+" let g:pymode_rope = 0
+" let g:pymode_lint_checkers = []
+" let g:pymode_run = 0
+
+if jedi#init_python()
+  function! s:jedi_auto_force_py_version() abort
+    let major_version = pyenv#python#get_internal_major_version()
+    call jedi#force_py_version(major_version)
+  endfunction
+  augroup vim-pyenv-custom-augroup
+    autocmd! *
+    autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+  augroup END
+endif
 " EndPythonMode: ------------------------------------------------------}}}
+" Python Neovim: ------------------------------------------------------{{{
+let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/farfanoide/.pyenv/versions/neovim3/bin/python'
+" EndPython Neovim: ---------------------------------------------------}}}
 " FZF: ----------------------------------------------------------------{{{
+
+let g:fzf_layout = {'window': '-tabnew'}
+let g:fzf_files_options =
+  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
 nmap <c-p> :Files<cr>
 " nmap <c-p><c-t> :Tags<cr>
@@ -219,31 +243,15 @@ let g:fzf_action = {
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
 
-let g:fzf_colors =
-      \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
-
 command! FZFMru call fzf#run({
       \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
       \'sink' : 'e ',
-      \ 'down':    '~40%',
       \'options' : '-m',
       \})
 
 command! Plugs call fzf#run({
       \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
       \ 'options': '--delimiter / --nth -1',
-      \ 'down':    '~40%',
       \ 'sink':    'Explore'})
 
 " end FZF -------------------------------------------------------------}}}
@@ -348,7 +356,7 @@ au BufRead *.tmuxtheme setlocal filetype=tmux foldmethod=marker
 " Show/Hide NerdTree
 map <LEADER>n :NERDTreeToggle<CR>
 " Find current buffer in nerdtree
-noremap <LEADER>r :NERDTreeFind<CR>
+nnoremap <LEADER>r :NERDTreeFind<CR>
 let g:NERDTreeMapOpenVSplit='v'      " keep mappings between ctrlp and nerdtree concise
 let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap files
 set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
@@ -450,6 +458,7 @@ map <LEADER>tw :TrailerTrim<CR>
 set ignorecase " Ignore case of searches
 set smartcase  " ...unless at least one capital letter in search pattern
 set gdefault   " Add the g flag to search/replace by default
+set wildignorecase " Case insensitive filename completion
 
 " Find and copy all occurrences of pattern into register
 " http://superuser.com/a/818607
@@ -541,6 +550,8 @@ map <LEADER>taf :TrailerTrim <cr>:TrimCR <cr> :IndentBuffer<cr>
 " turns into:
 "   @something = create :something
 map <LEADER>ei ^diwds(xea =wds{I@
+map <LEADER>et citkp=it
+map <LEADER>ep ci)kp:s/,/,\r/=i)
 
 " TODO: consider instance variables
 " s/\(\w\+\) = \(.*\)$/let(:\1) { \2 }/
@@ -584,6 +595,21 @@ function! CurrentBufferToPasteBoard()
 endfunction
 nnoremap <LEADER>cb call CurrentBufferToPasteBoard()
 
+function! InsertBreakPoint()
+  if &filetype == 'python'
+    let debug_command = 'import pdb; pdb.set_trace() #TODO: remove this line ;)'
+  elseif &filetype == 'ruby'
+    let debug_command = 'binding.pry'
+  elseif &filetype == 'php'
+    let debug_command = 'var_dump(); die()'
+  else
+    let debug_command = 'hey, i dont know any debug command for this filetype'
+  endif
+  execute(':normal O' . debug_command . '==j')
+endfunction
+nnoremap <LEADER>b :call InsertBreakPoint()<CR>
+
+
 " cd into current buffer's directory
 nnoremap <LEADER>cd :cd %:p:h<CR>:pwd<CR>
 
@@ -621,7 +647,7 @@ set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 autocmd ColorScheme * :call ResetColors()
-colorscheme default
+colorscheme hybrid_material
 call HideUnwantedBackgrounds()
 " endif
 
@@ -644,7 +670,7 @@ call HideUnwantedBackgrounds()
 " AutoCommands:
 nmap <LEADER>v :vsp $MYVIMRC<CR>
 
-" au BufWritePost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
+au BufWritePost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 
 au BufNewFile,BufRead *.org  setlocal filetype=org      " Org files
 au BufNewFile,BufRead *.md   setlocal filetype=markdown " Treat.md files as Markdown
@@ -671,3 +697,4 @@ execute 'hi IncSearch ctermbg=white ctermfg=green'
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
 
 execute "vnoremap <c-k> [egv"
+au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
