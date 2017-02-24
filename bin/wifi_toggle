@@ -14,12 +14,19 @@
 #
 # ------------------------------------------------------------------------------
 
-_cut_and_clean() { cut -d: -f 2 | tr -d ' ' ;}
-_get_device()    { grep -i wi-fi -2 | grep -i device | _cut_and_clean ;}
+_cut_and_clean()
+{
+  cut -d: -f 2 | tr -d ' ' ;
+}
+
+_get_device()
+{
+  grep -i wi-fi -2 | grep -i device | _cut_and_clean ;
+}
 
 wifi_interface=$(networksetup -listallhardwareports  | _get_device)
 wifi_status=$(networksetup -getairportpower $wifi_interface | _cut_and_clean)
 
-[ "$wifi_status" = "Off" ] && status="On" || status="Off"
+[ "${wifi_status}" = "Off" ] && status="On" || status="Off"
 
 networksetup -setairportpower $wifi_interface $status && echo "Wi-Fi: ${status}"

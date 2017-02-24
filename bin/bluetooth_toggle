@@ -23,8 +23,8 @@ EOS
 exit 1
 fi
 
-_bt_status() { blueutil | head -1 | cut -d':' -f2 | tr -d ' ' ;}
+bt_status=$(blueutil | head -1 | cut -d':' -f2 | tr -d ' ')
 
-[ "$(_bt_status)" = '0' ] && status=1 || status=0
+[ "${bt_status}" = '0' ] && status=1 || status=0
 
 blueutil power $status

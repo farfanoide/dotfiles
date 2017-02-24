@@ -19,11 +19,13 @@ distro=$(uname)
 if [ $distro = Linux ];then
   battery_path=/sys/class/power_supply/BAT0
 
-  _charging() {
+  _charging()
+  {
     cat $battery_path/status | grep -qi '^charging\|full'
   }
 
-  _battery_state() {
+  _battery_state()
+  {
     local now full
     now=$(cat $battery_path/charge_now)
     full=$(cat $battery_path/charge_full)
@@ -32,7 +34,8 @@ if [ $distro = Linux ];then
 
   battery_capacity=$(_battery_state)
 else
-  _charging() {
+  _charging()
+  {
     pmset -g batt | grep -qo 'AC Power'
   }
   battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
