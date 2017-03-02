@@ -213,6 +213,16 @@ let g:neomake_open_list = 0
 " let g:pymode_lint_checkers = []
 " let g:pymode_run = 0
 
+" TODO: check these mappings and add them only to htmldjango
+" let b:surround_{char2nr("v")} = "{{ \r }}"
+" let b:surround_{char2nr("{")} = "{{ \r }}"
+" let b:surround_{char2nr("%")} = "{% \r %}"
+" let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
+" let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
+" let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
+" let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
+" let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+
 if jedi#init_python()
   function! s:jedi_auto_force_py_version() abort
     let major_version = pyenv#python#get_internal_major_version()
@@ -231,7 +241,7 @@ let g:python3_host_prog = '/Users/farfanoide/.pyenv/versions/neovim3/bin/python'
 " EndPython Neovim: ---------------------------------------------------}}}
 " FZF: ----------------------------------------------------------------{{{
 
-let g:fzf_layout = {'window': '-tabnew'}
+let g:fzf_layout = {'down': '~50%'}
 let g:fzf_files_options =
   \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
@@ -300,7 +310,6 @@ set clipboard+=unnamedplus " Share clipboard with os
 
 " Make vim more useful
 set wildmode=list:full    " Show complete list of options and navigation too
-set esckeys               " Allow cursor keys in insert mode
 set binary                " Don’t add empty newlines at the end of files
 
 " Disable backups and swap files
@@ -349,8 +358,6 @@ nmap <LEADER>td :vsp $SRC_DIR/encode/todo.md<CR>
 " nnoremap <LEADER>g :Gist<CR>
 " CSS: ------------------------------------------------------------------{{{
 au BufNewFile,BufRead *.less,*.css,*.scss nnoremap <buffer> <LEADER>S ?{<CR>jV/\v^\s*\}?$<CR>k:sort<CR>:noh<CR>
-au BufRead *.html.twig setlocal filetype=html.twig
-au BufRead *.tmuxtheme setlocal filetype=tmux foldmethod=marker
 " end css ---------------------------------------------------------------}}}
 
 " Show/Hide NerdTree
@@ -417,14 +424,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
 set synmaxcol=230
-if has('gui_running')
-  set guifont=PragmataPro\ for\ Powerline:h14
-  set linespace=7
-  if has("gui_gtk2")
-    set guifont=Nimbus\ Mono\ L\ Bold\ 10
-  endif
-endif
-
 set t_Co=256   " Use 256 colours
 set cursorline " Highlight current line
 set noshowmode " Remove second status bar when using powerline
@@ -605,6 +604,7 @@ function! InsertBreakPoint()
   else
     let debug_command = 'hey, i dont know any debug command for this filetype'
   endif
+  " TODO: check :put command
   execute(':normal O' . debug_command . '==j')
 endfunction
 nnoremap <LEADER>b :call InsertBreakPoint()<CR>
@@ -649,7 +649,11 @@ let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palett
 autocmd ColorScheme * :call ResetColors()
 colorscheme hybrid_material
 call HideUnwantedBackgrounds()
-" endif
+
+if has('gui_running')
+  set linespace=7
+  colorscheme Tomorrow-Night
+endif
 
 "}}}--------------------[ end Screencasting  ]----------------------------------------
 " Miscellaneous:---------------------------------------------------------------{{{
@@ -677,6 +681,11 @@ au BufNewFile,BufRead *.md   setlocal filetype=markdown " Treat.md files as Mark
 au BufNewFile,BufRead *.md   setlocal textwidth=80      " Automatically break line after 80 chars
 au BufNewFile,BufRead *.vim* setlocal filetype=vim      " Org files
 au BufNewFile,BufRead *.vim  setlocal foldmethod=marker " Fold
+au BufRead *.html.twig setlocal filetype=html.twig
+au BufRead *.tmuxtheme setlocal filetype=tmux foldmethod=marker
+au BufRead *.sh setlocal foldmethod=marker
+au BufRead *.zsh setlocal foldmethod=marker
+au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
@@ -695,6 +704,3 @@ inoremap <C-h> <left>
 execute 'hi Search ctermbg=green ctermfg=black'
 execute 'hi IncSearch ctermbg=white ctermfg=green'
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
-
-execute "vnoremap <c-k> [egv"
-au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
