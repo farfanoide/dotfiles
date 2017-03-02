@@ -12,7 +12,6 @@
 # General: ------------------------------------{{{
 
 set -g status on
-set -g utf8 on
 set -g bell-action other
 set -g visual-activity off
 setw -g monitor-activity on

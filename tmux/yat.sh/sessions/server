@@ -1,15 +1,12 @@
+# -*- mode: sh -*-
+# vi: set ft=sh :
+
+#= AUTHOR: farfanoide (https://github.com/farfanoide)
 #= DESCRIPTION: Basic remote tmux session
 #= SERVER: server
-#= NAME: test
+#= NAME: Remote Session
 #= LOADER: remote
 
 new_session -n 'General'
 
 send_line 'General' 'ls'
-
-vsplit 'General'
-send_line 'General'.2 'cd /usr/share/nginx/www ; ls'
-
-
-# -*- mode: sh -*-
-# vi: set ft=sh :
