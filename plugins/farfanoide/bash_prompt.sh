@@ -28,15 +28,14 @@ CYAN="\[\033[0;36m\]"
 CYAN_BOLD="\[\033[01;36m\]"
 
 # scm
-function parse_git_dirty {
+function parse_git_dirty()
+{
   [[ $(git status 2> /dev/null | tail -n1) != "nothing to commit"* ]] && echo "*"
 }
 
-function parse_git_branch {
+function parse_git_branch()
+{
   git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/ [git::\1$(parse_git_dirty)]/"
 }
 
 PS1="$BLUE_BOLD [\W]$GREEN_BOLD\$(parse_git_branch) $RED_BOLD-> $BASH_WHITE";
-
-# _*_ mode: sh _*_
-# vi: set ft=sh :

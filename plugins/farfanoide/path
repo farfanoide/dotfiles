@@ -1,7 +1,0 @@
-# personal binaries
-export PATH="${HOME}/.composer/vendor/bin:${HOME}/.bin:${PATH}"
-export PATH="/usr/local/sbin:${PATH}"
-export PATH="/opt/apache-maven-3.3.9/bin:${PATH}"
-
-# _*_ mode: sh _*_
-# vi: set ft=sh :

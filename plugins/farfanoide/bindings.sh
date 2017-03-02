@@ -9,6 +9,3 @@ if [[ $(current_shell) =~ 'zsh' ]]; then
   zle -N edit-command-line
   bindkey -M vicmd v edit-command-line
 fi
-
-# _*_ mode: sh _*_
-# vi: set ft=sh :

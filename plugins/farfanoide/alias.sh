@@ -49,6 +49,7 @@ fi
 
 # ---------------------[ Mac stuff ]----------------------------------------{{{
 if _mac_osx ; then
+  alias fixcam='sudo killall AppleCameraAssistant;sudo killall VDCAssistant'
   alias optimize='o -a ImageOptim'
   alias optim='optimize'
   alias brup='brew update && brew upgrade && brew cleanup'
@@ -194,9 +195,3 @@ name_this()
   echo "$(whoami)/$(basename $(pwd))"
 }
 # }}}
-
-# ---------------------[ Modeline ]-----------------------------------{{{
-# _*_ mode: sh _*_
-# vi: set ft=sh :
-# vi: set fdm=marker :
-#}}}

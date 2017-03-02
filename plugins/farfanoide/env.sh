@@ -3,7 +3,6 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Directories
-export PROJ_DIR="$HOME/Develop/sites"
 export MUSIC_DIR="$HOME/Music/iTunes/iTunes\ Media/Music/"
 export DOWN_DIR="$HOME/Downloads"
 export SRC_DIR="$HOME/Develop/src"
@@ -19,16 +18,12 @@ export EDITOR='nvim'
 export VAGRANT_DEFAULT_PROVIDER=virtualbox
 
 # Python stuff --------------{{{
-export PYENV_VIRTUALENV_DISABLE_PROMPT=0
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Develop/src
-if _mac_osx; then
-  export VIRTUALENVWRAPPER_SCRIPT="$(brew --prefix)/bin/virtualenvwrapper.sh"
-else
-  export VIRTUALENVWRAPPER_SCRIPT="$(which virtualenvwrapper.sh)"
-fi
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
-gpip() { PIP_REQUIRE_VIRTUALENV="" /usr/local/bin/pip2 $* ;} # unless explicit call
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export CFLAGS='-O2'
+eval "$(pyenv init -)"
 # end Python stuff -----------}}}
 
 # ls options
@@ -37,7 +32,5 @@ if _mac_osx; then
 fi
 
 
+export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore .hg -g ""'
 export BONITA_INSTALL_DIR=~/Develop/apps/bonita/current
-
-# _*_ mode: sh _*_
-# vi: set ft=sh :

@@ -15,19 +15,6 @@ reloadshell()
 }
 alias shellreload=reloadshell
 
-if [[ "$(current_shell)" =~ 'bash' ]]; then
-
-  _set_null_glob()   { shopt -s nullglob ;}
-  _unset_null_glob() { shopt -u nullglob ;}
-
-elif [[ "$(current_shell)" =~ 'zsh' ]]; then
-
-  _set_null_glob()   { setopt NULL_GLOB ;}
-  _unset_null_glob() { unsetopt NULL_GLOB ;}
-
-fi
-
-
 stream()
 {
   peerflix $(pbpaste) "$*"
@@ -37,6 +24,3 @@ stream()
 # remote_gzip() {
 #     parallel -S $1 --cleanup --return {/}.gz "gzip --best {} -c &gt; {/}.gz" ::: $2
 # }
-
-# _*_ mode: sh _*_
-# vi: set ft=sh :
