@@ -329,6 +329,7 @@ set hidden         " allow unsaved changes to be hidden
 set scrolloff=3    " Start scrolling three lines before the horizontal window border
 set modeline       " enable modeline for per file configs
 set nojoinspaces   " dont add extra spaces when joining lines
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0 " Disable cursor shape
 
 " make Y work consistently to C and D
 nnoremap Y y$
@@ -650,7 +651,7 @@ autocmd ColorScheme * :call ResetColors()
 colorscheme hybrid_material
 call HideUnwantedBackgrounds()
 
-if has('gui_running')
+if has('gui_running') || has('gui_vimr')
   set linespace=7
   colorscheme Tomorrow-Night
 endif
