@@ -33,12 +33,12 @@ let g:jedi#rename_command = ""
 let g:jedi#usages_command = ""
 Plug 'zchee/deoplete-jedi'
 Plug 'Shougo/neco-syntax'
-Plug 'carlitux/deoplete-ternjs'
+Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
 Plug 'Konfekt/FastFold'
 Plug 'Shougo/vimproc.vim', {'do': 'make'} " enable async stuff for Shougo's plugins
 Plug 'm2mdas/phpcomplete-extended', {'for': 'php'}
 Plug 'Shougo/echodoc.vim'
-Plug 'osyo-manga/vim-monster'
+Plug 'fishbullet/deoplete-ruby'
 Plug 'Shougo/deoplete-zsh'
 " end deoplete ----------------------------------------------------}}}
 
@@ -46,7 +46,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegu
 
 Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
 
-
+" Plug 'ternjs/tern_for_vim'
 Plug 'bling/vim-airline'              " vimscript airline, yay!
 Plug 'vim-airline/vim-airline-themes'
 Plug 'csexton/trailertrash.vim'       " Trailing whitespaces
@@ -127,6 +127,7 @@ Plug 'SirVer/ultisnips'
 " Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
+Plug 'zaiste/tmux.vim'
 " Plug 'jceb/vim-orgmode'                 " OrgMode support
 " Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
 " Plug 'elixir-lang/vim-elixir'           " Elixir support
@@ -152,10 +153,10 @@ Plug 'evidens/vim-twig'                 " Twig support
 " end syntaxt plugins ----------------------------------------------}}}
 
 " Python: ---------------------------------------------------------{{{
-" Plug 'klen/python-mode'
 Plug 'mjbrownie/vim-htmldjango_omnicomplete'
 Plug 'Vimjas/vim-python-pep8-indent'
 
+let python_highlight_all = 1
 " end pypthon ------------------------------------------------------}}}
 
 " Text Objects: --------------------------------------------{{{
@@ -193,6 +194,7 @@ let g:deoplete#enable_smart_case = 1
 inoremap <expr><C-k> deoplete#mappings#smart_close_popup()."\<C-k>"
 " inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
 
+set completeopt-=preview
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function() abort
