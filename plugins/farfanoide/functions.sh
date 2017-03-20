@@ -20,6 +20,18 @@ stream()
   peerflix $(pbpaste) "$*"
 }
 
+piprequire()
+{
+    local package="$*"
+    local reqs_file="$(repo_root)/requirements.txt"
+
+    \pip install -U "${package}"
+
+    if ! grep -q "${package}" "${reqs_file}"; then
+        \pip freeze | \grep -i "${package}" >> "${reqs_file}"
+    fi
+}
+
 # test this:
 # remote_gzip() {
 #     parallel -S $1 --cleanup --return {/}.gz "gzip --best {} -c &gt; {/}.gz" ::: $2
