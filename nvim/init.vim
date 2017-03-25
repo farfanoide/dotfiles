@@ -98,8 +98,12 @@ Plug 'easysid/mod8.vim'
 Plug 'chriskempson/base16-vim'
 
 Plug 'ryanoasis/vim-devicons'
+" let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
 let g:WebDevIconsUnicodeDecorateFolderNodes = 1
 let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+" Full folders:   
 
 " end themes ------------------------------------------------------------}}}
 
