@@ -78,21 +78,21 @@ Plug 'jlfwong/vim-mercenary'
 " Themes: ---------------------------------------------------------------{{{
 " Plug 'chrisbra/Colorizer', {'on': 'ColorHilight'} " i dont use it that much...
 Plug 'junegunn/seoul256.vim'
-" Plug 'farfanoide/vim-facebook'
+Plug 'farfanoide/vim-facebook'
 Plug 'w0ng/vim-hybrid'
 Plug 'kristijanhusak/vim-hybrid-material'
 let g:enable_bold_font = 1
-" Plug 'baskerville/bubblegum'
-" Plug 'tomasr/molokai'
+Plug 'baskerville/bubblegum'
+Plug 'tomasr/molokai'
 Plug 'altercation/vim-colors-solarized'
-" Plug 'jpo/vim-railscasts-theme'
-" Plug '29decibel/codeschool-vim-theme'
-" Plug 'vim-scripts/apprentice.vim'
-" Plug 'nanotech/jellybeans.vim'
-" Plug 'AlxHnr/clear_colors'
+Plug 'jpo/vim-railscasts-theme'
+Plug '29decibel/codeschool-vim-theme'
+Plug 'vim-scripts/apprentice.vim'
+Plug 'nanotech/jellybeans.vim'
+Plug 'AlxHnr/clear_colors'
 Plug 'chriskempson/tomorrow-theme', { 'rtp': 'vim/' }
-" Plug 'abra/vim-obsidian'
-" Plug 'freeo/vim-kalisi'
+Plug 'abra/vim-obsidian'
+Plug 'freeo/vim-kalisi'
 Plug 'morhetz/gruvbox'
 Plug 'easysid/mod8.vim'
 Plug 'chriskempson/base16-vim'
@@ -104,6 +104,9 @@ let g:DevIconsEnableFoldersOpenClose = 1
 let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
 let g:DevIconsDefaultFolderOpenSymbol = ''
 " Full folders:   
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+" Bolder carets:  
 
 " end themes ------------------------------------------------------------}}}
 
@@ -143,8 +146,10 @@ Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 Plug 'ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx' " JSX support
+" Plug 'pangloss/vim-javascript'
+" Plug 'vim-scripts/JavaScript-Indent'
+" Plug 'jelera/vim-javascript-syntax'
+" Plug 'mxw/vim-jsx' " JSX support
 let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 Plug 'evidens/vim-twig'                 " Twig support
 " Plug 'rizzatti/dash.vim'                " Dash integration
@@ -175,7 +180,6 @@ Plug 'kana/vim-textobj-fold'
 " end text objects -----------------------------------------}}}
 
 " Misc: ----------------------------------------------------{{{
-Plug 'vim-utils/vim-man'
 " end misc -------------------------------------------------}}}
 
 call plug#end()               " any plugis should be before this
