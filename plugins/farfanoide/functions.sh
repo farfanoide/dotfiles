@@ -32,6 +32,11 @@ piprequire()
     fi
 }
 
+fixapp()
+{
+    xattr -cr $*
+}
+
 # test this:
 # remote_gzip() {
 #     parallel -S $1 --cleanup --return {/}.gz "gzip --best {} -c &gt; {/}.gz" ::: $2
