@@ -62,12 +62,13 @@ Plug 'christoomey/vim-sort-motion' " Sort text objects
 Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <LEADER>t :Tabularize<CR>
 Plug 'plasticboy/vim-markdown'          " Markdown support
+let g:vim_markdown_conceal = 0
 
 let g:vim_markdown_new_list_item_indent = 0
 
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
-
+Plug 'rhysd/open-pdf.vim' " requires => brew cask install pdftotext
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -679,8 +680,8 @@ endif
 " map <LEADER>b :w<CR> :!your command here %<CR>
 "
 " PDF auto conversion -> requires xpdf which in turn requires xquartz
-" let g:pdf_convert_on_edit=1
-" let g:pdf_convert_on_read=1
+let g:pdf_convert_on_edit=1
+let g:pdf_convert_on_read=1
 
 " AutoCommands:
 nmap <LEADER>v :vsp $MYVIMRC<CR>
@@ -714,4 +715,10 @@ inoremap <C-h> <left>
 " Search Colors
 execute 'hi Search ctermbg=green ctermfg=black'
 execute 'hi IncSearch ctermbg=white ctermfg=green'
+
+" <C-s> for "substitute". Replaces spanish letters for equivalence classes
+" [[=char=]] when searchinb either forward or backwards.
+" Taken from some vim god: http://vi.stackexchange.com/a/7394
+
+cnoremap <C-s> <C-\>e getcmdtype() =~ '[?/]' ? substitute(getcmdline(), '[aeiouñ]', '[[=\0=]]', 'g'): getcmdline()<CR><CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
