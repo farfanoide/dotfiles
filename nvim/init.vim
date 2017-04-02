@@ -21,7 +21,7 @@ Plug 'tpope/vim-surround'            " easy pair characters manipulation
 Plug 'Raimondi/delimitMate'          " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
 Plug 'mattn/emmet-vim'               " new era of zencoding :)
 Plug 'matchit.zip'                   " match tags :)
-
+Plug 'junegunn/vader.vim'            " Vimscript Testing
 
 " Deoplete: -------------------------------------------------------{{{
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -78,6 +78,10 @@ Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
 " Plug 'chrisbra/Colorizer', {'on': 'ColorHilight'} " i dont use it that much...
+set termguicolors
+Plug 'AlessandroYorba/Sidonia'
+Plug 'AlessandroYorba/Sierra'
+Plug 'AlessandroYorba/Monrovia'
 Plug 'junegunn/seoul256.vim'
 Plug 'farfanoide/vim-facebook'
 Plug 'w0ng/vim-hybrid'
@@ -393,18 +397,29 @@ execute "set softtabstop=".tabsize
 set expandtab " Use spaces instead of tabs
 
 " Terminal Bubbling:-------------------
-vnoremap <C-J> ]egv
-vnoremap <C-H> <gv
-vnoremap <C-K> [egv
-vnoremap <C-L> >gv
+" change cursor position in insert mode
+inoremap <C-l> <right>
+inoremap <C-h> <left>
+inoremap <C-j> <down>
+inoremap <C-k> <up>
 
-" or alternatively
-vnoremap < <gv
-vnoremap > >gv
+vnoremap <silent> <C-k> :move-2<cr>
+vnoremap <silent> <C-j> :move+<cr>
+
+nnoremap <silent> <C-k> :move-2<cr>
+nnoremap <silent> <C-j> :move+<cr>
+
+xnoremap <silent> <C-k> :move-2<cr>gv
+xnoremap <silent> <C-j> :move'>+<cr>gv
+
+xnoremap <silent> <C-h> <gv
+xnoremap <silent> <C-l> >gv
+xnoremap < <gv
+xnoremap > >gv
+
 " Faster matching
 nnoremap <TAB> %
 vnoremap <TAB> %
-
 
 " Paste and Indent
 nnoremap <esc>p p'[v']=
@@ -613,6 +628,8 @@ function! InsertBreakPoint()
     let debug_command = 'binding.pry'
   elseif &filetype == 'php'
     let debug_command = 'var_dump(); die()'
+  elseif &filetype == 'javascript'
+      let debug_command = 'console.log()'
   else
     let debug_command = 'hey, i dont know any debug command for this filetype'
   endif
@@ -658,13 +675,13 @@ nnoremap <LEADER>ft Vatzf
 set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
-autocmd ColorScheme * :call ResetColors()
+" autocmd ColorScheme * :call ResetColors()
 colorscheme hybrid_material
-call HideUnwantedBackgrounds()
+" call HideUnwantedBackgrounds()
 
 if has('gui_running') || has('gui_vimr')
-  set linespace=7
-  colorscheme Tomorrow-Night
+    set linespace=7
+    colorscheme Tomorrow-Night
 endif
 
 "}}}--------------------[ end Screencasting  ]----------------------------------------
@@ -708,10 +725,6 @@ let g:is_bash=0
 " let g:DisableAutoPHPFolding = 1 " disable php auto-folding
 " let g:php_cs_fixer_path = '~/.bin/php-cs-fixer'
 
-" TODO: test vimrc to find where this breaks
-" change cursor position in insert mode
-inoremap <C-l> <right>
-inoremap <C-h> <left>
 " Search Colors
 execute 'hi Search ctermbg=green ctermfg=black'
 execute 'hi IncSearch ctermbg=white ctermfg=green'
@@ -720,5 +733,6 @@ execute 'hi IncSearch ctermbg=white ctermfg=green'
 " [[=char=]] when searchinb either forward or backwards.
 " Taken from some vim god: http://vi.stackexchange.com/a/7394
 
-cnoremap <C-s> <C-\>e getcmdtype() =~ '[?/]' ? substitute(getcmdline(), '[aeiouñ]', '[[=\0=]]', 'g'): getcmdline()<CR><CR>
+inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
+cnoremap <C-s> <C-\>e getcmdtype() =~ '[?/]' ? substitute(getcmdline(), '[aeiouñ]', '[[=\0=]]', 'g'): getcmdline()<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
