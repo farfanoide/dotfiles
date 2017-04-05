@@ -11,6 +11,9 @@
 " Plugins: --------------------------------------------------------------{{{
 call plug#begin('~/.config/nvim/plugged')
 
+Plug '~/Develop/src/inflector.vim'
+let g:inflector_mapping = 'gI'
+
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
 Plug 'tpope/vim-repeat'              " enable repeating supported plugin maps with .
 Plug 'tpope/vim-unimpaired'          " Some nice text object manipulation mappings
@@ -63,12 +66,13 @@ Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <LEADER>t :Tabularize<CR>
 Plug 'plasticboy/vim-markdown'          " Markdown support
 let g:vim_markdown_conceal = 0
-
-let g:vim_markdown_new_list_item_indent = 0
+let g:vim_markdown_folding_level = 6
+let g:vim_markdown_new_list_item_indent = 1
 
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
 Plug 'rhysd/open-pdf.vim' " requires => brew cask install pdftotext
+Plug 'junegunn/vim-xmark'
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -78,7 +82,6 @@ Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
 " Plug 'chrisbra/Colorizer', {'on': 'ColorHilight'} " i dont use it that much...
-set termguicolors
 Plug 'AlessandroYorba/Sidonia'
 Plug 'AlessandroYorba/Sierra'
 Plug 'AlessandroYorba/Monrovia'
@@ -450,6 +453,7 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 " Eye Candy:---------------------------------------------------------------{{{
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
+set termguicolors
 set synmaxcol=230
 set t_Co=256   " Use 256 colours
 set cursorline " Highlight current line
@@ -622,19 +626,26 @@ endfunction
 nnoremap <LEADER>cb call CurrentBufferToPasteBoard()
 
 function! InsertBreakPoint()
-  if &filetype == 'python'
-    let debug_command = 'import pdb; pdb.set_trace() #TODO: remove this line ;)'
-  elseif &filetype == 'ruby'
-    let debug_command = 'binding.pry'
-  elseif &filetype == 'php'
-    let debug_command = 'var_dump(); die()'
-  elseif &filetype == 'javascript'
-      let debug_command = 'console.log()'
+
+  let l:commands_reference = {
+        \ 'python': 'import pdb; pdb.set_trace() # ',
+        \ 'ruby': 'binding.pry # ',
+        \ 'php': 'die(var_dump()); // ',
+        \ 'javascript': 'console.log() // ',
+        \}
+
+  if has_key(l:commands_reference, &filetype)
+    let l:debug_command = l:commands_reference[&filetype] . 'TODO: remove this line ;)'
   else
-    let debug_command = 'hey, i dont know any debug command for this filetype'
+    let l:debug_command = 'hey, i dont know any debug command for this filetype'
   endif
-  " TODO: check :put command
-  execute(':normal O' . debug_command . '==j')
+
+  let l:reg_save = @s
+
+  call setreg('s', l:debug_command, 'V')
+  normal! "sP
+
+  let @s = l:reg_save
 endfunction
 nnoremap <LEADER>b :call InsertBreakPoint()<CR>
 
@@ -703,7 +714,7 @@ let g:pdf_convert_on_read=1
 " AutoCommands:
 nmap <LEADER>v :vsp $MYVIMRC<CR>
 
-au BufWritePost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
+" au BufWritePost $MYVIMRC source $MYVIMRC|call ResetColors() " Auto-reload vimrc on save
 
 au BufNewFile,BufRead *.org  setlocal filetype=org      " Org files
 au BufNewFile,BufRead *.md   setlocal filetype=markdown " Treat.md files as Markdown
