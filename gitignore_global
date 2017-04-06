@@ -1,31 +1,16 @@
-*~
-.DS_Store
-.idea/
-nbproject/
-*.sublime-project
-*.sublime-workspace
-*.pyc
-*.iml
-*.swp
-.svn
-tags
-.ropeproject/*
-npm-debug.log
-.vagrant
-# Created by https://www.gitignore.io/api/vim
+# Editors stuff =======================================================
 
-### Vim ###
+# Vim --------------------------------------------------------------{{{
 [._]*.s[a-w][a-z]
 [._]s[a-w][a-z]
 *.un~
 Session.vim
 .netrwhist
+*.swp
 *~
+# Vim --------------------------------------------------------------}}}
 
-# Created by https://www.gitignore.io/api/emacs
-
-### Emacs ###
-# -*- mode: gitignore; -*-
+# Emacs ------------------------------------------------------------{{{
 *~
 \#*\#
 /.emacs.desktop
@@ -34,29 +19,59 @@ Session.vim
 auto-save-list
 tramp
 .\#*
-
 # Org-mode
 .org-id-locations
 *_archive
-
 # flymake-mode
 *_flymake.*
-
 # eshell files
 /eshell/history
 /eshell/lastdir
-
 # elpa packages
 /elpa/
-
 # reftex files
 *.rel
-
 # AUCTeX auto folder
 /auto/
+# Emacs ------------------------------------------------------------}}}
 
-# cask packages
+# Others -----------------------------------------------------------{{{
+.idea/
+nbproject/
+*.sublime-project
+*.sublime-workspace
+*.iml
+.svn
+tags
+.vagrant
+# Others -----------------------------------------------------------}}}
+
+# Mac OS X ---------------------------------------------------------{{{
 .cask/
+.DS_Store
+._*
+# Mac OS X ---------------------------------------------------------}}}
 
-pip-selfcheck.json
+# Language specific stuff =============================================
+
+# PHP --------------------------------------------------------------{{{
+
+.composer
+.phpcomplete_extended
+
+# PHP --------------------------------------------------------------}}}
+
+# Python -----------------------------------------------------------{{{
+.ropeproject/*
 .python-version
+pip-selfcheck.json
+*.pyc
+# Python -----------------------------------------------------------}}}
+
+# Javascript -------------------------------------------------------{{{
+.tern-port
+npm-debug.log
+# Javascript -------------------------------------------------------}}}
+
+# vim:set foldmethod=marker:
+# -*- mode: gitignore; -*-
