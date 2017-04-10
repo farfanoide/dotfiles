@@ -720,6 +720,7 @@ au BufRead *.tmuxtheme setlocal filetype=tmux foldmethod=marker
 au BufRead *.sh setlocal foldmethod=marker
 au BufRead *.zsh setlocal foldmethod=marker
 au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
+au BufRead *.js setlocal suffixesadd+=.js
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r
