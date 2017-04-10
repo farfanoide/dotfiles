@@ -65,9 +65,6 @@ Plug 'christoomey/vim-sort-motion' " Sort text objects
 Plug 'godlygeek/tabular'                " must go before vim-instant-markdown
 map <LEADER>t :Tabularize<CR>
 Plug 'plasticboy/vim-markdown'          " Markdown support
-let g:vim_markdown_conceal = 0
-let g:vim_markdown_folding_level = 6
-let g:vim_markdown_new_list_item_indent = 1
 
 Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
@@ -86,7 +83,7 @@ Plug 'AlessandroYorba/Sidonia'
 Plug 'AlessandroYorba/Sierra'
 Plug 'AlessandroYorba/Monrovia'
 Plug 'junegunn/seoul256.vim'
-Plug 'farfanoide/vim-facebook'
+Plug '~/Develop/src/vim-facebook'
 Plug 'w0ng/vim-hybrid'
 Plug 'kristijanhusak/vim-hybrid-material'
 let g:enable_bold_font = 1
@@ -170,7 +167,8 @@ Plug 'evidens/vim-twig'                 " Twig support
 " end syntaxt plugins ----------------------------------------------}}}
 
 " Python: ---------------------------------------------------------{{{
-Plug 'mjbrownie/vim-htmldjango_omnicomplete'
+" Plug 'mjbrownie/vim-htmldjango_omnicomplete'
+Plug 'tweekmonster/django-plus.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 
 let python_highlight_all = 1
@@ -192,112 +190,6 @@ Plug 'kana/vim-textobj-fold'
 
 call plug#end()               " any plugis should be before this
 " end plugins -----------------------------------------------------------}}}
-" Deoplete: -----------------------------------------------------------{{{
-let g:neopairs#enable = 1
-" inoremap <expr><c-k>
-"       \ deoplete#mappings#smart_close_popup()."\<c-k>"
-" autocmd CompleteDone * pclose!
-"
-" let g:deoplete#enable_at_startup = 1
-"
-" let g:echodoc_enable_at_startup = 1
-" Use deoplete.
-let g:deoplete#enable_at_startup = 1
-" Use smartcase.
-let g:deoplete#enable_smart_case = 1
-
-" <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-k> deoplete#mappings#smart_close_popup()."\<C-k>"
-" inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
-
-set completeopt-=preview
-" <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#mappings#close_popup() . "\<CR>"
-endfunction
-" end deoplete --------------------------------------------------------}}}
-" NeoMake: ------------------------------------------------------------{{{
-let g:neomake_open_list = 0
-" let g:neomake_airline = 1
-" end neomake ---------------------------------------------------------}}}
-" PythonMode: ---------------------------------------------------------{{{
-" let g:pymode_doc = 0
-" let g:pymode_doc_bind = ''
-" let g:pymode_lint = 1
-" let g:pymode_lint_on_write = 0
-" let g:pymode_lint_on_fly = 0
-" let g:pymode_rope = 0
-" let g:pymode_lint_checkers = []
-" let g:pymode_run = 0
-
-" TODO: check these mappings and add them only to htmldjango
-" let b:surround_{char2nr("v")} = "{{ \r }}"
-" let b:surround_{char2nr("{")} = "{{ \r }}"
-" let b:surround_{char2nr("%")} = "{% \r %}"
-" let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
-" let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
-" let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
-" let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
-" let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
-
-if jedi#init_python()
-  function! s:jedi_auto_force_py_version() abort
-    let major_version = pyenv#python#get_internal_major_version()
-    call jedi#force_py_version(major_version)
-  endfunction
-  augroup vim-pyenv-custom-augroup
-    autocmd! *
-    autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
-    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
-  augroup END
-endif
-" EndPythonMode: ------------------------------------------------------}}}
-" Python Neovim: ------------------------------------------------------{{{
-let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/farfanoide/.pyenv/versions/neovim3/bin/python'
-" EndPython Neovim: ---------------------------------------------------}}}
-" FZF: ----------------------------------------------------------------{{{
-
-let g:fzf_layout = {'down': '~50%'}
-let g:fzf_files_options =
-  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
-
-nmap <c-p> :Files<cr>
-" nmap <c-p><c-t> :Tags<cr>
-nmap <c-s> :BTags<cr>
-let g:fzf_action = {
-      \ 'ctrl-t': 'tab split',
-      \ 'ctrl-x': 'split',
-      \ 'ctrl-v': 'vsplit' }
-
-command! FZFMru call fzf#run({
-      \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
-      \'sink' : 'e ',
-      \'options' : '-m',
-      \})
-
-command! Plugs call fzf#run({
-      \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-      \ 'options': '--delimiter / --nth -1',
-      \ 'sink':    'Explore'})
-
-" end FZF -------------------------------------------------------------}}}
-" Spell Checking:---------------------------------------------------------------{{{
-
-set spelllang=es
-set spelllang+=en
-set spellfile=~/.vim/dict.add
-au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
-
-" end spell checking -----------------------------------------------------------}}}
-" Airline: --------------------------------------------------------------{{{
-let g:airline_extensions      = ['branch', 'hunks']
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep        = ' '
-let g:airline_right_sep       = ' '
-let g:airline_theme           = 'bubblegum'
-" end airline -----------------------------------------------------------}}}
 " Editor: ---------------------------------------------------------------{{{
 
 syntax on " Enable syntax highligting
@@ -388,6 +280,126 @@ let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap
 set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
 set guioptions-=R                    " Hide nerdtree's window scrollbar on macvim
 " end editor ------------------------------------------------------------}}}
+" PluginConfigurations: -------------------------------------------------{{{
+" vim-markdown: ---------------------------------------------------------{{{
+let g:vim_markdown_conceal = 0
+let g:vim_markdown_folding_level = 6
+let g:vim_markdown_new_list_item_indent = 0
+" end vim-markdown: -----------------------------------------------------}}}
+" Deoplete: -----------------------------------------------------------{{{
+let g:neopairs#enable = 1
+" inoremap <expr><c-k>
+"       \ deoplete#mappings#smart_close_popup()."\<c-k>"
+" autocmd CompleteDone * pclose!
+"
+" let g:deoplete#enable_at_startup = 1
+"
+" let g:echodoc_enable_at_startup = 1
+" Use deoplete.
+let g:deoplete#enable_at_startup = 1
+" Use smartcase.
+let g:deoplete#enable_smart_case = 1
+
+" <C-h>, <BS>: close popup and delete backword char.
+inoremap <expr><C-k> deoplete#mappings#smart_close_popup()."\<C-k>"
+" inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
+
+set completeopt-=preview
+" <CR>: close popup and save indent.
+inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+function! s:my_cr_function() abort
+  return deoplete#mappings#close_popup() . "\<CR>"
+endfunction
+" end deoplete --------------------------------------------------------}}}
+" NeoMake: ------------------------------------------------------------{{{
+let g:neomake_open_list = 0
+" let g:neomake_airline = 1
+" end neomake ---------------------------------------------------------}}}
+" PythonMode: ---------------------------------------------------------{{{
+" let g:pymode_doc = 0
+" let g:pymode_doc_bind = ''
+" let g:pymode_lint = 1
+" let g:pymode_lint_on_write = 0
+" let g:pymode_lint_on_fly = 0
+" let g:pymode_rope = 0
+" let g:pymode_lint_checkers = []
+" let g:pymode_run = 0
+
+" TODO: check these mappings and add them only to htmldjango
+" let b:surround_{char2nr("v")} = "{{ \r }}"
+" let b:surround_{char2nr("{")} = "{{ \r }}"
+" let b:surround_{char2nr("%")} = "{% \r %}"
+" let b:surround_{char2nr("b")} = "{% block \1block name: \1 %}\r{% endblock \1\1 %}"
+" let b:surround_{char2nr("i")} = "{% if \1condition: \1 %}\r{% endif %}"
+" let b:surround_{char2nr("w")} = "{% with \1with: \1 %}\r{% endwith %}"
+" let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
+" let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
+
+if jedi#init_python()
+  function! s:jedi_auto_force_py_version() abort
+    let major_version = pyenv#python#get_internal_major_version()
+    call jedi#force_py_version(major_version)
+  endfunction
+  augroup vim-pyenv-custom-augroup
+    autocmd! *
+    autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+  augroup END
+endif
+" EndPythonMode: ------------------------------------------------------}}}
+" FZF: ----------------------------------------------------------------{{{
+
+let g:fzf_layout = {'down': '~50%'}
+let g:fzf_files_options =
+  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+
+nmap <c-p> :Files<cr>
+" nmap <c-p><c-t> :Tags<cr>
+nmap <c-s> :BTags<cr>
+let g:fzf_action = {
+      \ 'ctrl-t': 'tab split',
+      \ 'ctrl-x': 'split',
+      \ 'ctrl-v': 'vsplit' }
+
+command! FZFMru call fzf#run({
+      \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
+      \'sink' : 'e ',
+      \'options' : '-m',
+      \})
+
+command! Plugs call fzf#run({
+      \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+      \ 'options': '--delimiter / --nth -1',
+      \ 'sink':    'Explore'})
+
+" end FZF -------------------------------------------------------------}}}
+" Airline: --------------------------------------------------------------{{{
+let g:airline_extensions      = ['branch', 'hunks']
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep        = ' '
+let g:airline_right_sep       = ' '
+let g:airline_theme           = 'bubblegum'
+" end airline -----------------------------------------------------------}}}
+" Snippets: -------------------------------------------------------------{{{
+
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+
+" end snippets ----------------------------------------------------------}}}
+" END PluginConfigurations: ---------------------------------------------}}}
+" Python Neovim: ------------------------------------------------------{{{
+let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/Users/farfanoide/.pyenv/versions/neovim3/bin/python'
+" EndPython Neovim: ---------------------------------------------------}}}
+" Spell Checking:---------------------------------------------------------------{{{
+
+set spelllang=es
+set spelllang+=en
+set spellfile=~/.vim/dict.add
+au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
+
+" end spell checking -----------------------------------------------------------}}}
 " Indentation: ----------------------------------------------------------{{{
 
 set smartindent " Smart indentation of new lines
@@ -443,13 +455,6 @@ endfunction
 command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 
 " end indentation -------------------------------------------------------}}}
-" Snippets: -------------------------------------------------------------{{{
-
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
-
-" end snippets ----------------------------------------------------------}}}
 " Eye Candy:---------------------------------------------------------------{{{
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
@@ -487,6 +492,7 @@ map <LEADER>tw :TrailerTrim<CR>
 " Search:---------------------------------------------------------------{{{
 set ignorecase " Ignore case of searches
 set smartcase  " ...unless at least one capital letter in search pattern
+set infercase  " more intelligent completions
 set gdefault   " Add the g flag to search/replace by default
 set wildignorecase " Case insensitive filename completion
 
@@ -616,7 +622,7 @@ endfunction
 command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
 
 " Join upper line at the end of current one
-nnoremap <LEADER>j ddkOpJ
+nnoremap <LEADER>j ddkPJ
 
 " send current's buffer full dir into clipboard
 " '%' = current buffer; ':p' = full path modifier
@@ -643,7 +649,7 @@ function! InsertBreakPoint()
   let l:reg_save = @s
 
   call setreg('s', l:debug_command, 'V')
-  normal! "sP
+  normal! "sP'[v']=
 
   let @s = l:reg_save
 endfunction
