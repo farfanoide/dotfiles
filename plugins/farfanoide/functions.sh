@@ -1,9 +1,9 @@
+
 md()
 {
     local dir=$1
     mkdir -p $dir && cd $dir
 }
-
 current_shell()
 {
     ps | grep $(echo $$) | grep -v grep | awk '{ print $4 }'
@@ -35,6 +35,11 @@ piprequire()
 fixapp()
 {
     xattr -cr $*
+}
+
+fixdropbox()
+{
+    gsed -i 's/3655/3655000/g' ~/Library/LaunchAgents/com.dropbox.DropboxMacUpdate.agent.plist
 }
 
 # test this:
