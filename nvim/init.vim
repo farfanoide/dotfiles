@@ -103,20 +103,9 @@ Plug 'easysid/mod8.vim'
 Plug 'chriskempson/base16-vim'
 
 Plug 'ryanoasis/vim-devicons'
-" let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
-let g:WebDevIconsUnicodeDecorateFolderNodes = 1
-let g:DevIconsEnableFoldersOpenClose = 1
-let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
-let g:DevIconsDefaultFolderOpenSymbol = ''
-" Full folders:   
-let g:NERDTreeDirArrowExpandable = ''
-let g:NERDTreeDirArrowCollapsible = ''
-" Bolder carets:  
-
 " end themes ------------------------------------------------------------}}}
 
 " Ruby: -----------------------------------------------------------{{{
-
 Plug 'tpope/rbenv-ctags'
 Plug 'tpope/vim-rails'
 Plug 'tpope/vim-endwise'
@@ -130,39 +119,23 @@ Plug 'kmdsbng/vim-ruby-eval'
 
 " Snippets: -------------------------------------------------------{{{
 Plug 'honza/vim-snippets'
-" Plug 'Shougo/neosnippet-snippets'
 Plug 'SirVer/ultisnips'
 " end snippets ----------------------------------------------------}}}
 
 " Syntax Plugins: --------------------------------------------------{{{
 
-" Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
+Plug 'benekastah/neomake'             " Syntax check
+Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
-Plug 'zaiste/tmux.vim'
-" Plug 'jceb/vim-orgmode'                 " OrgMode support
-" Plug 'tpope/vim-speeddating'            " Required by vim-orgmode
-" Plug 'elixir-lang/vim-elixir'           " Elixir support
-Plug 'benekastah/neomake'             " Syntax check
-autocmd! BufWritePost * Neomake
+Plug 'keith/tmux.vim'
 
 Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 Plug 'ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
-" Plug 'pangloss/vim-javascript'
-" Plug 'vim-scripts/JavaScript-Indent'
-" Plug 'jelera/vim-javascript-syntax'
-" Plug 'mxw/vim-jsx' " JSX support
-let g:jsx_ext_required = 0 " Allow JSX in normal JS files
 Plug 'evidens/vim-twig'                 " Twig support
-" Plug 'rizzatti/dash.vim'                " Dash integration
-" Plug 'Glench/Vim-Jinja2-Syntax'         " Jinja2 support
-" Plug 'stephpy/vim-yaml'
-" Plug 'lmeijvogel/vim-yaml-helper'
-" Plug 'xsbeats/vim-blade'
-" Plug 'Chiel92/vim-autoformat'
 
 " end syntaxt plugins ----------------------------------------------}}}
 
@@ -313,6 +286,8 @@ endfunction
 " end deoplete --------------------------------------------------------}}}
 " NeoMake: ------------------------------------------------------------{{{
 let g:neomake_open_list = 0
+autocmd! BufWritePost * Neomake
+hi NeomakeErrorSign guifg=red
 " let g:neomake_airline = 1
 " end neomake ---------------------------------------------------------}}}
 " PythonMode: ---------------------------------------------------------{{{
@@ -387,6 +362,19 @@ let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " end snippets ----------------------------------------------------------}}}
+" Devicons: -------------------------------------------------------------{{{
+
+" let g:WebDevIconsNerdTreeAfterGlyphPadding = ' '
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 1
+let g:WebDevIconsUnicodeDecorateFolderNodesDefaultSymbol = ''
+let g:DevIconsDefaultFolderOpenSymbol = ''
+" Full folders:   
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+" Bolder carets:  
+
+" end Devicons ----------------------------------------------------------}}}
 " END PluginConfigurations: ---------------------------------------------}}}
 " Python Neovim: ------------------------------------------------------{{{
 let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
