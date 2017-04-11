@@ -1,8 +1,10 @@
+--recurse
 --exclude=.git
 --exclude=.hg
 --exclude=log
 
---exclude=tmp--languages=-javascript,sql
+--exclude=tmp
+--languages=-sql
 
 --python-kinds=-i
 
@@ -28,3 +30,9 @@
 --regex-js=/(function)*[ \t]*([A-Za-z$_][A-Za-z0-9_$]+)[ \t]*\([^)]*\)[ \t]*\{/\2/f,function/
 --regex-js=/['"]*([A-Za-z$][A-Za-z0-9_$]+)['"]*:[ \t]*function[ \t]*\(/\1/m,method/
 --regex-js=/([A-Za-z0-9_$]+)\[["']([A-Za-z0-9_$]+)["']\][ \t]*=[ \t]*function[ \t]*\(/\2/m,method/
+
+--PHP-kinds=+cf
+--regex-PHP=/abstract class ([^ ]*)/\1/c/
+--regex-PHP=/interface ([^ ]*)/\1/c/
+--regex-PHP=/trait ([^ ]*)/\1/c/
+--regex-PHP=/(public |static |abstract |protected |private )+ function +([^ \(]*)/\2/f/
