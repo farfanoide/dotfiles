@@ -39,7 +39,11 @@ fixapp()
 
 fixdropbox()
 {
-    gsed -i 's/3655/3655000/g' ~/Library/LaunchAgents/com.dropbox.DropboxMacUpdate.agent.plist
+    local dropbox_config=~/Library/LaunchAgents/com.dropbox.DropboxMacUpdate.agent.plist
+
+    launchctl unload $dropbox_config && \
+        gsed -i 's/3655/3655000/g' $dropbox_config && \
+        launchctl load -w $dropbox_config
 }
 
 # test this:
