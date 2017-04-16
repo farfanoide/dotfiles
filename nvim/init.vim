@@ -48,6 +48,8 @@ Plug 'Shougo/deoplete-zsh'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
 
 Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
+Plug 'Yggdroot/indentLine', {'on': 'IndentLinesEnable'}
+autocmd! User indentLine doautocmd indentLine Syntax
 
 " Plug 'ternjs/tern_for_vim'
 Plug 'bling/vim-airline'              " vimscript airline, yay!
@@ -70,6 +72,7 @@ Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
 Plug 'rhysd/open-pdf.vim' " requires => brew cask install pdftotext
 Plug 'junegunn/vim-xmark'
+Plug 'junegunn/vim-peekaboo'
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -129,6 +132,7 @@ Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
 Plug 'keith/tmux.vim'
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 
 Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
@@ -140,9 +144,9 @@ Plug 'evidens/vim-twig'                 " Twig support
 " end syntaxt plugins ----------------------------------------------}}}
 
 " Python: ---------------------------------------------------------{{{
-" Plug 'mjbrownie/vim-htmldjango_omnicomplete'
 Plug 'tweekmonster/django-plus.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
+Plug 'tmhedberg/SimpylFold'
 
 let python_highlight_all = 1
 " end pypthon ------------------------------------------------------}}}
@@ -391,7 +395,7 @@ au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
 " Indentation: ----------------------------------------------------------{{{
 
 set smartindent " Smart indentation of new lines
-
+set breakindent
 " Tab expansion settings
 let tabsize = 2
 execute "set tabstop=".tabsize

@@ -33,7 +33,6 @@ alias mkdir='mkdir -p'
 # requires brew install grc
 alias ctail='\grc tail'
 alias dateformat='date "+%d-%m-%Y"'
-alias pm='python manage.py'
 _linux && alias open='xdg-open'
 alias o='open'
 alias o.='open .'
