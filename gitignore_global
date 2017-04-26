@@ -75,3 +75,4 @@ npm-debug.log
 
 # vim:set foldmethod=marker:
 # -*- mode: gitignore; -*-
+extras

@@ -8,3 +8,5 @@ bin/*
 tmux/yat.sh/sessions/*
 tmux/history
 vim/autoload/plug.vim
+nvim/autoload/plug.vim.old
+tmux/plugins
