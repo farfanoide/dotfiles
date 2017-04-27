@@ -10,3 +10,4 @@ tmux/history
 vim/autoload/plug.vim
 nvim/autoload/plug.vim.old
 tmux/plugins
+emacs.d/elpa
