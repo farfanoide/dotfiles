@@ -1,6 +1,9 @@
 (require 'package)
 (global-linum-mode 1)
 (set 'linum-format "%3d ▍")
+; (set 'linum-format "%3d ⎜")
+; (set 'linum-format "%3d ‖")
+(set 'linum-format "%3d ⁞ ")
 
 (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
@@ -20,12 +23,34 @@
 ; Save all backups in one directory
 (set 'backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
+; Spaces instead of tabs
+(setq c-basic-indent 2)
+(setq tab-width 2)
+(setq indent-tabs-mode nil)
+(setq tab-stop-list (number-sequence 2 120 2))
+
+(setq whitespace-style '(face trailing spaces space-mark))
+
+(setq-default show-trailing-whitespace t)
+(setq-default highlight-tabs t)
+; (highlight-tabs)
+; (highlight-trailing-whitespace)
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
+
+
 (use-package yaml-mode
   :ensure t
   :config
   (add-hook 'yaml-mode-hook
-	    (lambda ()
-	      (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
+        (lambda ()
+          (define-key yaml-mode-map "\C-m" 'newline-and-indent))))
 
 ;; Require Evil Mode
 (set 'evil-want-C-u-scroll t) ;Use <C-U> to scroll up
@@ -61,7 +86,7 @@
   :config
   (global-evil-surround-mode 1))
 
-(define-key evil-insert-state-map "jj" 'evil-force-normal-state)
+;;(define-key evil-insert-state-map "jj" 'evil-normal-state)
 
 ;; Make evil-mode up/down operate in screen lines instead of logical lines
 (define-key evil-motion-state-map "j" 'evil-next-visual-line)
@@ -75,6 +100,15 @@
 (define-key evil-insert-state-map "\C-k" 'evil-previous-line)
 (define-key evil-insert-state-map "\C-j" 'evil-next-line)
 
+(defun jump-to-tag ()
+  (interactive)
+  (evil-emacs-state)
+  (call-interactively (key-binding (kbd "M-.")))
+  (evil-change-to-previous-state (other-buffer))
+  (evil-change-to-previous-state (current-buffer)))
+
+(define-key evil-normal-state-map (kbd "C-]") 'jump-to-tag)
+
 (electric-pair-mode 1) ;; Enable auto closing matching characters
 
 (menu-bar-mode -1) ;; Remove menubar on top
@@ -84,13 +118,10 @@
   :config
   (ac-config-default))
 
-(set-display-table-slot standard-display-table 'wrap ? )
+(set-display-table-slot standard-display-table 'wrap ?… )
 
 ;; Add _ to word motion
-(add-hook 'python-mode-hook #'(lambda () (modify-syntax-entry ?_ "w"))) ;; For Python
-(add-hook 'ruby-mode-hook   #'(lambda () (modify-syntax-entry ?_ "w")))   ;; For ruby
-(add-hook 'js2-mode-hook    #'(lambda () (modify-syntax-entry ?_ "w")))    ;; For Javascript
-
+(modify-syntax-entry ?_ "w")
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
