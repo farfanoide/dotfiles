@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# ---------------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Script to retrieve BTC value from bitstamp and store it in a temp file.
+#  I personally use it to show BTC value on tmux, so i run this file
+#  periodically with a cron like so:
+#
+#   */15 * * * * bash -c "bitstamp_value > /tmp/bitstamplog 2>&1"
+#
+# ---------------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ---------------------------------------------------------------------------------------
+# Dependencies
+# ------------
+#
+#   - jq: https://stedolan.github.io/jq/
+#
+# ---------------------------------------------------------------------------------------
+
+
+export PATH="/usr/local/bin:${PATH}"
+curl --silent https://www.bitstamp.net/api/v2/ticker/btcusd/ \
+    | jq -r '.last' \
+    | cut -d '.' -f1 \
+    > /tmp/btc_value
