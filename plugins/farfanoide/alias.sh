@@ -1,4 +1,5 @@
 # ---------------------[ General Stuff ]----------------------------------------{{{
+alias e='emacs'
 alias v='nvim'
 alias vi='nvim'
 alias vim='nvim'
@@ -62,13 +63,13 @@ fi
 
 # ---------------------[ Linux stuff ]----------------------------------------{{{
 if _linux ; then
-  alias sai='sudo apt-get install -y '
-  alias sar='sudo apt-get purge -y '
-  alias sud='sudo apt-get update'
-  alias sup='sudo apt-get update && \
-             sudo apt-get -y dist-upgrade && \
-             sudo apt-get -y autoremove && \
-             sudo apt-get -y autoclean'
+  alias sai='sudo apt install -y '
+  alias sar='sudo apt purge -y '
+  alias sud='sudo apt update'
+  alias sup='sudo apt update && \
+             sudo apt full-upgrade -y && \
+             sudo apt autoremove -y && \
+             sudo apt autoclean -y'
   alias pbcopy='xsel -a'
   alias pbpaste='xsel -o'
 fi
@@ -93,13 +94,15 @@ alias ga.='ga .'
 alias gd='git diff '
 alias grv='git remote -v'
 alias gcm='git commit -m'
-alias gl="git log --color --graph --pretty=format:'%Cred%h%Creset - %C(bold blue)%an%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) ' --abbrev-commit --"
+alias gl="git log --color --graph --pretty=format:'%C(bold blue)%an%Creset on%Cred %h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr) ' --abbrev-commit --"
 alias gfc='git clone'
 alias gc='git commit -v'
 alias gco='git checkout '
 alias gba='git branch -av'
 grt()
 {
+    # Jump to the root of the repo.
+    #
     # Requires `repo_root` shell script which basically asks the scm executable
     # the root path for the current repository
     cd "$(repo_root)"
@@ -129,25 +132,27 @@ alias bi='bundle check; bundle install'
 herokup()
 {
   local dotenv="$(repo_root)/.env"
-  git push heroku master && [ -e $dotenv ] && heroku config:set $(cat $dotenv) && heroku apps:open
+  git push heroku master \
+      && [ -e $dotenv ] \
+      && heroku config:set $(cat $dotenv) \
+      && heroku apps:open
 }
 alias hup=herokup
 alias ho='heroku open'
 alias hl='heroku logs -t'
-hr()
-{
-    heroku run $*
-}
+hr() { heroku run $* ;}
 # }}}
 
 # ---------------------[ Ruby/Rails/Rake ]----------------------------------------{{{
 bes()
 {
-    bundle exec rails server $* 2> /dev/null || bundle exec rackup $*
+    bundle exec rails server $* 2> /dev/null \
+        || bundle exec rackup $*
 }
 bec()
 {
-    bundle exec rails console $* 2> /dev/null || (grt 2> /dev/null ; bundle exec racksh)
+    bundle exec rails console $* 2> /dev/null \
+        || (grt 2> /dev/null ; bundle exec racksh)
 }
 alias ber='bundle exec rake'
 alias bem='bundle exec rake db:migrate'
@@ -157,7 +162,9 @@ alias beg='be guard'
 # get development db name from database.yml
 devdb()
 {
-    cat $(repo_root)/config/database.yml | grep _development | tr -d ' ' | cut -d':' -f2
+    cat $(repo_root)/config/database.yml \
+        | grep '_development' \
+        | tr -d ' ' | cut -d':' -f2
 }
 getdevdb()
 {
@@ -180,7 +187,12 @@ alias vpr='vagrant provision'
 # ---------------------[ SSH ]----------------------------------------{{{
 alias s='ssh'
 alias scp='scp -r'
-alias sshfixpermissions='chmod -R 700 "$HOME/.ssh" && chmod 600 "$HOME/.ssh/*rsa" && chmod 644 "$HOME/.ssh/*pub"'
+fix_ssh_permissions()
+{
+    chmod -R 700 "$HOME/.ssh" \
+        && chmod 600 "$HOME/.ssh/*rsa" \
+        && chmod 644 "$HOME/.ssh/*pub"
+}
 # }}}
 
 # ---------------------[ Docker ]-------------------------------------{{{

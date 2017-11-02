@@ -1,17 +1,58 @@
 #!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#   Simple script to create github repo and add it as a remote.
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
 
-[ $# -eq 0 ] && echo "Usage: $(basename $0) <repository_name> [username]" && exit 1
+set -e
 
-repo_name=$1; shift
-[ $# -gt 0 ] && username=$1 || username=$(git config github.user)
+_arguments_received () { [ $# -eq 0 ]  ;}
+_arguments_left ()     { [ $# -gt 0 ]  ;}
+_git_repo_exists ()    { [ -d '.git' ] ;}
+_create_repo ()
+{
+    local ENDPOINT='https://api.github.com/user/repos'
+    local REPO_DATA="{\"name\":\"${REPO_NAME}\"}"
 
+    curl --silent -u ${USERNAME} ${ENDPOINT} -d "${REPO_DATA}" \
+        | grep ssh_url \
+        | cut -d'"'  -f4
+}
+_repo_was_created () { [ ! -z "${REPO_URL}" ] ;}
+_origin_is_set ()    { git remote -v | grep -q origin ;}
 
-endpoint='https://api.github.com/user/repos'
-repo_url="$(curl -u ${username} ${endpoint} -d "{\"name\":\"${repo_name}\"}" | grep ssh_url | cut -d\"  -f4 )"
-origin="$(git remote -v | grep origin)"
+main ()
+{
+    if ! _git_repo_exists; then
+        git init .
+    fi
 
-if [ ! -z "${repo_url}" -a -z "${origin}" ]; then
-  git remote add origin $repo_url
+    REPO_URL="$(_create_repo)"
+
+    if _repo_was_created && ! _origin_is_set; then
+        git remote add origin $REPO_URL
+    fi
+}
+
+if ! _arguments_received; then
+    echo "Usage: $(basename $0) <repository_name> [username]" && exit 1
 fi
 
-# TODO: git init if not exists, ask for remote name if origin exists
+REPO_NAME=$1; shift
+
+if _arguments_left; then
+    USERNAME="$1"
+else
+    USERNAME="$(git config github.user)"
+fi
+
+main
