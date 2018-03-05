@@ -1,3 +1,15 @@
+CRYFS_MOUNTDIR=~/cryfs
+
+mount_private()
+{
+  [ ! -d $CRYFS_MOUNTDIR ] && mkdir $CRYFS_MOUNTDIR
+  cryfs ~/Dropbox/fs $CRYFS_MOUNTDIR
+}
+
+unmount_private()
+{
+  umount $CRYFS_MOUNTDIR && rm -r $CRYFS_MOUNTDIR
+}
 
 md()
 {
