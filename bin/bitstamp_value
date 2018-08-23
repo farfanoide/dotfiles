@@ -23,8 +23,10 @@
 #
 # ---------------------------------------------------------------------------------------
 
+set -e
 
 export PATH="/usr/local/bin:${PATH}"
+
 curl --silent https://www.bitstamp.net/api/v2/ticker/btcusd/ \
     | jq -r '.last' \
     | cut -d '.' -f1 \

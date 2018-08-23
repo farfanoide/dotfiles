@@ -10,8 +10,9 @@
 
 " Plugins: --------------------------------------------------------------{{{
 call plug#begin('~/.config/nvim/plugged')
+Plug 'majutsushi/tagbar'
 
-Plug '~/Develop/src/inflector.vim'
+Plug 'farfanoide/inflector.vim'
 let g:inflector_mapping = 'gI'
 
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
@@ -23,7 +24,7 @@ Plug 'tomtom/tcomment_vim'           " easy code commenting
 Plug 'tpope/vim-surround'            " easy pair characters manipulation
 Plug 'Raimondi/delimitMate'          " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
 Plug 'mattn/emmet-vim'               " new era of zencoding :)
-Plug 'matchit.zip'                   " match tags :)
+Plug 'vim-scripts/matchit.zip'       " match tags :)
 Plug 'junegunn/vader.vim'            " Vimscript Testing
 
 " Deoplete: -------------------------------------------------------{{{
@@ -31,7 +32,8 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neopairs.vim' " Auto insert pairs when complete done
 Plug 'Shougo/neco-vim'
 Plug 'Shougo/neoinclude.vim'
-Plug 'davidhalter/jedi-vim' | Plug 'lambdalisue/vim-pyenv'
+Plug 'davidhalter/jedi-vim'
+Plug 'lambdalisue/vim-pyenv'
 let g:jedi#rename_command = ""
 let g:jedi#usages_command = ""
 Plug 'zchee/deoplete-jedi'
@@ -45,7 +47,8 @@ Plug 'fishbullet/deoplete-ruby'
 Plug 'Shougo/deoplete-zsh'
 " end deoplete ----------------------------------------------------}}}
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } | Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'Yggdroot/indentLine', {'on': 'IndentLinesEnable'}
@@ -73,6 +76,7 @@ Plug 'mattn/gist-vim' " Gist from withing vim :)
 Plug 'rhysd/open-pdf.vim' " requires => brew cask install pdftotext
 Plug 'junegunn/vim-xmark'
 Plug 'junegunn/vim-peekaboo'
+
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
@@ -82,9 +86,7 @@ Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
 " Plug 'chrisbra/Colorizer', {'on': 'ColorHilight'} " i dont use it that much...
-Plug 'AlessandroYorba/Sidonia'
 Plug 'AlessandroYorba/Sierra'
-Plug 'AlessandroYorba/Monrovia'
 Plug 'junegunn/seoul256.vim'
 Plug '~/Develop/src/vim-facebook'
 Plug 'w0ng/vim-hybrid'
@@ -104,6 +106,8 @@ Plug 'freeo/vim-kalisi'
 Plug 'morhetz/gruvbox'
 Plug 'easysid/mod8.vim'
 Plug 'chriskempson/base16-vim'
+Plug 'sonph/onehalf', {'rtp': 'vim/'}
+Plug 'romainl/Apprentice'
 
 Plug 'ryanoasis/vim-devicons'
 " end themes ------------------------------------------------------------}}}
@@ -133,10 +137,12 @@ Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
 Plug 'keith/tmux.vim'
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'mxw/vim-jsx', {'for': 'javascript'}
+let g:jsx_ext_required = 0
 
 Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'evanmiller/nginx-vim-syntax'      " Nginx
-Plug 'ansible-vim'
+Plug 'pearofducks/ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
 Plug 'evidens/vim-twig'                 " Twig support
@@ -217,6 +223,7 @@ set scrolloff=3    " Start scrolling three lines before the horizontal window bo
 set modeline       " enable modeline for per file configs
 set nojoinspaces   " dont add extra spaces when joining lines
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0 " Disable cursor shape
+set guicursor=
 
 " make Y work consistently to C and D
 nnoremap Y y$
@@ -330,7 +337,7 @@ endif
 
 let g:fzf_layout = {'down': '~50%'}
 let g:fzf_files_options =
-  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+  \ '--preview "(rougify {} || highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
 nmap <c-p> :Files<cr>
 " nmap <c-p><c-t> :Tags<cr>
@@ -353,7 +360,7 @@ command! Plugs call fzf#run({
 
 " end FZF -------------------------------------------------------------}}}
 " Airline: --------------------------------------------------------------{{{
-let g:airline_extensions      = ['branch', 'hunks']
+let g:airline_extensions      = ['branch', 'hunks', 'tagbar']
 let g:airline_powerline_fonts = 1
 let g:airline_left_sep        = ' '
 let g:airline_right_sep       = ' '
@@ -361,7 +368,7 @@ let g:airline_theme           = 'bubblegum'
 " end airline -----------------------------------------------------------}}}
 " Snippets: -------------------------------------------------------------{{{
 
-let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
 let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
@@ -381,8 +388,8 @@ let g:NERDTreeDirArrowCollapsible = ''
 " end Devicons ----------------------------------------------------------}}}
 " END PluginConfigurations: ---------------------------------------------}}}
 " Python Neovim: ------------------------------------------------------{{{
-let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/Users/farfanoide/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = '/home/pi/.pyenv/versions/neovim2/bin/python'
+let g:python3_host_prog = '/home/pi/.pyenv/versions/neovim3/bin/python'
 " EndPython Neovim: ---------------------------------------------------}}}
 " Spell Checking:---------------------------------------------------------------{{{
 
@@ -630,7 +637,8 @@ function! InsertBreakPoint()
         \ 'ruby': 'binding.pry # ',
         \ 'php': 'die(var_dump()); // ',
         \ 'javascript': 'console.log() // ',
-        \}
+        \ 'html': '<br>',
+        \ }
 
   if has_key(l:commands_reference, &filetype)
     let l:debug_command = l:commands_reference[&filetype] . 'TODO: remove this line ;)'
@@ -641,7 +649,7 @@ function! InsertBreakPoint()
   let l:reg_save = @s
 
   call setreg('s', l:debug_command, 'V')
-  normal! "sP'[v']=
+  normal! "s[P
 
   let @s = l:reg_save
 endfunction
@@ -685,7 +693,7 @@ set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 " autocmd ColorScheme * :call ResetColors()
-colorscheme hybrid_material
+colorscheme Tomorrow-Night-Eighties
 " call HideUnwantedBackgrounds()
 
 if has('gui_running') || has('gui_vimr')
@@ -725,6 +733,16 @@ au BufRead *.sh setlocal foldmethod=marker
 au BufRead *.zsh setlocal foldmethod=marker
 au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
 au BufRead *.js setlocal suffixesadd+=.js
+au BufRead *.rst setlocal suffixesadd+=.rst
+" TODO: on django files auto add templates to path
+" path+=join(systemlist('find . -name templates -type d'), ',')
+" :autocmd FileType django call HandlePathFunc
+
+function! AddTemplatesToPath()
+    let l:find_command = 'find . -name templates -type d | sed 's/^\.\///' '
+    let l:new_paths = join(systemlist(l:find_command), ',')
+    set path+=l:new_paths
+endfunction
 
 " dont comment out next line (dont know why this must go last)
 autocmd FileType * setlocal formatoptions-=o formatoptions-=r

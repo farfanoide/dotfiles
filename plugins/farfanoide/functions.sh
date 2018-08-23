@@ -44,9 +44,9 @@ fixdropbox()
 {
     local dropbox_config=~/Library/LaunchAgents/com.dropbox.DropboxMacUpdate.agent.plist
 
-    launchctl unload $dropbox_config && \
-        gsed -i 's/3629/3655000/g' $dropbox_config && \
-        launchctl load -w $dropbox_config
+    launchctl unload $dropbox_config \
+        && gsed -i  's/<integer>[[:digit:]][[:digit:]]*<\/integer>/<integer>386666666666484<\/integer>/g' $dropbox_config \
+        && launchctl load -w $dropbox_config
 }
 
 # Execute `pyton manage.py` from anywhere in the repo tree
