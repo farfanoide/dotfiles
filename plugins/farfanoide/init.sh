@@ -22,9 +22,6 @@ chpwd ()
   [ $(ls -l | wc -l) -gt $(tput lines) ] && ls || ls -l
 }
 
-if rbenv --version > /dev/null; then
+if type rbenv 2>&1 > /dev/null; then
   eval "$(rbenv init - --no-rehash zsh)"
 fi
-
-# allow <c-h> mappings in nvim -> https://github.com/neovim/neovim/wiki/Troubleshooting#my-ctrl-h-mapping-doesnt-work
-[ ! -e /tmp/$TERM.ti ] && infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > /tmp/$TERM.ti && tic /tmp/$TERM.ti

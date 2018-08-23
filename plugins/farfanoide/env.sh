@@ -3,7 +3,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Directories
-export MUSIC_DIR="$HOME/Music/iTunes/iTunes\ Media/Music/"
+export MUSIC_DIR="$HOME/Music/iTunes/iTunes Media/Music/"
 export DOWN_DIR="$HOME/Downloads"
 export SRC_DIR="$HOME/Develop/src"
 export APPS_DIR="$HOME/Develop/apps"
@@ -22,14 +22,36 @@ export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
-export CFLAGS='-O2'
+gpip()
+{
+  PIP_REQUIRE_VIRTUALENV=false pip $*;
+}
+
+pyenv_install_env ()
+{
+  # about zlib
+  export CFLAGS="-I$(xcrun --show-sdk-path)/usr/include"
+  # about readline
+  export CFLAGS="-I$(brew --prefix readline)/include $CFLAGS"
+  export LDFLAGS="-L$(brew --prefix readline)/lib $LDFLAGS"
+  # about openssl
+  export CFLAGS="-I$(brew --prefix openssl)/include $CFLAGS"
+  export LDFLAGS="-L$(brew --prefix openssl)/lib $LDFLAGS"
+  # about SQLite (maybe not necessary)
+  export CFLAGS="-I$(brew --prefix sqlite)/include $CFLAGS"
+  export LDFLAGS="-L$(brew --prefix sqlite)/lib $LDFLAGS"
+}
+
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 # end Python stuff -----------}}}
 
 # ls options
 if _mac_osx; then
   export CLICOLOR=1
 fi
+
+export GREP_OPTIONS='--color=auto --exclude=*.pyc --exclude-dir=.git'
 
 
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore .hg -g ""'
