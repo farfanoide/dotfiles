@@ -15,6 +15,8 @@
 
 set -e
 
+_arguments_received () { [ $# -eq 0 ]  ;}
+_arguments_left ()     { [ $# -gt 0 ]  ;}
 _git_repo_exists ()    { [ -d '.git' ] ;}
 _create_repo ()
 {
@@ -30,33 +32,24 @@ _origin_is_set ()    { git remote -v | grep -q origin ;}
 
 main ()
 {
-    if ! _git_repo_exists 2> /dev/null; then
+    if ! _git_repo_exists; then
         git init .
     fi
 
     REPO_URL="$(_create_repo)"
 
-    if _repo_was_created; then
-        echo "Created https://github.com/${USERNAME}/${REPO_NAME}"
-        if ! _origin_is_set; then
-            git remote add origin $REPO_URL && \
-                echo "Added ${REPO_URL} as 'origin' remote."
-        fi
-    else
-        echo "Failed to create repo. Re check your credentials." \
-            && exit 1
+    if _repo_was_created && ! _origin_is_set; then
+        git remote add origin $REPO_URL
     fi
 }
 
-if [ $# -eq 0 ] || [[ "$1" =~ 'h' ]] ; then
-    echo "Usage: $(basename $0) <repository_name> [username]" \
-        && exit 1
+if ! _arguments_received; then
+    echo "Usage: $(basename $0) <repository_name> [username]" && exit 1
 fi
 
-# Arguments parsing, really lame, but it kinda works..
 REPO_NAME=$1; shift
 
-if [ $# -gt 0 ] ; then
+if _arguments_left; then
     USERNAME="$1"
 else
     USERNAME="$(git config github.user)"

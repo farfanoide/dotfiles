@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# ------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#  Simple Plex Media Server update script
+#
+# ------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ------------------------------------------------------------------------------
+
+set -e
+
+_usage ()
+{
+    echo -e "sudo plexupdate <PLEX_DOWNLOAD_URL>"
+}
+
+[ $# -eq 0 ] && _usage && exit 1
+
+PLEX_URL=$1
+PLEX_PKG='plexinstall.deb'
+PLEX_TMP=/tmp/plexinstall
+TARGET_USER=pi
+
+mkdir -p $PLEX_TMP && cd $PLEX_TMP
+
+curl -LSC - -o $PLEX_PKG $PLEX_URL &&
+    dpkg -i $PLEX_PKG &&
+    chown -R "${TARGET_USER}": /usr/lib/plexmediaserver &&
+    sed -i "s/=plex/=${TARGET_USER}/" /lib/systemd/system/plexmediaserver.service &&
+    systemctl daemon-reload &&
+    systemctl restart plexmediaserver.service
+
