@@ -93,7 +93,10 @@ alias ga='git add --all '
 alias ga.='ga .'
 alias gd='git diff '
 alias grv='git remote -v'
-alias gcm='git commit -m'
+gcm ()
+{
+    git commit -m "$*"
+}
 alias gl="git log --color --graph --pretty=format:'%C(bold blue)%an%Creset on%Cred %h%Creset - %C(yellow)%d%Creset %s %Cgreen(%cr) ' --abbrev-commit --"
 alias gfc='git clone'
 alias gc='git commit -v'
@@ -204,5 +207,10 @@ alias dpa='docker ps -a'
 name_this()
 {
   echo "$(whoami)/$(basename $(pwd))"
+}
+dattach()
+{
+  local $container_name=$1
+  docker attach $(docker ps -a | grep $container_name | cut -d ' ' -f 1)
 }
 # }}}

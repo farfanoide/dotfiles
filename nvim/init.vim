@@ -27,25 +27,41 @@ Plug 'mattn/emmet-vim'               " new era of zencoding :)
 Plug 'vim-scripts/matchit.zip'       " match tags :)
 Plug 'junegunn/vader.vim'            " Vimscript Testing
 
-" Deoplete: -------------------------------------------------------{{{
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neopairs.vim' " Auto insert pairs when complete done
-Plug 'Shougo/neco-vim'
-Plug 'Shougo/neoinclude.vim'
-Plug 'davidhalter/jedi-vim'
-Plug 'lambdalisue/vim-pyenv'
-let g:jedi#rename_command = ""
-let g:jedi#usages_command = ""
-Plug 'zchee/deoplete-jedi'
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+
+if !empty($VIRTUAL_ENV)
+    " auto add virtualenv path and tags if enabled
+    execute('set path+=' . $VIRTUAL_ENV . '/lib/python2.7/site-packages')
+    execute('set tags+=' . $VIRTUAL_ENV . '/lib/python2.7/site-packages/*/tags')
+    " TODO: auto generate tags for site-packages
+endif
+
+Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+Plug 'ncm2/ncm2-cssomni'
+
+Plug 'ncm2/ncm2-html-subscope'
+Plug 'ncm2/ncm2-markdown-subscope'
+
 Plug 'Shougo/neco-syntax'
-Plug 'carlitux/deoplete-ternjs', { 'do': 'npm install -g tern' }
-Plug 'Konfekt/FastFold'
-Plug 'Shougo/vimproc.vim', {'do': 'make'} " enable async stuff for Shougo's plugins
-Plug 'm2mdas/phpcomplete-extended', {'for': 'php'}
-Plug 'Shougo/echodoc.vim'
-Plug 'fishbullet/deoplete-ruby'
-Plug 'Shougo/deoplete-zsh'
-" end deoplete ----------------------------------------------------}}}
+Plug 'ncm2/ncm2-syntax'
+" Plug 'jsfaint/gen_tags.vim'
+
+" enable ncm2 for all buffers
+autocmd BufEnter * call ncm2#enable_for_buffer()
+
+" :help Ncm2PopupOpen for more information
+set completeopt=noinsert,menuone,noselect
+
+
+set shortmess+=c
+
+Plug 'ncm2/ncm2-ultisnips'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -75,7 +91,7 @@ Plug 'mattn/webapi-vim'
 Plug 'mattn/gist-vim' " Gist from withing vim :)
 Plug 'rhysd/open-pdf.vim' " requires => brew cask install pdftotext
 Plug 'junegunn/vim-xmark'
-Plug 'junegunn/vim-peekaboo'
+" Plug 'junegunn/vim-peekaboo'
 
 " SCM: -------------------------------------------------------
 Plug 'tpope/vim-fugitive'
@@ -108,6 +124,7 @@ Plug 'easysid/mod8.vim'
 Plug 'chriskempson/base16-vim'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'romainl/Apprentice'
+Plug 'rainglow/vim'
 
 Plug 'ryanoasis/vim-devicons'
 " end themes ------------------------------------------------------------}}}
@@ -136,16 +153,16 @@ Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
 Plug 'keith/tmux.vim'
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'mxw/vim-jsx', {'for': 'javascript'}
+" Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+" Plug 'mxw/vim-jsx', {'for': 'javascript'}
 let g:jsx_ext_required = 0
 
 Plug 'honza/dockerfile.vim'             " Dockerfile support
-Plug 'evanmiller/nginx-vim-syntax'      " Nginx
 Plug 'pearofducks/ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
 Plug 'evidens/vim-twig'                 " Twig support
+set conceallevel=0
 
 " end syntaxt plugins ----------------------------------------------}}}
 
@@ -154,6 +171,7 @@ Plug 'tweekmonster/django-plus.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'tmhedberg/SimpylFold'
 
+au FileType python setlocal formatprg=autopep8\ -
 let python_highlight_all = 1
 " end pypthon ------------------------------------------------------}}}
 
@@ -271,6 +289,7 @@ let g:vim_markdown_folding_level = 6
 let g:vim_markdown_new_list_item_indent = 0
 " end vim-markdown: -----------------------------------------------------}}}
 " Deoplete: -----------------------------------------------------------{{{
+
 let g:neopairs#enable = 1
 " inoremap <expr><c-k>
 "       \ deoplete#mappings#smart_close_popup()."\<c-k>"
@@ -285,19 +304,19 @@ let g:deoplete#enable_at_startup = 1
 let g:deoplete#enable_smart_case = 1
 
 " <C-h>, <BS>: close popup and delete backword char.
-inoremap <expr><C-k> deoplete#mappings#smart_close_popup()."\<C-k>"
+"" inoremap <expr><C-k> deoplete#mappings#smart_close_popup()."\<C-k>"
 " inoremap <expr><BS>  deoplete#mappings#smart_close_popup()."\<C-h>"
 
-set completeopt-=preview
+" set completeopt-=preview
 " <CR>: close popup and save indent.
-inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
-function! s:my_cr_function() abort
-  return deoplete#mappings#close_popup() . "\<CR>"
-endfunction
+"" inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
+"" function! s:my_cr_function() abort
+""   return deoplete#mappings#close_popup() . "\<CR>"
+"" endfunction
 " end deoplete --------------------------------------------------------}}}
 " NeoMake: ------------------------------------------------------------{{{
 let g:neomake_open_list = 0
-autocmd! BufWritePost * Neomake
+" autocmd! BufWritePost * Neomake
 hi NeomakeErrorSign guifg=red
 " let g:neomake_airline = 1
 " end neomake ---------------------------------------------------------}}}
@@ -321,17 +340,17 @@ hi NeomakeErrorSign guifg=red
 " let b:surround_{char2nr("f")} = "{% for \1for loop: \1 %}\r{% endfor %}"
 " let b:surround_{char2nr("c")} = "{% comment %}\r{% endcomment %}"
 
-if jedi#init_python()
-  function! s:jedi_auto_force_py_version() abort
-    let major_version = pyenv#python#get_internal_major_version()
-    call jedi#force_py_version(major_version)
-  endfunction
-  augroup vim-pyenv-custom-augroup
-    autocmd! *
-    autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
-    autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
-  augroup END
-endif
+" if jedi#init_python()
+"   function! s:jedi_auto_force_py_version() abort
+"     let major_version = pyenv#python#get_internal_major_version()
+"     call jedi#force_py_version(major_version)
+"   endfunction
+"   augroup vim-pyenv-custom-augroup
+"     autocmd! *
+"     autocmd User vim-pyenv-activate-post   call s:jedi_auto_force_py_version()
+"     autocmd User vim-pyenv-deactivate-post call s:jedi_auto_force_py_version()
+"   augroup END
+" endif
 " EndPythonMode: ------------------------------------------------------}}}
 " FZF: ----------------------------------------------------------------{{{
 
@@ -388,8 +407,10 @@ let g:NERDTreeDirArrowCollapsible = ''
 " end Devicons ----------------------------------------------------------}}}
 " END PluginConfigurations: ---------------------------------------------}}}
 " Python Neovim: ------------------------------------------------------{{{
-let g:python_host_prog = '/home/pi/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = '/home/pi/.pyenv/versions/neovim3/bin/python'
+" let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
+" let g:loaded_python_provider = 1
+let g:python3_host_prog = '/Users/farfanoide/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = '/Users/farfanoide/.pyenv/versions/neovim2/bin/python'
 " EndPython Neovim: ---------------------------------------------------}}}
 " Spell Checking:---------------------------------------------------------------{{{
 
@@ -404,7 +425,7 @@ au BufNewFile,BufRead *.md nmap <buffer> <leader>s 1z=
 set smartindent " Smart indentation of new lines
 set breakindent
 " Tab expansion settings
-let tabsize = 2
+let tabsize = 4
 execute "set tabstop=".tabsize
 execute "set shiftwidth=".tabsize
 execute "set softtabstop=".tabsize
@@ -540,10 +561,15 @@ nnoremap k gk
 " Maps Alt-[h,j,k,l] to resizing a window split
 if has('mac')
   " use actual characters in mac instead of <[A|M]-[h|j|k|l]>
-  noremap <silent> ˙ <C-w>5<
-  noremap <silent> ∆ <C-W5>-
+  " noremap <silent> ˙ <C-w>5<
+  " noremap <silent> ∆ <C-W5>-
+  " noremap <silent> ˚ <C-W>5+
+  " noremap <silent> ¬ <C-w>5>
+
+  noremap <silent> ˍ <C-w>5<
+  noremap <silent> ˝ <C-W5>-
   noremap <silent> ˚ <C-W>5+
-  noremap <silent> ¬ <C-w>5>
+  noremap <silent> - <C-w>5>
 else
   noremap <silent> <M-h> <C-w><
   noremap <silent> <M-j> <C-W>-
@@ -693,7 +719,7 @@ set background=dark
 let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 " autocmd ColorScheme * :call ResetColors()
-colorscheme Tomorrow-Night-Eighties
+colorscheme allure
 " call HideUnwantedBackgrounds()
 
 if has('gui_running') || has('gui_vimr')
