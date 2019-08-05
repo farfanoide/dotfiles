@@ -42,6 +42,13 @@ pyenv_install_env ()
   export LDFLAGS="-L$(brew --prefix sqlite)/lib $LDFLAGS"
 }
 
+# # For compilers to find zlib you may need to set:
+# export LDFLAGS="${LDFLAGS} -L/usr/local/opt/zlib/lib"
+# export CPPFLAGS="${CPPFLAGS} -I/usr/local/opt/zlib/include"
+
+# For pkg-config to find zlib you may need to set:
+# export PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/zlib/lib/pkgconfig"
+
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
 # end Python stuff -----------}}}
@@ -54,5 +61,6 @@ fi
 export GREP_OPTIONS='--color=auto --exclude=*.pyc --exclude-dir=.git'
 
 
+export HOMEBREW_NO_AUTO_UPDATE=1
 export FZF_DEFAULT_COMMAND='ag --hidden --ignore .git --ignore .hg -g ""'
 export BONITA_INSTALL_DIR=~/Develop/apps/bonita/current

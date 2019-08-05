@@ -13,7 +13,7 @@ unmount_private()
 
 md()
 {
-    local dir=$1
+    local dir="$*"
     mkdir -p $dir && cd $dir
 }
 
@@ -47,6 +47,20 @@ piprequire()
     fi
 }
 
+pip()
+{
+    # TODO: send everything to ctags_for_pip so it greps what it needs and
+    # prints everything
+    local cmd="$1"
+    if [ $cmd = 'install' ]; then
+        # `pyenv which pip` $* |
+            ctags_for_pip $*
+    else
+        `pyenv which pip` $*
+    fi
+}
+
+
 fixapp()
 {
     xattr -cr $*
@@ -67,7 +81,27 @@ pm()
     ( cd -q $(repo_root) && python ./manage.py $* )
 }
 
+get_branch()
+{
+    [ $# -eq 0 ] && echo Need a branch name && return
+    branch_name="${1}"
+    git branch --list "*${branch_name}*" | tr -d ' \n'
+}
+
+go_branch()
+{
+    [ $# -eq 0 ] && echo Need a branch name && return
+    branch_name="${1}"
+    git checkout "$(git branch --list "*${branch_name}*" | tr -d '\n ')"
+}
+
 # test this:
 # remote_gzip() {
 #     parallel -S $1 --cleanup --return {/}.gz "gzip --best {} -c &gt; {/}.gz" ::: $2
 # }
+
+track_pdf ()
+{
+    local project="$1"
+    tracklr pdf -d $(date "+%Y-%m") -k "${project}" -s "$(date '+%B %Y')" -f ivank_"${project}"-$(date "+%Y-%m").pdf
+}

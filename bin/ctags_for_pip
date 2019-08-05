@@ -1,0 +1,142 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# vim: set expandtab tabstop=4 shiftwidth=4:
+# ---------------------------------------------------------------------------------------
+# Description
+# -----------
+#
+#
+#  Wrapper script to run pip and generate ctags for every package/module installed
+#  Call it from your shell with a wrapper function like so:
+#
+#  pip() {
+#      local cmd="$1"
+#      if [ $cmd = 'install' ]; then
+#           ctags_for_pip $*
+#      else
+#           `pyenv which pip` $*
+#      fi
+#  }
+#
+# ---------------------------------------------------------------------------------------
+# Author
+# -------
+#
+#  * Farfanoide (https://github.com/farfanoide)
+#
+# ---------------------------------------------------------------------------------------
+
+from __future__ import absolute_import
+from __future__ import print_function
+from __future__ import unicode_literals
+
+
+
+import sys
+import os
+import subprocess
+import re
+import threading
+
+SITE_PACKAGES_PATH = next(path for path in sys.path if path.endswith('site-packages'))
+#TODO: should search for packages in sys.path instead of only site-packages
+
+class CtagsThread(threading.Thread):
+
+    def __init__(self, *args, **kwargs):
+        self.package = kwargs.pop('package')
+        super(CtagsThread, self).__init__(*args, **kwargs)
+
+    def __str__(self):
+        return "Ctags for {}".format(self.package)
+
+    def cmd_for_package(self, item):
+        return "cd {} && ctags -a -R .".format(item.name_as_dir())
+
+    def cmd_for_module(self, item):
+        return "cd {} && ctags -a {}".format(SITE_PACKAGES_PATH, item.name_as_file())
+
+    def run(self):
+        for item in self.package:
+            if item.is_file():
+                subprocess.call(self.cmd_for_module(item), shell=True)
+            elif item.is_directory():
+                subprocess.call(self.cmd_for_package(item), shell=True)
+
+class PackageItem:
+
+    def __init__(self, name):
+        self.name = name
+
+    def is_file(self):
+        return os.path.isfile(os.path.join(SITE_PACKAGES_PATH, self.name_as_file()))
+
+    def is_directory(self):
+        return os.path.isdir(self.name_as_dir())
+
+    def name_as_file(self):
+        return "{}.py".format(self.name)
+
+    def name_as_dir(self):
+        return os.path.join(SITE_PACKAGES_PATH, self.name)
+
+class Package:
+    _top_level_file = False
+    items = []
+
+    def __iter__(self):
+        for item in self.items:
+            yield item
+
+    def is_valid(self):
+        return bool(self.get_top_level_file())
+
+    def get_top_level_file(self):
+        if self._top_level_file is False:
+            self._top_level_file = next((line.strip()
+                                         for line in subprocess.check_output([
+                                             sys.executable, '-m', 'pip', 'show', '-f' , self.name
+                                         ]).decode('utf-8').split('\n')
+                                         if line.endswith('top_level.txt')), None)
+        return self._top_level_file
+
+    def get_item_names(self):
+        top_level_txt = open(os.path.join(SITE_PACKAGES_PATH, self.get_top_level_file()), 'r')
+        return [name.strip() for name in top_level_txt.readlines()]
+
+    def __init__(self, name):
+        self.name = name
+        if self.is_valid():
+            self.items = [PackageItem(name) for name in self.get_item_names()]
+
+
+def main():
+
+    arguments = sys.argv
+    ## replace script name with `pip` and send through all arguments as we received them
+    arguments[0] = 'pip'
+
+    process = subprocess.Popen(' '.join(arguments), stdout=subprocess.PIPE, shell=True)
+
+    # use iter to stream lines as we get them
+    for bline in iter(process.stdout.readline, b''):
+        line = bline.decode('utf-8')
+        sys.stdout.write(line)
+
+        if line.strip().startswith('Successfully installed'):
+            newline = line.strip().replace('Successfully installed ', '')
+            pkgs_names = [re.sub(r'-(\d\.?)*$', '', package_str) for package_str in newline.split(' ')]
+            packages = [Package(name=name) for name in pkgs_names]
+
+            threads = []
+            for package in packages:
+                if package.is_valid():
+                    thread = CtagsThread(package=package)
+                    thread.start()
+                    threads.append(thread)
+
+            for thread in threads:
+                thread.join()
+
+if __name__ == "__main__":
+    main()
