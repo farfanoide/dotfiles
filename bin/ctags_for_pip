@@ -125,7 +125,7 @@ def main():
 
         if line.strip().startswith('Successfully installed'):
             newline = line.strip().replace('Successfully installed ', '')
-            pkgs_names = [re.sub(r'-(\d\.?)*$', '', package_str) for package_str in newline.split(' ')]
+            pkgs_names = [re.sub(r'-(\d\.?)*(\w+\d)?$', '', package_str) for package_str in newline.split(' ')]
             packages = [Package(name=name) for name in pkgs_names]
 
             threads = []
