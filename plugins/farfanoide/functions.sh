@@ -49,12 +49,9 @@ piprequire()
 
 pip()
 {
-    # TODO: send everything to ctags_for_pip so it greps what it needs and
-    # prints everything
     local cmd="$1"
     if [ $cmd = 'install' ]; then
-        # `pyenv which pip` $* |
-            ctags_for_pip $*
+        ctags_for_pip $*
     else
         `pyenv which pip` $*
     fi
@@ -81,19 +78,19 @@ pm()
     ( cd -q $(repo_root) && python ./manage.py $* )
 }
 
-get_branch()
-{
-    [ $# -eq 0 ] && echo Need a branch name && return
-    branch_name="${1}"
-    git branch --list "*${branch_name}*" | tr -d ' \n'
-}
-
-go_branch()
-{
-    [ $# -eq 0 ] && echo Need a branch name && return
-    branch_name="${1}"
-    git checkout "$(git branch --list "*${branch_name}*" | tr -d '\n ')"
-}
+# get_branch()
+# {
+#     [ $# -eq 0 ] && echo Need a branch name && return
+#     branch_name="${1}"
+#     git branch --list "*${branch_name}*" | tr -d ' \n'
+# }
+#
+# go_branch()
+# {
+#     [ $# -eq 0 ] && echo Need a branch name && return
+#     branch_name="${1}"
+#     git checkout "$(git branch --list "*${branch_name}*" | tr -d '\n ')"
+# }
 
 # test this:
 # remote_gzip() {
