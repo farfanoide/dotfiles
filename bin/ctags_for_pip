@@ -128,6 +128,7 @@ def main():
             pkgs_names = [re.sub(r'-(\d\.?)*(\w+\d)?$', '', package_str) for package_str in newline.split(' ')]
             packages = [Package(name=name) for name in pkgs_names]
 
+            # TODO: maybe add async on py3? https://fredrikaverpil.github.io/2017/06/20/async-and-await-with-subprocesses/
             threads = []
             for package in packages:
                 if package.is_valid():

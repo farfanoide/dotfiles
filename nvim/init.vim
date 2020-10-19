@@ -1,3 +1,12 @@
+" Faster matching
+nnoremap <TAB> %
+vnoremap <TAB> %
+
+set guicursor=
+set inccommand=nosplit
+set cursorline
+hi CursorLine guibg=Grey40
+
 " ====================================================
 "                        _
 "  _ __ ___  _   ___   _(_)_ __ ___  _ __ ___
@@ -10,10 +19,12 @@
 
 " Plugins: --------------------------------------------------------------{{{
 call plug#begin('~/.config/nvim/plugged')
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar'
 
 Plug 'farfanoide/inflector.vim'
 let g:inflector_mapping = 'gI'
+
+Plug 'lambdalisue/vim-pyenv'
 
 Plug 'editorconfig/editorconfig-vim' " http://editorconfig.org/
 Plug 'tpope/vim-repeat'              " enable repeating supported plugin maps with .
@@ -21,47 +32,64 @@ Plug 'tpope/vim-unimpaired'          " Some nice text object manipulation mappin
 
 Plug 'tpope/vim-eunuch'              " nice UNIX helpers like SudoWrite, etc
 Plug 'tomtom/tcomment_vim'           " easy code commenting
-Plug 'tpope/vim-surround'            " easy pair characters manipulation
+" Plug 'tpope/vim-surround'            " easy pair characters manipulation
+Plug 'machakann/vim-sandwich'
 Plug 'Raimondi/delimitMate'          " easy quoting, etc. ie: insert ' -> ''; [ -> []  auto-pairs replacement (test)
 Plug 'mattn/emmet-vim'               " new era of zencoding :)
-Plug 'vim-scripts/matchit.zip'       " match tags :)
+" Plug 'vim-scripts/matchit.zip'       " match tags :)
+Plug 'andymass/vim-matchup'
 Plug 'junegunn/vader.vim'            " Vimscript Testing
 
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
+" Plug 'beeender/Comrade'
 
+" Plug 'roxma/nvim-yarp'
+" Plug 'ncm2/ncm2'
+Plug 'mgedmin/python-imports.vim'
+
+set path+='/Users/farfanoide/.pyenv/versions/neovim3/lib/python3.6/site-packages'
 if !empty($VIRTUAL_ENV)
     " auto add virtualenv path and tags if enabled
+    " Fugitive .git/tags support removed in favor of
+    " :set tags^=./.git/tags;
+    execute('set path+=' . $VIRTUAL_ENV . '/lib/python3.8/site-packages')
+    execute('set tags+=' . $VIRTUAL_ENV . '/lib/python3.8/site-packages/*/tags')
+    execute('set path+=' . $VIRTUAL_ENV . '/lib/python3.7/site-packages')
+    execute('set tags+=' . $VIRTUAL_ENV . '/lib/python3.7/site-packages/*/tags')
     execute('set path+=' . $VIRTUAL_ENV . '/lib/python2.7/site-packages')
     execute('set tags+=' . $VIRTUAL_ENV . '/lib/python2.7/site-packages/*/tags')
-    " TODO: auto generate tags for site-packages
+    set path+=**/templates/,**/static/
 endif
 
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
-Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
-Plug 'ncm2/ncm2-cssomni'
+Plug 'machakann/vim-highlightedyank'
+Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 
-Plug 'ncm2/ncm2-html-subscope'
-Plug 'ncm2/ncm2-markdown-subscope'
-
-Plug 'Shougo/neco-syntax'
-Plug 'ncm2/ncm2-syntax'
+" Plug 'ncm2/ncm2-jedi'
+" Plug 'ncm2/ncm2-bufword'
+" Plug 'ncm2/ncm2-path'
+" Plug 'ncm2/ncm2-tern',  {'do': 'npm install'}
+" Plug 'ncm2/ncm2-cssomni'
+"
+" Plug 'ncm2/ncm2-html-subscope'
+" Plug 'ncm2/ncm2-markdown-subscope'
+"
+" Plug 'Shougo/neco-syntax'
+" Plug 'ncm2/ncm2-syntax'
+" Plug 'ncm2/ncm2-tagprefix'
 " Plug 'jsfaint/gen_tags.vim'
-
-" enable ncm2 for all buffers
-autocmd BufEnter * call ncm2#enable_for_buffer()
-
-" :help Ncm2PopupOpen for more information
-set completeopt=noinsert,menuone,noselect
-
-
-set shortmess+=c
-
-Plug 'ncm2/ncm2-ultisnips'
-Plug 'SirVer/ultisnips'
+"
+" " enable ncm2 for all buffers
+" autocmd BufEnter * call ncm2#enable_for_buffer()
+"
+" " :help Ncm2PopupOpen for more information
+" set completeopt=noinsert,menuone,noselect
+"
+"
+" set shortmess+=c
+"
+" Plug 'ncm2/ncm2-ultisnips'
+" Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+
 
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -70,12 +98,11 @@ Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
 Plug 'Yggdroot/indentLine', {'on': 'IndentLinesEnable'}
 autocmd! User indentLine doautocmd indentLine Syntax
 
-" Plug 'ternjs/tern_for_vim'
 Plug 'bling/vim-airline'              " vimscript airline, yay!
 Plug 'vim-airline/vim-airline-themes'
 Plug 'csexton/trailertrash.vim'       " Trailing whitespaces
 
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align', {'on': '<Plug>(EasyAlign)'}
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -97,10 +124,27 @@ Plug 'junegunn/vim-xmark'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
+" let g:gitgutter_sign_added = ''
+" let g:gitgutter_sign_modified = ''
+" let g:gitgutter_sign_removed = ''
+" let g:gitgutter_sign_removed_first_line = ''
+" let g:gitgutter_sign_modified_removed = ''
+
 Plug 'junegunn/gv.vim'
 Plug 'jlfwong/vim-mercenary'
 
 " Themes: ---------------------------------------------------------------{{{
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'arcticicestudio/nord-vim'
+
+let g:nord_italic = 1
+let g:nord_underline = 1
+let g:nord_italic_comments = 1
+let g:nord_uniform_status_lines = 1
+" let g:nord_comment_brightness = 12
+let g:nord_uniform_diff_background = 1
+" let g:nord_cursor_line_number_background = 1
+
 " Plug 'chrisbra/Colorizer', {'on': 'ColorHilight'} " i dont use it that much...
 Plug 'AlessandroYorba/Sierra'
 Plug 'junegunn/seoul256.vim'
@@ -142,26 +186,34 @@ Plug 'kmdsbng/vim-ruby-eval'
 " EndRuby: --------------------------------------------------------}}}
 
 " Snippets: -------------------------------------------------------{{{
-Plug 'honza/vim-snippets'
-Plug 'SirVer/ultisnips'
+" Plug 'honza/vim-snippets'
+" Plug 'SirVer/ultisnips'
 " end snippets ----------------------------------------------------}}}
 
 " Syntax Plugins: --------------------------------------------------{{{
 
-Plug 'benekastah/neomake'             " Syntax check
+Plug 'chr4/nginx.vim'
+" Plug 'benekastah/neomake'             " Syntax check
+Plug 'dense-analysis/ale'
+let g:ale_python_black_executable = '~/.pyenv/versions/neovim3/bin/python'
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['prettier', 'eslint'],
+\   'vue': ['prettier', 'eslint'],
+\   'python': ['black', 'isort',],
+\}
 Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'kchmck/vim-coffee-script'
 Plug 'vim-scripts/bats.vim'             " Bats support
 Plug 'keith/tmux.vim'
-" Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-" Plug 'mxw/vim-jsx', {'for': 'javascript'}
+Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 let g:jsx_ext_required = 0
+Plug 'posva/vim-vue', {'for': 'vue'}
 
-Plug 'honza/dockerfile.vim'             " Dockerfile support
 Plug 'pearofducks/ansible-vim'
 Plug 'elzr/vim-json', {'for': 'json'}
 let g:vim_json_syntax_conceal = 0
-Plug 'evidens/vim-twig'                 " Twig support
+Plug 'evidens/vim-twig', {'for': 'twig'}                 " Twig support
 set conceallevel=0
 
 " end syntaxt plugins ----------------------------------------------}}}
@@ -240,8 +292,6 @@ set hidden         " allow unsaved changes to be hidden
 set scrolloff=3    " Start scrolling three lines before the horizontal window border
 set modeline       " enable modeline for per file configs
 set nojoinspaces   " dont add extra spaces when joining lines
-let $NVIM_TUI_ENABLE_CURSOR_SHAPE=0 " Disable cursor shape
-set guicursor=
 
 " make Y work consistently to C and D
 nnoremap Y y$
@@ -278,7 +328,7 @@ map <LEADER>n :NERDTreeToggle<CR>
 " Find current buffer in nerdtree
 nnoremap <LEADER>r :NERDTreeFind<CR>
 let g:NERDTreeMapOpenVSplit='v'      " keep mappings between ctrlp and nerdtree concise
-let NERDTreeIgnore=['\.pyc$', '\~$'] " Ignore irrelevant files like pyc and swap files
+let NERDTreeIgnore=['\.pyc$', '\~$', '__pycache__'] " Ignore irrelevant files like pyc and swap files
 set guioptions-=L                    " Hide nerdtree's window scrollbar on macvim
 set guioptions-=R                    " Hide nerdtree's window scrollbar on macvim
 " end editor ------------------------------------------------------------}}}
@@ -315,10 +365,12 @@ let g:deoplete#enable_smart_case = 1
 "" endfunction
 " end deoplete --------------------------------------------------------}}}
 " NeoMake: ------------------------------------------------------------{{{
-let g:neomake_open_list = 0
+" let g:neomake_open_list = 0
 " autocmd! BufWritePost * Neomake
-hi NeomakeErrorSign guifg=red
+" hi NeomakeErrorSign guifg=red
 " let g:neomake_airline = 1
+let g:ale_sign_error = ''
+let g:ale_sign_warning = ''
 " end neomake ---------------------------------------------------------}}}
 " PythonMode: ---------------------------------------------------------{{{
 " let g:pymode_doc = 0
@@ -352,13 +404,29 @@ hi NeomakeErrorSign guifg=red
 "   augroup END
 " endif
 " EndPythonMode: ------------------------------------------------------}}}
+
+" Sandwich: ----------------------------------------------------------------{{{
+runtime macros/sandwich/keymap/surround.vim
+" if you have not copied default recipes
+let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+
+" add spaces inside bracket
+let g:sandwich#recipes += [
+      \   {'buns': ['{ ', ' }'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['{']},
+      \   {'buns': ['[ ', ' ]'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['[']},
+      \   {'buns': ['( ', ' )'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['(']},
+      \   {'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
+      \   {'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
+      \   {'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
+      \ ]
+" EndSandwich: ------------------------------------------------------}}}
 " FZF: ----------------------------------------------------------------{{{
 
 let g:fzf_layout = {'down': '~50%'}
 let g:fzf_files_options =
-  \ '--preview "(rougify {} || highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
-nmap <c-p> :Files<cr>
+nmap <c-p> :Files!<cr>
 " nmap <c-p><c-t> :Tags<cr>
 nmap <c-s> :BTags<cr>
 let g:fzf_action = {
@@ -379,17 +447,17 @@ command! Plugs call fzf#run({
 
 " end FZF -------------------------------------------------------------}}}
 " Airline: --------------------------------------------------------------{{{
-let g:airline_extensions      = ['branch', 'hunks', 'tagbar']
+let g:airline_extensions      = [ 'coc', 'branch', 'hunks' ]
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep        = ' '
-let g:airline_right_sep       = ' '
-let g:airline_theme           = 'bubblegum'
+" let g:airline_left_sep        = ' '
+" let g:airline_right_sep       = ' '
+let g:airline_theme           = 'nord'
 " end airline -----------------------------------------------------------}}}
 " Snippets: -------------------------------------------------------------{{{
 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<TAB>"
+let g:UltiSnipsJumpBackwardTrigger="<S-TAB>"
 
 " end snippets ----------------------------------------------------------}}}
 " Devicons: -------------------------------------------------------------{{{
@@ -452,10 +520,6 @@ xnoremap <silent> <C-l> >gv
 xnoremap < <gv
 xnoremap > >gv
 
-" Faster matching
-nnoremap <TAB> %
-vnoremap <TAB> %
-
 " Paste and Indent
 nnoremap <esc>p p'[v']=
 nnoremap <esc>P P'[v']=
@@ -478,10 +542,10 @@ command! -nargs=1 SetTabSize call SetTabSize(<f-args>)
 " Eye Candy:---------------------------------------------------------------{{{
 
 " don't try to highlight lines longer than 130 characters. (life saving!)
-set termguicolors
+" set termguicolors
 set synmaxcol=230
 set t_Co=256   " Use 256 colours
-set cursorline " Highlight current line
+" set cursorline " Highlight current line
 set noshowmode " Remove second status bar when using powerline
 
 set guioptions-=T " Dont show toolbar on gui
@@ -489,23 +553,23 @@ set guioptions-=T " Dont show toolbar on gui
 highlight ColorColumn ctermbg=white ctermfg=red
 call matchadd('ColorColumn', '\%120v', 100)
 
-function! ResetColors()
-  " no background for those vertical splits, they look ugly
-  execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
-  " Make sure TODO's look nice
-  execute 'hi Todo ctermfg=green ctermbg=NONE'
-  " Custom colors for trailing whitespaces
-  execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
-  " kind of bored of same old yellow... let's use #E0B56E
-  execute 'hi String ctermfg=yellow guifg=#E0B56E'
-  " remove underline from current line, and set background
-  execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
-  execute 'hi Folded ctermbg=237  guibg=#353b4a   term=underline'
-endfunction
+" function! ResetColors()
+"   " no background for those vertical splits, they look ugly
+"   execute 'hi VertSplit guibg=NONE ctermbg=NONE gui=NONE'
+"   " Make sure TODO's look nice
+"   execute 'hi Todo ctermfg=green ctermbg=NONE'
+"   " Custom colors for trailing whitespaces
+"   execute 'hi UnwantedTrailerTrash guibg=NONE ctermbg=NONE ctermfg=green guifg=green'
+"   " kind of bored of same old yellow... let's use #E0B56E
+"   execute 'hi String ctermfg=yellow guifg=#E0B56E'
+"   " remove underline from current line, and set background
+"   execute 'hi CursorLine cterm=NONE guifg=NONE guibg=#353b4a ctermbg=237 gui=NONE'
+"   execute 'hi Folded ctermbg=237  guibg=#353b4a   term=underline'
+" endfunction
 
-function! HideUnwantedBackgrounds()
-  source ~/.vim/default_colors.vim
-endfunction
+" function! HideUnwantedBackgrounds()
+"   source ~/.vim/default_colors.vim
+" endfunction
 
 map <LEADER>tw :TrailerTrim<CR>
 " end eye candy ---------------------------------------------------------}}}
@@ -663,6 +727,7 @@ function! InsertBreakPoint()
         \ 'ruby': 'binding.pry # ',
         \ 'php': 'die(var_dump()); // ',
         \ 'javascript': 'console.log() // ',
+        \ 'vue': 'console.log() // ',
         \ 'html': '<br>',
         \ }
 
@@ -695,7 +760,7 @@ nnoremap <LEADER>ul YpVr=
 " Folding: ------------------------------------------{{{
 set foldenable
 " set foldmethod=marker
-" set foldlevelstart=0
+set foldlevelstart=10
 
 " Toggle folds
 nnoremap <LEADER><Space> za
@@ -716,16 +781,16 @@ nnoremap <LEADER>ft Vatzf
 "   let g:airline_theme='solarized'
 " else
 set background=dark
-let g:hybrid_custom_term_colors = 1
-let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
+" let g:hybrid_custom_term_colors = 1
+" let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 " autocmd ColorScheme * :call ResetColors()
-colorscheme allure
+colorscheme nord
 " call HideUnwantedBackgrounds()
 
-if has('gui_running') || has('gui_vimr')
-    set linespace=7
-    colorscheme Tomorrow-Night
-endif
+" if has('gui_running') || has('gui_vimr')
+"     set linespace=7
+"     colorscheme Tomorrow-Night
+" endif
 
 "}}}--------------------[ end Screencasting  ]----------------------------------------
 " Miscellaneous:---------------------------------------------------------------{{{
@@ -757,17 +822,18 @@ au BufRead *.html.twig setlocal filetype=html.twig
 au BufRead *.tmuxtheme setlocal filetype=tmux foldmethod=marker
 au BufRead *.sh setlocal foldmethod=marker
 au BufRead *.zsh setlocal foldmethod=marker
-au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
+" au BufWritePost ~/.Xresources :silent !xrdb ~/.Xresources
 au BufRead *.js setlocal suffixesadd+=.js
+au BufRead *.js setlocal suffixesadd+=.vue
 au BufRead *.rst setlocal suffixesadd+=.rst
 " TODO: on django files auto add templates to path
 " path+=join(systemlist('find . -name templates -type d'), ',')
 " :autocmd FileType django call HandlePathFunc
 
 function! AddTemplatesToPath()
-    let l:find_command = 'find . -name templates -type d | sed 's/^\.\///' '
+    let l:find_command = 'find . -name templates -type d | sed "s/^\.\///" '
     let l:new_paths = join(systemlist(l:find_command), ',')
-    set path+=l:new_paths
+    set path+=echo(l:new_paths)
 endfunction
 
 " dont comment out next line (dont know why this must go last)
@@ -780,8 +846,8 @@ let g:is_bash=0
 " let g:php_cs_fixer_path = '~/.bin/php-cs-fixer'
 
 " Search Colors
-execute 'hi Search ctermbg=green ctermfg=black'
-execute 'hi IncSearch ctermbg=white ctermfg=green'
+" execute 'hi Search ctermbg=green ctermfg=black'
+" execute 'hi IncSearch ctermbg=white ctermfg=green'
 
 " <C-s> for "substitute". Replaces spanish letters for equivalence classes
 " [[=char=]] when searchinb either forward or backwards.
@@ -790,3 +856,170 @@ execute 'hi IncSearch ctermbg=white ctermfg=green'
 inoreabbrev <expr> #!! "#!/usr/bin/env" . (empty(&filetype) ? '' : ' '.&filetype)
 cnoremap <C-s> <C-\>e getcmdtype() =~ '[?/]' ? substitute(getcmdline(), '[aeiouñ]', '[[=\0=]]', 'g'): getcmdline()<CR>
 "}}}--------------------[ end Miscellaneous  ]----------------------------------------
+
+set t_Co=256
+
+" COC: ----------------------------------------------------------------{{{
+" Some servers have issues with backup files, see #649
+" Better display for messages
+set cmdheight=2
+
+" You will have bad experience for diagnostic messages when it's default 4000.
+set updatetime=300
+
+" don't give |ins-completion-menu| messages.
+set shortmess+=c
+
+" always show signcolumns
+" set signcolumn=yes
+
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
+
+" Use <cr> to confirm completion, `<C-g>u` means break undo chain at current position.
+" Coc only does snippet and additional edit on confirm.
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" Or use `complete_info` if your vim support it, like:
+" inoremap <expr> <cr> complete_info()["selected"] != "-1" ? "\<C-y>" : "\<C-g>u\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Highlight symbol under cursor on CursorHold
+" autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
+
+" Remap for format selected region
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+" augroup mygroup
+"   autocmd!
+"   " Setup formatexpr specified filetype(s).
+"   autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"   " Update signature help on jump placeholder
+"   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+" augroup end
+
+" Remap for do codeAction of selected region, ex: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap for do codeAction of current line
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Fix autofix problem of current line
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Create mappings for function text object, requires document symbols feature of languageserver.
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
+
+" Use <TAB> for select selections ranges, needs server support, like: coc-tsserver, coc-python
+" nmap <silent> <TAB> <Plug>(coc-range-select)
+" xmap <silent> <TAB> <Plug>(coc-range-select)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" use `:OR` for organize import of current buffer
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+" endcoc
+
+
+" Add status line support, for integration with other plugin, checkout `:h coc-status`
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+" Using CocList
+" Show all diagnostics
+" nnoremap <silent> <space>a  :<C-u>CocList diagnostics<cr>
+" " Manage extensions
+" nnoremap <silent> <space>e  :<C-u>CocList extensions<cr>
+" " Show commands
+" nnoremap <silent> <space>c  :<C-u>CocList commands<cr>
+" " Find symbol of current document
+" nnoremap <silent> <space>o  :<C-u>CocList outline<cr>
+" " Search workspace symbols
+" nnoremap <silent> <space>s  :<C-u>CocList -I symbols<cr>
+" " Do default action for next item.
+" nnoremap <silent> <space>j  :<C-u>CocNext<CR>
+" " Do default action for previous item.
+" nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
+" " Resume latest coc list
+" nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+"                                            \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" Use <C-l> for trigger snippet expand.
+" imap <C-l> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+let g:coc_snippet_next = '<tab>'
+" end COC -------------------------------------------------------------}}}
+
+" Kite
+" set completeopt-=menu
+" set completeopt+=menuone
+" set completeopt-=longest
+" set completeopt-=preview
+" set completeopt+=noinsert
+" set completeopt-=noselect

@@ -1,0 +1,11 @@
+
+call plug#begin('~/.config/nvim/plugged')
+" Plug 'majutsushi/tagbar'
+
+Plug 'farfanoide/inflector.vim'
+let g:inflector_mapping = 'gI'
+
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+
+call plug#end()               " any plugis should be before this

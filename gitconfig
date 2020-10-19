@@ -1,7 +1,8 @@
 [core]
 	fileMode = false
-	excludesfile = ~/.gitignore_global
+	excludesfile = /Users/farfanoide/.gitignore_global
 	autocrlf = input
+	pager = diff-so-fancy | less --tabs=4 -RFX
 [color]
 	ui = always
 [user]
@@ -18,3 +19,18 @@
 [alias]
   lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
   whodafuck = blame
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	process = git-lfs filter-process
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+[fetch]
+	prune = true
+[pull]
+	rebase = false

@@ -15,3 +15,17 @@ snippet .listgroup "bootstrap list-group"
     <li class="list-group-item"></li>
   </ul>
 endsnippet
+
+snippet .tabs "custom-tabs"
+<div data-tabs-container>
+  <button data-tab-toggle-trigger data-tab-target="#target-element-id">
+    Toggle #target-element-id
+  </button>
+  <div class="hidden"
+       data-tab-content
+       id="target-element-id">
+    #target-element-id content
+  </div>
+</div>
+endsnippet
+

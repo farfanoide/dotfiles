@@ -1,0 +1,8 @@
+{
+    "python.jediEnabled": false,
+    "python.linting.pylintArgs": [ "--load-plugins=pylint_django" ],
+    "python.linting.pylintPath": "~/.pyenv/versions/vedas/lib/python3.7/site-packages/pylint",
+    "python.pythonPath": "~/.pyenv/shims",
+    "suggest.noselect": true
+}
+

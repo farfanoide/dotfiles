@@ -1,0 +1,1 @@
+/usr/local/Cellar/yatsh/0.4.1/completions/_yat.sh.zsh

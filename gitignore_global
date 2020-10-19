@@ -76,3 +76,9 @@ npm-debug.log
 # vim:set foldmethod=marker:
 # -*- mode: gitignore; -*-
 extras
+*.sqlite3
+*development.sh
+celerybeat-schedule.db
+vedasyat
+node_modules
+bower_components

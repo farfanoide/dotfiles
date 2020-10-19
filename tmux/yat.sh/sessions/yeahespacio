@@ -1,1 +1,21 @@
-/Users/farfanoide/Develop/src/yeahespacio/yeahespacio
+# Create new session and name first window 'Editor'
+new_session -n 'Editor'
+
+# our windows
+
+# setup those windows
+send_line 'Editor' ${EDITOR:-vi}
+
+new_window -n 'General'
+send_line 'General' 'git status -bs'
+
+new_window -n 'Server'
+send_line 'Server' 'bundle exec rails server'
+hsplit 'Server' -p 20
+send_line 'Server'.2 'bundle exec guard'
+
+
+select_window 'Editor'
+
+# -*- mode: sh -*-
+# vi: set ft=sh :

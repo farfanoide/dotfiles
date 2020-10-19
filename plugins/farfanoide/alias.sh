@@ -6,7 +6,7 @@ alias vim='nvim'
 _mac_osx && alias ls='ls -h' || alias ls='ls -h --color=auto'
 alias d='dirs -v'
 # alias para colorcitos y giladas
-alias l='ls -o'
+alias l='exa -l'
 alias la='ls -lA'
 alias lg='la | grep -i'
 alias lr='ls -R '
@@ -44,7 +44,7 @@ if [[ -f "$HOME/.bin/cp" ]] ; then
 else
   alias cp='rsync --append --progress -azvrE'
 fi
-
+alias rmpyc='rm -rf **/*.pyc'
 # }}}
 
 # ---------------------[ Mac stuff ]----------------------------------------{{{

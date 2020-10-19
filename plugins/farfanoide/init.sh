@@ -15,13 +15,18 @@ source "${dir}/bindings.sh"
 
 unset dir # clean up after ourselves
 
-chpwd ()
-{
-  # If all files can be listed in the available rows, do so with item details,
-  # otherwise do a normal `ls` splitting into columns
-  [ $(ls -l | wc -l) -gt $(tput lines) ] && ls || ls -l
-}
-
-if type rbenv 2>&1 > /dev/null; then
-  eval "$(rbenv init - --no-rehash zsh)"
-fi
+# chpwd ()
+# {
+#   # If all files can be listed in the available rows, do so with item details,
+#   # otherwise do a normal `ls` splitting into columns
+#   [ $(ls -l | wc -l) -gt $(tput lines) ] && ls || ls -l
+# }
+#
+# initialize_rbenv ()
+# {
+#     if type rbenv 2>&1 > /dev/null; then
+#         eval "$(rbenv init - --no-rehash zsh)"
+#     else
+#         echo "rbenv not found"
+#     fi
+# }

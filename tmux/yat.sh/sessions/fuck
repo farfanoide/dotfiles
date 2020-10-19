@@ -5,11 +5,11 @@ cd $SRC_DIR/faculty
 new_session -n 'General'
 send_line 'General' 'ls'
 
-new_window -n 'Ing'
-send_line 'Ing' 'cd ing_soft_1'
+new_window -n 'aspectos'
+send_line 'aspectos' 'cd aspectos'
 
-new_window -n 'POO'
-send_line 'POO' 'cd poo_I_2014'
+new_window -n 'big_data'
+send_line 'big_data' 'cd big_data'
 
 # -*- mode: sh -*-
 # vi: set ft=sh :

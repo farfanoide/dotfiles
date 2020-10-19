@@ -31,6 +31,7 @@ pyenv_install_env ()
 {
   # about zlib
   export CFLAGS="-I$(xcrun --show-sdk-path)/usr/include"
+  export CPPFLAGS="-I$(brew --prefix zlib)/include"
   # about readline
   export CFLAGS="-I$(brew --prefix readline)/include $CFLAGS"
   export LDFLAGS="-L$(brew --prefix readline)/lib $LDFLAGS"
@@ -49,14 +50,14 @@ pyenv_install_env ()
 # For pkg-config to find zlib you may need to set:
 # export PKG_CONFIG_PATH="${PKG_CONFIG_PATH} /usr/local/opt/zlib/lib/pkgconfig"
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 # end Python stuff -----------}}}
 
 # ls options
-if _mac_osx; then
-  export CLICOLOR=1
-fi
+# if _mac_osx; then
+#   export CLICOLOR=1
+# fi
 
 export GREP_OPTIONS='--color=auto --exclude=*.pyc --exclude-dir=.git'
 
