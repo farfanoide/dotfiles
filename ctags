@@ -4,6 +4,7 @@
 --exclude=log
 
 --exclude=tmp
+--exclude=node_modules
 --languages=-sql
 
 --python-kinds=-i
@@ -11,6 +12,7 @@
 --langdef=js
 --langmap=js:.js
 --langmap=js:+.jsx
+--langmap=js:.js.vue
 
 --regex-js=/[ \t.]([A-Z][A-Z0-9._$]+)[ \t]*[=:][ \t]*([0-9"'\[\{]|null)/\1/n,constant/
 
