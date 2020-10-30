@@ -120,3 +120,10 @@ digitalocean_speedtest ()
         curl -w "%{url_effective};%{time_connect}\n" -o /dev/null -s http://speedtest-blr1.digitalocean.com/
     } | sort -t';' -k2
 }
+
+fix_postgresql_pid ()
+{
+    brew services stop postgresql &&
+        rm /usr/local/var/postgres/postmaster.pid &&
+        brew services start postgresql
+}
