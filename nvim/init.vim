@@ -5,7 +5,7 @@ vnoremap <TAB> %
 set guicursor=
 set inccommand=nosplit
 set cursorline
-hi CursorLine guibg=Grey40
+" hi CursorLine guibg=Grey40
 
 " ====================================================
 "                        _
@@ -169,6 +169,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'sonph/onehalf', {'rtp': 'vim/'}
 Plug 'romainl/Apprentice'
 Plug 'rainglow/vim'
+Plug 'gmoe/vim-espresso'
 
 Plug 'ryanoasis/vim-devicons'
 " end themes ------------------------------------------------------------}}}
@@ -784,7 +785,12 @@ set background=dark
 " let g:hybrid_custom_term_colors = 1
 " let g:hybrid_reduced_contrast = 1 " Remove this line if using the default palette.
 " autocmd ColorScheme * :call ResetColors()
-colorscheme nord
+colorscheme espresso
+
+" Espresso changes
+hi VertSplit guibg=NONE ctermfg=grey ctermbg=NONE gui=NONE
+hi Todo ctermfg=green ctermbg=NONE
+hi LineNr ctermbg=NONE
 " call HideUnwantedBackgrounds()
 
 " if has('gui_running') || has('gui_vimr')
@@ -985,7 +991,7 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 " nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " " Resume latest coc list
 " nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
-" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : 
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() :
 "                                            \"\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Use <C-l> for trigger snippet expand.
 " imap <C-l> <Plug>(coc-snippets-expand)
