@@ -6,9 +6,10 @@ source $ZPLUG_HOME/init.zsh
 
 # own completions
 fpath=("$HOME/.fpath" ${fpath[*]})
+fpath=("/usr/local/share/zsh/site-functions" ${fpath[*]})
 # compsys initialization
 autoload -U compinit
-compinit
+compinit -i
 source "${PLUGINS_DIR}farfanoide/zshrc.zsh"
 source "${PLUGINS_DIR}farfanoide/init.sh"
 
@@ -38,7 +39,7 @@ zplug load
 export PATH="/usr/local/opt/gettext/bin:$PATH"
 
 ###-tns-completion-start-###
-if [ -f /Users/farfanoide/.tnsrc ]; then 
-    source /Users/farfanoide/.tnsrc 
+if [ -f /Users/farfanoide/.tnsrc ]; then
+    source /Users/farfanoide/.tnsrc
 fi
 ###-tns-completion-end-###
