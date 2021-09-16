@@ -100,7 +100,15 @@ pm()
 track_pdf ()
 {
     local project="$1"
-    tracklr pdf -d $(date "+%Y-%m") -k "${project}" -s "$(date '+%B %Y')" -f ivank_"${project}"-$(date "+%Y-%m").pdf
+    # local date="$2"
+    #
+    # if [[ -z $date ]]; then
+        tracklr pdf -d $(date "+%Y-%m") -k "${project}" -s "$(date '+%B %Y')" -f ivank_"${project}"-$(date "+%Y-%m").pdf
+    # fi
+    #
+    #
+    # tracklr pdf -d $date -k "${project}" -s "${date}" -f ivank_"${project}-${date}".pdf
+
 }
 
 digitalocean_speedtest ()

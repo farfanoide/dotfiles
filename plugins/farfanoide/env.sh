@@ -21,7 +21,7 @@ export VAGRANT_DEFAULT_PROVIDER=virtualbox
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
 export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
+# export PATH="$PYENV_ROOT/bin:$PATH"
 gpip()
 {
   PIP_REQUIRE_VIRTUALENV=false pip $*;

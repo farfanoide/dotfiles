@@ -40,17 +40,22 @@ Plug 'mattn/emmet-vim'               " new era of zencoding :)
 Plug 'andymass/vim-matchup'
 Plug 'junegunn/vader.vim'            " Vimscript Testing
 
+Plug 'farfanoide/vim-kivy'
+
 " Plug 'beeender/Comrade'
 
 " Plug 'roxma/nvim-yarp'
 " Plug 'ncm2/ncm2'
 Plug 'mgedmin/python-imports.vim'
 
+set tags^=./.git/tags
 set path+='/Users/farfanoide/.pyenv/versions/neovim3/lib/python3.6/site-packages'
 if !empty($VIRTUAL_ENV)
     " auto add virtualenv path and tags if enabled
     " Fugitive .git/tags support removed in favor of
-    " :set tags^=./.git/tags;
+    set tags^=./.git/tags;
+    execute('set path+=' . $VIRTUAL_ENV . '/lib/python3.9/site-packages')
+    execute('set tags+=' . $VIRTUAL_ENV . '/lib/python3.9/site-packages/*/tags')
     execute('set path+=' . $VIRTUAL_ENV . '/lib/python3.8/site-packages')
     execute('set tags+=' . $VIRTUAL_ENV . '/lib/python3.8/site-packages/*/tags')
     execute('set path+=' . $VIRTUAL_ENV . '/lib/python3.7/site-packages')
@@ -61,7 +66,7 @@ if !empty($VIRTUAL_ENV)
 endif
 
 Plug 'machakann/vim-highlightedyank'
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " Plug 'ncm2/ncm2-jedi'
 " Plug 'ncm2/ncm2-bufword'
@@ -91,7 +96,7 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'honza/vim-snippets'
 
 
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 Plug 'scrooloose/nerdtree', {'on':  ['NERDTreeToggle', 'NERDTreeFind']}
@@ -195,13 +200,14 @@ Plug 'kmdsbng/vim-ruby-eval'
 
 Plug 'chr4/nginx.vim'
 " Plug 'benekastah/neomake'             " Syntax check
+
 Plug 'dense-analysis/ale'
 let g:ale_python_black_executable = '~/.pyenv/versions/neovim3/bin/python'
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['prettier', 'eslint'],
 \   'vue': ['prettier', 'eslint'],
-\   'python': ['black', 'isort',],
+\   'python': ['isort', 'autoimport', 'add_blank_lines_for_python_control_statements',],
 \}
 Plug 'vim-scripts/rtorrent-syntax-file' " rtorrent conf files support
 Plug 'kchmck/vim-coffee-script'
@@ -423,11 +429,11 @@ let g:sandwich#recipes += [
 " EndSandwich: ------------------------------------------------------}}}
 " FZF: ----------------------------------------------------------------{{{
 
-let g:fzf_layout = {'down': '~50%'}
-let g:fzf_files_options =
-  \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
+" let g:fzf_layout = {'down': '~50%'}
+" let g:fzf_files_options =
+"   \ '--preview "(highlight -O ansi {} || cat {}) 2> /dev/null | head -'.&lines.'"'
 
-nmap <c-p> :Files!<cr>
+nmap <c-p> :Files<cr>
 " nmap <c-p><c-t> :Tags<cr>
 nmap <c-s> :BTags<cr>
 let g:fzf_action = {
@@ -435,16 +441,16 @@ let g:fzf_action = {
       \ 'ctrl-x': 'split',
       \ 'ctrl-v': 'vsplit' }
 
-command! FZFMru call fzf#run({
-      \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
-      \'sink' : 'e ',
-      \'options' : '-m',
-      \})
+" command! FZFMru call fzf#run({
+"       \'source': filter(copy(v:oldfiles), 'v:val !~ "NERD_tree"'),
+"       \'sink' : 'e ',
+"       \'options' : '-m',
+"       \})
 
-command! Plugs call fzf#run({
-      \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
-      \ 'options': '--delimiter / --nth -1',
-      \ 'sink':    'Explore'})
+" command! Plugs call fzf#run({
+"       \ 'source':  map(sort(keys(g:plugs)), 'g:plug_home."/".v:val'),
+"       \ 'options': '--delimiter / --nth -1',
+"       \ 'sink':    'Explore'})
 
 " end FZF -------------------------------------------------------------}}}
 " Airline: --------------------------------------------------------------{{{
@@ -1029,3 +1035,11 @@ let g:coc_snippet_next = '<tab>'
 " set completeopt-=preview
 " set completeopt+=noinsert
 " set completeopt-=noselect
+" Show syntax highlighting groups for word under cursor
+nmap <F2> :call <SID>SynStack()<CR>
+function! <SID>SynStack()
+    if !exists("*synstack")
+        return
+    endif
+    echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc

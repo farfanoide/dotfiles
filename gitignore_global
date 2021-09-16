@@ -82,3 +82,5 @@ celerybeat-schedule.db
 vedasyat
 node_modules
 bower_components
+environment/*.sh
+maildir
