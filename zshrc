@@ -1,7 +1,7 @@
 # Plugins and such
 PLUGINS_DIR="$HOME/.plugins/"
 
-export ZPLUG_HOME=/usr/local/opt/zplug
+export ZPLUG_HOME="/opt/homebrew/opt/zplug"
 source $ZPLUG_HOME/init.zsh
 
 # own completions
@@ -34,12 +34,3 @@ zplug "bobthecow/git-flow-completion", use:git-flow-completion.zsh
 
 # Then, source plugins and add commands to $PATH
 zplug load
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export PATH="/usr/local/opt/gettext/bin:$PATH"
-
-###-tns-completion-start-###
-if [ -f /Users/farfanoide/.tnsrc ]; then
-    source /Users/farfanoide/.tnsrc
-fi
-###-tns-completion-end-###

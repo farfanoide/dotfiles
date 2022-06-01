@@ -1,3 +1,5 @@
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
 # forradas mac (aporta para powerline)
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
@@ -20,7 +22,14 @@ export VAGRANT_DEFAULT_PROVIDER=virtualbox
 # Python stuff --------------{{{
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 export PIP_REQUIRE_VIRTUALENV=true # Only run pip from within a virtualenv
+
+# pyenv
 export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+
+eval "$(pyenv init -)"
+# pyenv virtualenv
+eval "$(pyenv virtualenv-init -)"
 # export PATH="$PYENV_ROOT/bin:$PATH"
 gpip()
 {
