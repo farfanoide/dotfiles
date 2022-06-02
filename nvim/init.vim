@@ -27,6 +27,7 @@ if !empty($VIRTUAL_ENV)
     set path+=**/templates/,**/static/
 endif
 nnoremap <c-p> <cmd>Telescope find_files<cr>
+nnoremap <c-s> <cmd>Telescope current_buffer_tags<cr>
 set completeopt=menu,menuone,noselect
 " Vim Script
 let g:catppuccin_flavour = "frappe" " latte, dusk, macchiato, mocha

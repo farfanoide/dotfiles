@@ -8,4 +8,5 @@ export PATH="${HOME}/.bin:${PATH}"
 #export PATH=$PATH:$ANDROID_HOME/build-tools/29.0.3/;
 #export PATH=$PATH:$ANDROID_HOME/platform-tools
 
-export fpath=("$(brew --prefix)/share/zsh/site-functions" $fpath)
+export fpath=("/opt/homebrew/share/zsh/site-functions" $fpath)
+

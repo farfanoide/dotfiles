@@ -34,8 +34,10 @@ else
 
 fi
 
-no_internet="\uf193"  # 
-connected="\uf1eb"    # 
+# no_internet="\uf193"  # 
+# connected="\uf1eb"    # 
+no_internet=
+connected=
 
 if _connected; then
   echo -e "#[fg=blue,nobold]${connected} #[fg=white]${bssid}"

@@ -41,12 +41,18 @@ else
   battery_capacity="$(pmset -g batt | grep -o '[0-9]*%' | tr -d %)"
 fi
 
-plugged="\uf1e6"    # 
-full_batt="\uf240"  # 
-mid_full="\uf241"   # 
-mid_batt="\uf242"   # 
-mid_empty="\uf243"  # 
-empty_batt="\uf244" # 
+# plugged="\uf1e6"    # 
+plugged=
+# full_batt="\uf240"  # 
+full_batt=
+# mid_full="\uf241"   # 
+mid_full=
+# mid_batt="\uf242"   # 
+mid_batt=
+# mid_empty="\uf243"  # 
+mid_empty=
+# empty_batt="\uf244" # 
+empty_batt=
 
 if _charging ; then
   icon="#[fg=green]${plugged}#[fg=white]"

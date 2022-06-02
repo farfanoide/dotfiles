@@ -1,3 +1,17 @@
+require('telescope').setup {
+  extensions = {
+    fzf = {
+      fuzzy = true,                    -- false will only do exact matching
+      override_generic_sorter = true,  -- override the generic sorter
+      override_file_sorter = true,     -- override the file sorter
+      case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                       -- the default case_mode is "smart_case"
+    }
+  }
+}
+-- To get fzf loaded and working with telescope, you need to call
+-- load_extension, somewhere after setup function:
+require('telescope').load_extension('fzf')
 require('mini.surround').setup({
   mappings = {
 	  add = 'ys',
@@ -51,6 +65,10 @@ cmp.setup {
       luasnip.lsp_expand(args.body)
     end,
   },
+  window = {
+      completion = cmp.config.window.bordered(),
+      documentation = cmp.config.window.bordered(),
+  },
   mapping = cmp.mapping.preset.insert({
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
     ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -83,7 +101,14 @@ cmp.setup {
     { name = 'luasnip' },
   },
 }
+local win = require('lspconfig.ui.windows')
+local _default_opts = win.default_opts
 
+win.default_opts = function(options)
+  local opts = _default_opts(options)
+  opts.border = 'rounded'
+  return opts
+end
 -- require('lspconfig').pyright.setup({})
 require("nvim-lsp-installer").setup({
     automatic_installation = true, -- automatically detect which servers to install (based on which servers are set up via lspconfig)
@@ -96,11 +121,10 @@ require("nvim-lsp-installer").setup({
     }
 })
 
-
 -- Snippets
 -- One peculiarity of honza/vim-snippets is that the file with the global snippets is _.snippets, so global snippets
 -- are stored in `ls.snippets._`.
 -- We need to tell luasnip that "_" contains global snippets:
-luasnip.filetype_extend("all", { "_" })
-
-require("luasnip.loaders.from_snipmate").load({ include = langs }) -- Load only python snippets
+-- luasnip.filetype_extend("all", { "_" })
+-- Enable snippets
+require("luasnip.loaders.from_vscode").load({ include = langs }) -- Load only python snippets
