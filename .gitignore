@@ -12,3 +12,4 @@ nvim/autoload/plug.vim.old
 tmux/plugins
 !emacs.d/init.el
 emacs.d/*
+nvim/plugin/packer_compiled.lua
