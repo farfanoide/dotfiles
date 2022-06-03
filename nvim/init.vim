@@ -33,3 +33,4 @@ set completeopt=menu,menuone,noselect
 let g:catppuccin_flavour = "frappe" " latte, dusk, macchiato, mocha
 colorscheme catppuccin
 "nmap <c-p> :Files!<cr>
+autocmd FileType lsp-installer lua vim.api.nvim_win_set_config(0, { border = "rounded" })

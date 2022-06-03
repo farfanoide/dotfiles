@@ -26,17 +26,36 @@ require('lualine').setup({
 require('Comment').setup()
 
 local langs = {
-	'lua',
-	'vim',
-	'python',
-	'javascript',
-	'html',
-	'css',
-	'vue',
-	'vim',
+  'bash',
+  'css',
+  'html',
+  'javascript',
+  'json',
+  'lua',
+  'markdown',
+  'python',
+  'query',
+  'typescript',
+  'vim',
+  'vim',
+  'vue',
 }
 require('nvim-treesitter.configs').setup({
-	ensure_installed = langs
+	ensure_installed = langs,
+    highlight = {
+        enable = true,
+        use_languagetree = true,
+    },
+    indent = {
+        enable = true,
+    },
+    autopairs = {
+        enable = true,
+    },
+    context_commentstring = {
+        enable = true,
+        enable_autocmd = false,
+    },
 })
 
 -- Add additional capabilities supported by nvim-cmp
@@ -46,12 +65,32 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local lspconfig = require('lspconfig')
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { 'pyright', 'tsserver' }
-for _, lsp in ipairs(servers) do
-  lspconfig[lsp].setup {
-    -- on_attach = my_custom_on_attach,
-    capabilities = capabilities,
-  }
+local servers = { 'pyright', 'tsserver', 'vuels', 'emmet_ls', 'sumneko_lua'}
+for _, server in ipairs(servers) do
+  if server == 'vuels' then
+    lspconfig[server].setup {
+      capabilities = capabilities,
+      settings = {
+        vetur = { ignoreProjectWarning = true },
+      }
+    }
+  elseif  server == 'sumneko_lua' then
+    lspconfig[server].setup {
+      capabilities = capabilities,
+      settings = {
+        Lua = {
+          diagnostics = {
+            globals = { 'vim', 'use' }
+          },
+        },
+      }
+    }
+  else
+    lspconfig[server].setup {
+      -- on_attach = my_custom_on_attach,
+      capabilities = capabilities,
+    }
+  end
 end
 
 -- luasnip setup

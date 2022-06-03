@@ -20,17 +20,17 @@ return require('packer').startup({function()
     use {
         "hrsh7th/nvim-cmp",
         requires = {
-            'hrsh7th/cmp-buffer',
-            'hrsh7th/cmp-nvim-lsp',
             'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-            'hrsh7th/cmp-nvim-lua',
-            'octaltree/cmp-look',
-            'hrsh7th/cmp-path',
-            'hrsh7th/cmp-calc',
             'f3fora/cmp-spell',
-            'hrsh7th/cmp-emoji',
+            'hrsh7th/cmp-buffer',
+            'hrsh7th/cmp-calc',
             'hrsh7th/cmp-cmdline',
+            'hrsh7th/cmp-emoji',
+            'hrsh7th/cmp-nvim-lsp',
+            'hrsh7th/cmp-nvim-lua',
+            'hrsh7th/cmp-path',
+            'octaltree/cmp-look',
+            'saadparwaiz1/cmp_luasnip',
         }
     }
     use 'rafamadriz/friendly-snippets'
@@ -42,7 +42,7 @@ return require('packer').startup({function()
     use {
         "catppuccin/nvim",
         as = "catppuccin"
-    } 
+    }
     use 'farfanoide/inflector.vim'
     use 'numToStr/Comment.nvim'
     use 'L3MON4D3/LuaSnip'
@@ -51,7 +51,7 @@ end,
 config = {
     display = {
         open_fn = function()
-            return require('packer.util').float({ border = 'rounded', })
+            return require('packer.util').float({ border = 'rounded' })
         end
     }
 }

@@ -1,4 +1,4 @@
-local tabsize = 4
+local tabsize = 2
 local options = {
 	clipboard = "unnamedplus" , -- Share clipboard with os
 
