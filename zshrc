@@ -1,7 +1,15 @@
+# old installations were on /usr/local while new ones go to /opt/homebrew
+OPT_DIR="/opt/homebrew"
+if [ -d "${OPT_DIR}" ]; then
+	eval "$(${OPT_DIR}/bin/brew shellenv)"
+  export ZPLUG_HOME="${OPT_DIR}/opt/zplug"
+else 
+  eval "$(/usr/local/bin/brew shellenv)"
+  export ZPLUG_HOME="/usr/local/opt/zplug"
+fi
 # Plugins and such
 PLUGINS_DIR="$HOME/.plugins/"
 
-export ZPLUG_HOME="/opt/homebrew/opt/zplug"
 source $ZPLUG_HOME/init.zsh
 
 # own completions

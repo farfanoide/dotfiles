@@ -1,4 +1,3 @@
-eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # forradas mac (aporta para powerline)
 export LC_ALL=en_US.UTF-8
