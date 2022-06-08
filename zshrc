@@ -1,3 +1,6 @@
+# fix <C-h> for vim on mac os
+# infocmp $TERM | sed 's/kbs=^[hH]/kbs=\\177/' > $TERM.ti && tic $TERM.ti
+
 # old installations were on /usr/local while new ones go to /opt/homebrew
 OPT_DIR="/opt/homebrew"
 if [ -d "${OPT_DIR}" ]; then

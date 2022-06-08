@@ -38,42 +38,7 @@ echo -e "$G Shell Setup $RESET"
 ln -s "${PWD}/plugins" "${HOME}/.plugins"
 ln -s "${PWD}/fpath" "${HOME}/.plugins"
 ln -s "${PWD}/zshrc" "${HOME}/.zshrc"
-# echo -e "$G Updating Submodules $RESET"
-# git submodule update --init --recursive
-# git submodule foreach 'git checkout master && git pull'
-
-# # Array of filenames to skip, any arguments passed to
-# # the script will be added here
-# skip=('README.md', 'tools', 'backups', 'sshconfig', $0, $*)
-# dotsdir="$(dirname $0)"
-# bckpdir="${dotsdir}/backups/$(date "+%Y%m%d%H%M%S_backup")"
-# [ ! -d $bckpdir ] && mkdir -p $bckpdir
-#
-# for name in $dotsdir/*; do
-#   if [[ ! ${skip[*]} =~ $name ]]; then
-#     target="$HOME/.$name"
-#
-#     if [ -a $target ]; then
-#       echo -e "$B [+] Backing up $target to $bckpdir/.$name"
-#       cp -r $target $bckpdir
-#       echo -e "$R [-] Removing $target"
-#       rm $target
-#     fi
-#
-#     ln -s "$dotsdir/$name" "$target"
-#     echo -e "$G [>] Linked $dotsdir/$name to $target"
-#   else
-#     echo -e "$Y [~] Skipping ${name}"
-#   fi
-# done
-# echo 'Gonna install vim plugins, might take a while.'
-#
-# echo 'Installing vim-plug'
-# mkdir -p ~/.vim/autoload
-# curl -fLo ~/.vim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-#
-# sleep 2
-# vim +PlugInstall! +PlugClean +qall
-#
-# echo 'All done.'
-# echo 'Enjoy the Ride!'
+# input rules
+ln -s "${PWD}/inputrc" "${HOME}/.inputrc"
+# eslint
+ln -s "${PWD}/eslintrc.json" "${HOME}/.eslintrc.json"

@@ -1,6 +1,6 @@
 local tabsize = 2
 local options = {
-	clipboard = "unnamedplus" , -- Share clipboard with os
+	clipboard = "unnamedplus", -- Share clipboard with os
 
 	-- Basically this makes terminal Vim work sanely.
 	-- TODO: check if this is actually required on neovim
@@ -17,6 +17,8 @@ local options = {
 	-- list = true       -- Show special characters
 	-- vim.cmd "set listchars=tab:❯,extends:»,precedes:«,trail:•"
 	-- set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:Ξ
+  -- list = true,
+	-- listchars = { tab = "❯", extends = "»", precedes = "«", trail = "•" },
 
 	wildmode = "list:full", -- Show complete list of options and navigation too
 	binary = true, -- Don’t add empty newlines at the end of files
@@ -29,8 +31,8 @@ local options = {
 	shortmess = "atI", -- Don't show 'Hit ENTER to continue' message
 	errorbells = false, -- Disable error bells
 	startofline = false, -- Don’t reset cursor to start of line when moving around.
-	number  = true, -- Use normal numbers
-	relativenumber  = true, -- and relative line numbers
+	number = true, -- Use normal numbers
+	relativenumber = true, -- and relative line numbers
 	autowriteall = true, -- Write all buffers
 	lazyredraw = true, -- Don't redraw while executing macros
 	showcmd = true, -- Show commands as you type them
@@ -46,7 +48,7 @@ local options = {
 	shiftwidth = tabsize,
 	softtabstop = tabsize,
 	expandtab = true, -- Use spaces instead of tabs
-	showmode = false,  -- Remove second status bar when using powerline
+	showmode = false, -- Remove second status bar when using powerline
 
 	-- Search options
 	ignorecase = true, -- Ignore case of searches
@@ -64,7 +66,6 @@ local options = {
 	-- Folding options
 	foldenable = true,
 	foldlevelstart = 10,
-
 }
 
 for option, value in pairs(options) do
