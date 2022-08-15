@@ -135,3 +135,10 @@ fix_postgresql_pid ()
         rm /usr/local/var/postgres/postmaster.pid &&
         brew services start postgresql
 }
+
+import_function ()
+{
+    local funcname="$1"
+    pg_restore -l extras/vedas_prod_bkp | grep -i "${funcname}" > extras/function_list && pg_restore -d vedas -L extras/function_list extras/vedas_prod_bkp
+
+}
