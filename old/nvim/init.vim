@@ -2,6 +2,7 @@
 nnoremap <TAB> %
 vnoremap <TAB> %
 
+
 set guicursor=
 set inccommand=nosplit
 set cursorline
@@ -797,6 +798,7 @@ colorscheme espresso
 hi VertSplit guibg=NONE ctermfg=grey ctermbg=NONE gui=NONE
 hi Todo ctermfg=green ctermbg=NONE
 hi LineNr ctermbg=NONE
+hi LineNr ctermfg=green ctermbg=NONE
 " call HideUnwantedBackgrounds()
 
 " if has('gui_running') || has('gui_vimr')

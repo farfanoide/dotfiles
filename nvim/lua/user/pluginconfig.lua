@@ -1,29 +1,10 @@
-require("telescope").setup({
-	extensions = {
-		fzf = {
-			fuzzy = true, -- false will only do exact matching
-			override_generic_sorter = true, -- override the generic sorter
-			override_file_sorter = true, -- override the file sorter
-			case_mode = "smart_case", -- or "ignore_case" or "respect_case"
-			-- the default case_mode is "smart_case"
-		},
-	},
-})
--- To get fzf loaded and working with telescope, you need to call
--- load_extension, somewhere after setup function:
-require("telescope").load_extension("fzf")
--- require("mini.surround").setup({
--- 	mappings = {
--- 		add = "ys",
--- 		delete = "ds",
--- 		replace = "cs",
--- 	},
--- })
-
 require("lualine").setup({
 	options = { theme = "catppuccin" },
 })
+
 require("Comment").setup()
+local comment_ft = require("Comment.ft")
+comment_ft.set("htmldjango", { "{# %s #}", "{% comment %}\n%s\n{% endcomment %}" })
 
 local langs = {
 	"bash",
@@ -56,6 +37,17 @@ require("nvim-treesitter.configs").setup({
 		enable = true,
 		enable_autocmd = false,
 	},
+
+	textobjects = {
+		select = {
+			enable = true,
+			keymaps = {
+				-- Your custom capture.
+				["ib"] = "@block.inner",
+				["ab"] = "@block.outer",
+			}
+		}
+	}
 })
 
 -- Add additional capabilities supported by nvim-cmp
@@ -73,81 +65,36 @@ local configs = {
 		},
 	},
 	emmet_ls = {
-			filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'htmldjango' },
+		filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "htmldjango" },
 	},
 	sumneko_lua = {
-			settings = {
-				Lua = {
-					diagnostics = {
-						globals = { "vim", "use" },
-					},
-					workspace = {
-						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.stdpath("config") .. "/lua"] = true,
-						},
+		settings = {
+			Lua = {
+				diagnostics = {
+					globals = { "vim", "use" },
+				},
+				workspace = {
+					library = {
+						[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+						[vim.fn.stdpath("config") .. "/lua"] = true,
 					},
 				},
 			},
+		},
 	},
 }
 
 for _, server in ipairs(servers) do
 	local base_settings = { capabilities = capabilities }
 	if configs[server] then
-		for k,v in pairs(configs[server]) do base_settings[k] = v end
+		for k, v in pairs(configs[server]) do
+			base_settings[k] = v
+		end
 	end
-		lspconfig[server].setup(base_settings)
-
+	lspconfig[server].setup(base_settings)
 end
 
--- luasnip setup
-local luasnip = require("luasnip")
 
--- nvim-cmp setup
-local cmp = require("cmp")
-cmp.setup({
-	snippet = {
-		expand = function(args)
-			luasnip.lsp_expand(args.body)
-		end,
-	},
-	window = {
-		completion = cmp.config.window.bordered(),
-		documentation = cmp.config.window.bordered(),
-	},
-	mapping = cmp.mapping.preset.insert({
-		["<C-d>"] = cmp.mapping.scroll_docs(-4),
-		["<C-f>"] = cmp.mapping.scroll_docs(4),
-		["<C-Space>"] = cmp.mapping.complete(),
-		["<CR>"] = cmp.mapping.confirm({
-			behavior = cmp.ConfirmBehavior.Replace,
-			select = true,
-		}),
-		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif luasnip.expand_or_jumpable() then
-				luasnip.expand_or_jump()
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-		["<S-Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_prev_item()
-			elseif luasnip.jumpable(-1) then
-				luasnip.jump(-1)
-			else
-				fallback()
-			end
-		end, { "i", "s" }),
-	}),
-	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "luasnip" },
-	},
-})
 local win = require("lspconfig.ui.windows")
 local _default_opts = win.default_opts
 
@@ -168,18 +115,6 @@ require("nvim-lsp-installer").setup({
 	},
 })
 
--- Snippets
--- One peculiarity of honza/vim-snippets is that the file with the global snippets is _.snippets, so global snippets
--- are stored in `ls.snippets._`.
--- We need to tell luasnip that "_" contains global snippets:
--- luasnip.filetype_extend("all", { "_" })
--- Enable snippets
-require("luasnip.loaders.from_vscode").load({ include = langs }) -- Load only python snippets
--- require('luasnip').filetype_extend("html", {"django"})
--- require('luasnip').filetype_extend("djangohtml", {"django"})
-require('luasnip').filetype_extend("htmldjango", {"djangohtml", "html", "javascript"})
-require('luasnip').filetype_extend("python", {"django"})
-
 
 require("nvim-autopairs").setup()
 require("gitsigns").setup({
@@ -195,39 +130,7 @@ require("gitsigns").setup({
 	end,
 })
 
-require("nvim-tree").setup({
-	disable_netrw = true,
-	diagnostics = {
-		enable = true,
-		icons = {
-			hint = "",
-			info = "",
-			warning = "",
-			error = "",
-		},
-	},
-	renderer = {
-		icons = {
-			glyphs = {
-				folder = {
-					default = "",
-					open = "",
-					empty = "",
-					empty_open = "",
-				},
-				git = {
-					unstaged = "",
-					staged = "S",
-					unmerged = "",
-					renamed = "➜",
-					deleted = "",
-					untracked = "U",
-					ignored = "◌",
-				},
-			},
-		},
-	},
-})
+require("nvim-tree").setup({ disable_netrw = true })
 
 local null_ls = require("null-ls")
 null_ls.setup({
@@ -235,9 +138,9 @@ null_ls.setup({
 	sources = {
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.black,
-    null_ls.builtins.formatting.prettier,
+		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.djlint,
 	},
 })
-require("fidget").setup({})
+require("fidget").setup({ text = { spinner = "dots" } })
 require("todo-comments").setup({})

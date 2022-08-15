@@ -1,26 +1,21 @@
 return require("packer").startup({
 	function()
-		-- use 'honza/vim-snippets'
+		use("honza/vim-snippets")
 		use("wbthomason/packer.nvim") -- Packer can manage itself
 		use({
 			"nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",
 		})
+		use("nvim-treesitter/nvim-treesitter-textobjects")
+		use("nvim-treesitter/playground")
 
-		use("JoosepAlviste/nvim-ts-context-commentstring")
-
-		use({
-			"nvim-telescope/telescope-fzf-native.nvim",
-			run = "make",
-		})
-		use({
-			"nvim-telescope/telescope.nvim",
-			requires = { { "nvim-lua/plenary.nvim" } },
-		})
-
+		use("nvim-lua/plenary.nvim")
+		use("onsails/lspkind.nvim")
 		use("neovim/nvim-lspconfig")
 		use("williamboman/nvim-lsp-installer")
 
+		use({ "junegunn/fzf", run = ":call fzf#install()" })
+		use("junegunn/fzf.vim")
 		use({
 			"hrsh7th/nvim-cmp",
 			requires = {
@@ -37,7 +32,6 @@ return require("packer").startup({
 				"saadparwaiz1/cmp_luasnip",
 			},
 		})
-		use("rafamadriz/friendly-snippets")
 		use({
 			"nvim-lualine/lualine.nvim",
 			requires = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -49,17 +43,17 @@ return require("packer").startup({
 		use("farfanoide/inflector.vim")
 		use("numToStr/Comment.nvim")
 		use("L3MON4D3/LuaSnip")
-		-- use("echasnovski/mini.nvim")
 		use("gpanders/editorconfig.nvim")
 		use("windwp/nvim-autopairs")
 		use("lewis6991/gitsigns.nvim")
 		use("kyazdani42/nvim-tree.lua")
 		use("jose-elias-alvarez/null-ls.nvim")
 		use("j-hui/fidget.nvim")
-    use("posva/vim-vue")
-    use("machakann/vim-sandwich")
-    use("machakann/vim-highlightedyank")
-    use("folke/todo-comments.nvim")
+		use("posva/vim-vue")
+		use("machakann/vim-sandwich")
+		use("machakann/vim-highlightedyank")
+		use("folke/todo-comments.nvim")
+		use("christoomey/vim-sort-motion")
 	end,
 	config = {
 		display = {
