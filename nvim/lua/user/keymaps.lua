@@ -1,8 +1,3 @@
-vim.cmd([[
-  nnoremap <silent> gs <Cmd>Sort<CR>
-  vnoremap <silent> gs <Esc><Cmd>Sort<CR>
-]])
-
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
@@ -76,6 +71,17 @@ keymap("n", "<LEADER>tn", ":tabnew<CR>", opts)
 keymap("i", "jj", "<ESC>", opts)
 
 -- open usual files
-keymap("n", "<LEADER>v", ":tabnew ~/.config/nvim/lua/user/keymaps.lua<CR>:vsp $MYVIMRC<CR>:sp ~/.config/nvim/lua/user/pluginconfig.lua<CR>", opts)
+keymap(
+  "n",
+  "<LEADER>v",
+  ":tabnew ~/.config/nvim/lua/user/keymaps.lua<CR>:vsp $MYVIMRC<CR>:sp ~/.config/nvim/lua/user/pluginconfig.lua<CR>",
+  opts
+)
 -- format file
-keymap("n", "<LEADER>f", ":lua vim.lsp.buf.formatting_sync()<CR>", opts)
+keymap("n", "<LEADER>f", ":lua vim.lsp.buf.format()<CR>", opts)
+
+-- open todo file
+keymap("n", "<LEADER>td", "<CMD>vsp $SRC_DIR/encode/todo.md<CR>", opts)
+
+-- Join upper line at the end of current one
+keymap("n", "<LEADER>j", "ddkPJ", opts)

@@ -718,8 +718,6 @@ function! SetMultiLineJump(jump_size)
 endfunction
 command! -nargs=1 SetMultiLineJump call SetMultiLineJump(<f-args>)
 
-" Join upper line at the end of current one
-nnoremap <LEADER>j ddkPJ
 
 " send current's buffer full dir into clipboard
 " '%' = current buffer; ':p' = full path modifier

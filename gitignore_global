@@ -84,3 +84,4 @@ node_modules
 bower_components
 environment/*.sh
 maildir
+client_secret.json

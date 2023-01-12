@@ -10,7 +10,7 @@ require("luasnip.loaders.from_snipmate").lazy_load()
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 
 -- Don't show the dumb matching stuff.
-vim.opt.shortmess:append "c"
+vim.opt.shortmess:append("c")
 
 -- luasnip setup
 local lspkind = require("lspkind")
@@ -35,7 +35,6 @@ lspkind.init({
 		Unit = "ﱦ",
 	},
 })
-
 
 -- nvim-cmp setup
 local cmp = require("cmp")
@@ -89,9 +88,16 @@ cmp.setup({
 		end, { "i", "s" }),
 	}),
 	sources = {
+		{
+			name = "buffer",
+			option = {
+				get_bufnrs = function()
+					return vim.api.nvim_list_bufs()
+				end,
+			},
+		},
+		{ name = "emmet_ls" },
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
-		{ name = "emmet_ls" },
-		{ name = "buffer" },
 	},
 })

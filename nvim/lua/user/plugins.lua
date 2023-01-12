@@ -1,7 +1,9 @@
 return require("packer").startup({
 	function()
+		use("junegunn/vader.vim")
 		use("honza/vim-snippets")
 		use("wbthomason/packer.nvim") -- Packer can manage itself
+    use("terrastruct/d2-vim")
 		use({
 			"nvim-treesitter/nvim-treesitter",
 			run = ":TSUpdate",

@@ -45,19 +45,19 @@ require("nvim-treesitter.configs").setup({
 				-- Your custom capture.
 				["ib"] = "@block.inner",
 				["ab"] = "@block.outer",
-			}
-		}
-	}
+			},
+		},
+	},
 })
 
 -- Add additional capabilities supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require("cmp_nvim_lsp").update_capabilities(capabilities)
+capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 
 local lspconfig = require("lspconfig")
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { "pyright", "tsserver", "vuels", "emmet_ls", "sumneko_lua" }
+local servers = { "pyright", "tsserver", "vuels", "emmet_ls", "sumneko_lua", "bashls" }
 local configs = {
 	vuels = {
 		settings = {
@@ -65,7 +65,17 @@ local configs = {
 		},
 	},
 	emmet_ls = {
-		filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "htmldjango" },
+		filetypes = {
+			"html",
+			"typescriptreact",
+			"javascriptreact",
+			"css",
+			"sass",
+			"scss",
+			"less",
+			"htmldjango",
+			"vue",
+		},
 	},
 	sumneko_lua = {
 		settings = {
@@ -94,7 +104,6 @@ for _, server in ipairs(servers) do
 	lspconfig[server].setup(base_settings)
 end
 
-
 local win = require("lspconfig.ui.windows")
 local _default_opts = win.default_opts
 
@@ -114,7 +123,6 @@ require("nvim-lsp-installer").setup({
 		},
 	},
 })
-
 
 require("nvim-autopairs").setup()
 require("gitsigns").setup({
@@ -140,6 +148,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.black,
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.djlint,
+		null_ls.builtins.formatting.jq,
 	},
 })
 require("fidget").setup({ text = { spinner = "dots" } })

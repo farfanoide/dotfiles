@@ -13,3 +13,4 @@ tmux/plugins
 !emacs.d/init.el
 emacs.d/*
 nvim/plugin/packer_compiled.lua
+nvim/undo

@@ -17,7 +17,7 @@ local options = {
 	-- list = true       -- Show special characters
 	-- vim.cmd "set listchars=tab:❯,extends:»,precedes:«,trail:•"
 	-- set listchars=tab:│\ ,extends:▸\,precedes:❮,trail:Ξ
-  -- list = true,
+	-- list = true,
 	-- listchars = { tab = "❯", extends = "»", precedes = "«", trail = "•" },
 
 	wildmode = "list:full", -- Show complete list of options and navigation too
@@ -66,6 +66,10 @@ local options = {
 	-- Folding options
 	foldenable = true,
 	foldlevelstart = 10,
+
+	-- Undodir
+	undodir = os.getenv("HOME") .. "/.config/nvim/undo",
+	undofile = true,
 }
 
 for option, value in pairs(options) do
