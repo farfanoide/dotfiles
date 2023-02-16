@@ -57,7 +57,7 @@ capabilities = require("cmp_nvim_lsp").default_capabilities(capabilities)
 local lspconfig = require("lspconfig")
 
 -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-local servers = { "pyright", "tsserver", "vuels", "emmet_ls", "sumneko_lua", "bashls" }
+local servers = { "pyright", "tsserver", "vuels", "emmet_ls", "lua_ls", "bashls" }
 local configs = {
 	vuels = {
 		settings = {
@@ -77,7 +77,7 @@ local configs = {
 			"vue",
 		},
 	},
-	sumneko_lua = {
+	lua_ls = {
 		settings = {
 			Lua = {
 				diagnostics = {

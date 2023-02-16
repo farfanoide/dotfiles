@@ -2,7 +2,7 @@ return require("packer").startup({
 	function()
 		use("junegunn/vader.vim")
 		use("honza/vim-snippets")
-		use("wbthomason/packer.nvim") -- Packer can manage itself
+		use("wbthomason/packer.nvim")
     use("terrastruct/d2-vim")
 		use({
 			"nvim-treesitter/nvim-treesitter",
@@ -48,6 +48,7 @@ return require("packer").startup({
 		use("gpanders/editorconfig.nvim")
 		use("windwp/nvim-autopairs")
 		use("lewis6991/gitsigns.nvim")
+		use("tpope/vim-fugitive")
 		use("kyazdani42/nvim-tree.lua")
 		use("jose-elias-alvarez/null-ls.nvim")
 		use("j-hui/fidget.nvim")
