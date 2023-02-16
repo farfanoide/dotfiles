@@ -149,6 +149,7 @@ null_ls.setup({
 		null_ls.builtins.formatting.prettier,
 		null_ls.builtins.formatting.djlint,
 		null_ls.builtins.formatting.jq,
+		null_ls.builtins.diagnostics.ruff,
 	},
 })
 require("fidget").setup({ text = { spinner = "dots" } })
