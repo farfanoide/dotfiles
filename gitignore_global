@@ -85,3 +85,5 @@ bower_components
 environment/*.sh
 maildir
 client_secret.json
+pyproject.toml
+jsconfig.json
