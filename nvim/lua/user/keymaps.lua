@@ -85,3 +85,7 @@ keymap("n", "<LEADER>td", "<CMD>vsp $SRC_DIR/encode/todo.md<CR>", opts)
 
 -- Join upper line at the end of current one
 keymap("n", "<LEADER>j", "ddkPJ", opts)
+
+
+vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files, { desc = 'Search [G]it [F]iles' })
+vim.keymap.set('n', '<c-s>', require('telescope.builtin').treesitter, { desc = 'Search Tags in current buffer (using treesitter)' })
