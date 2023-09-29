@@ -53,7 +53,7 @@ pip()
     if [ $cmd = 'install' ]; then
         ctags_for_pip "$*"
     else
-        `pyenv which pip` $*
+        `rtx which pip` $*
     fi
 }
 

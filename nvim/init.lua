@@ -48,10 +48,6 @@ require("lazy").setup({
 		"windwp/nvim-autopairs",
 		config = true,
 	},
-	{
-		"petertriho/nvim-scrollbar",
-		config = true,
-	},
 	-- ]]
 
 	-- Git related plugins
@@ -78,7 +74,7 @@ require("lazy").setup({
 
 			-- Useful status updates for LSP
 			-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-			{ "j-hui/fidget.nvim",       opts = {} },
+			{ "j-hui/fidget.nvim", opts = {} },
 
 			-- Additional lua configuration, makes nvim stuff amazing!
 			"folke/neodev.nvim",
@@ -103,7 +99,7 @@ require("lazy").setup({
 	},
 
 	-- Useful plugin to show you pending keybinds.
-	{ "folke/which-key.nvim",          opts = {} },
+	{ "folke/which-key.nvim", opts = {} },
 	{ -- Adds git releated signs to the gutter, as well as utilities for managing changes
 		"lewis6991/gitsigns.nvim",
 		-- opts = {
@@ -151,15 +147,20 @@ require("lazy").setup({
 	},
 
 	{
-		-- Add indentation guides even on blank lines
 		"lukas-reineke/indent-blankline.nvim",
-		-- Enable `lukas-reineke/indent-blankline.nvim`
-		-- See `:help indent_blankline.txt`
-		opts = {
-			-- char = '┊',
-			show_trailing_blankline_indent = false,
-		},
+		main = "ibl",
+		opts = {},
 	},
+	-- {
+	-- 	-- Add indentation guides even on blank lines
+	-- 	"lukas-reineke/indent-blankline.nvim",
+	-- 	-- Enable `lukas-reineke/indent-blankline.nvim`
+	-- 	-- See `:help indent_blankline.txt`
+	-- 	opts = {
+	-- 		-- char = '┊',
+	-- 		-- show_trailing_blankline_indent = false,
+	-- 	},
+	-- },
 
 	-- "gc" to comment visual regions/lines
 	{
@@ -289,7 +290,7 @@ pcall(require("telescope").load_extension, "fzf")
 
 -- See `:help telescope.builtin`
 vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
-vim.keymap.set("n", "<leader><leader>", ':Telescope<cr>', { desc = "[ ] Just open Telescope" })
+vim.keymap.set("n", "<leader><leader>", ":Telescope<cr>", { desc = "[ ] Just open Telescope" })
 vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
 vim.keymap.set("n", "<leader>/", function()
 	-- You can pass additional configuration to telescope to change theme, layout, etc.

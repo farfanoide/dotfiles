@@ -3,13 +3,17 @@ _mac_osx() { [ $(uname) = 'Darwin' ] ;}
 _linux()   { [ $(uname) = 'Linux' ] ;}
 
 # directory from which the plugins is being invoked
-dir="${PLUGINS_DIR}/farfanoide"
+# dir="${PLUGINS_DIR}/farfanoide"
+#
+# source "${dir}/alias.sh"
+# source "${dir}/functions.sh" # load functions after alias so that they can be inherited
+# # source "${dir}/env.sh"       # load env vars after functions too use them
+# # source "${dir}/path.sh"
+# source "${dir}/bindings.sh"
 
-source "${dir}/alias.sh"
-source "${dir}/functions.sh" # load functions after alias so that they can be inherited
-source "${dir}/env.sh"       # load env vars after functions too use them
-source "${dir}/path.sh"
-source "${dir}/bindings.sh"
+source ./plugins/farfanoide/alias.sh
+source ./plugins/farfanoide/functions.sh
+source ./plugins/farfanoide/bindings.sh
 
 # [[ $(current_shell) =~ "zsh" ]] && source "$dir/zsh"
 

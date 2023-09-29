@@ -87,3 +87,4 @@ maildir
 client_secret.json
 pyproject.toml
 jsconfig.json
+.venv
