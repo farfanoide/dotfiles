@@ -53,7 +53,7 @@ pip()
     if [ $cmd = 'install' ]; then
         ctags_for_pip "$*"
     else
-        `rtx which pip` $*
+        `mise which pip` $*
     fi
 }
 

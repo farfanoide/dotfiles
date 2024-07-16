@@ -88,3 +88,4 @@ client_secret.json
 pyproject.toml
 jsconfig.json
 .venv
+.rtx.toml

@@ -6,7 +6,7 @@ local opts = { noremap = true, silent = true }
 -- local term_opts = { silent = true }
 
 -- Shorten function name
-local keymap = vim.api.nvim_set_keymap
+local keymap = vim.keymap.set
 
 -- make Y work consistently to C and D
 keymap("n", "Y", "y$", opts)
@@ -21,9 +21,9 @@ vim.cmd("nnoremap <LEADER>n :NvimTreeToggle<CR>")
 
 -- Terminal Bubbling ------------------------------------------------------
 -- Move around without leaving insert mode
-keymap("i", "<C-l>", "<right>", opts)
-keymap("i", "<C-h>", "<left>", opts)
-keymap("i", "<C-j>", "<down>", opts)
+keymap("i", "<c-l>", "<right>", opts)
+keymap("i", "<c-h>", "<left>", opts)
+keymap("i", "<c-j>", "<down>", opts)
 keymap("i", "<C-k>", "<up>", opts)
 
 -- Move even when wrap is set to true
@@ -78,7 +78,7 @@ keymap(
   opts
 )
 -- format file
-keymap("n", "<LEADER>f", ":lua vim.lsp.buf.format()<CR>", opts)
+-- keymap("n", "<LEADER>f", ":lua vim.lsp.buf.format()<CR>", opts)
 
 -- open todo file
 keymap("n", "<LEADER>td", "<CMD>vsp $SRC_DIR/encode/todo.md<CR>", opts)
@@ -86,6 +86,18 @@ keymap("n", "<LEADER>td", "<CMD>vsp $SRC_DIR/encode/todo.md<CR>", opts)
 -- Join upper line at the end of current one
 keymap("n", "<LEADER>j", "ddkPJ", opts)
 
+vim.keymap.set("n", "<leader><leader>", ":Telescope<CR>", { desc = "Search Telescope builtins" })
+vim.keymap.set("n", "<c-p>", require("telescope.builtin").find_files, { desc = "Search [G]it [F]iles" })
+vim.keymap.set(
+  "n",
+  "<c-s>",
+  require("telescope.builtin").lsp_document_symbols,
+  { desc = "Search Tags in current buffer (using treesitter)" }
+)
 
-vim.keymap.set('n', '<c-p>', require('telescope.builtin').find_files, { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<c-s>', require('telescope.builtin').treesitter, { desc = 'Search Tags in current buffer (using treesitter)' })
+vim.keymap.set(
+  'n',
+  '‹leader>th',
+  function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
+  {desc = '[T]oggle Inlay [H]ints'}
+)

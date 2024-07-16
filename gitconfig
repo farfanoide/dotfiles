@@ -3,6 +3,7 @@
 	excludesfile = /Users/farfanoide/.gitignore_global
 	autocrlf = input
 	pager = diff-so-fancy | less --tabs=4 -RFX
+	compression = 0
 [color]
 	ui = always
 [user]

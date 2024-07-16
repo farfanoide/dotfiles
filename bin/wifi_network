@@ -25,7 +25,7 @@ if [ $(uname) = Linux ];then
 
 else
 
-  network=$(networksetup -getairportnetwork en1 | head -1)
+  network=$(networksetup -getairportnetwork en0 | head -1)
   bssid="$(echo "${network}" | cut -d ':' -f 2)"
   _connected()
   {

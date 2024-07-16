@@ -63,12 +63,17 @@
 # export LD_LIBRARY_PATH="/opt/homebrew/opt/mysql-client/lib/libmysqlclient.dylib"
 #
 
-source ~/Develop/dotfiles/master/plugins/farfanoide/zshrc.zsh
+export PATH="/opt/homebrew/bin:$PATH"
+export PATH="/opt/homebrew/sbin:$PATH"
+
+source ~/Develop/dotfiles/plugins/farfanoide/zshrc.zsh
 
 export LANG=en_US.UTF-8
 eval "$(starship init zsh)"
-source /usr/local/share/zsh-autosuggestions/zsh-autosuggestions.zsh
-eval "$($(brew --prefix)/bin/rtx activate zsh)"
+source "$(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "$(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
+source "$HOME/.fzf-tab/fzf-tab.plugin.zsh"
+eval "$(mise activate zsh)"
 PATH="${HOME}/.bin:${PATH}"
 
 if type brew &>/dev/null; then
@@ -84,8 +89,8 @@ fi
 _mac_osx() { [ $(uname) = 'Darwin' ] ;}
 _linux()   { [ $(uname) = 'Linux' ] ;}
 
-source ~/Develop/dotfiles/master/plugins/farfanoide/env.sh
-source ~/Develop/dotfiles/master/plugins/farfanoide/alias.sh
-source ~/Develop/dotfiles/master/plugins/farfanoide/functions.sh
-source ~/Develop/dotfiles/master/plugins/farfanoide/bindings.sh
+source ~/Develop/dotfiles/plugins/farfanoide/env.sh
+source ~/Develop/dotfiles/plugins/farfanoide/alias.sh
+source ~/Develop/dotfiles/plugins/farfanoide/functions.sh
+source ~/Develop/dotfiles/plugins/farfanoide/bindings.sh
 
