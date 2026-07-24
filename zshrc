@@ -93,4 +93,17 @@ source ~/Develop/dotfiles/plugins/farfanoide/env.sh
 source ~/Develop/dotfiles/plugins/farfanoide/alias.sh
 source ~/Develop/dotfiles/plugins/farfanoide/functions.sh
 source ~/Develop/dotfiles/plugins/farfanoide/bindings.sh
+export DYLD_FALLBACK_LIBRARY_PATH=/opt/homebrew/lib:$DYLD_FALLBACK_LIBRARY_PATH
 
+
+# Added by LM Studio CLI (lms)
+export PATH="$PATH:/Users/farfanoide/.lmstudio/bin"
+# End of LM Studio CLI section
+
+
+# Added by Antigravity
+export PATH="/Users/farfanoide/.antigravity/antigravity/bin:$PATH"
+
+# Added by Antigravity
+export PATH="/Users/farfanoide/.antigravity/antigravity/bin:$PATH"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"

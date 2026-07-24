@@ -14,3 +14,4 @@ tmux/plugins
 emacs.d/*
 nvim/plugin/packer_compiled.lua
 nvim/undo
+undo

@@ -89,3 +89,10 @@ pyproject.toml
 jsconfig.json
 .venv
 .rtx.toml
+.mise.toml
+keyvet-consult-frontend.code-workspace
+vedas/settings/keyvet/local.py
+#
+# AI -------------------------------------------------------{{{
+AGENTS.md
+# AI -------------------------------------------------------}}}

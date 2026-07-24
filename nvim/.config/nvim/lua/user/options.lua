@@ -20,7 +20,8 @@ local options = {
 	-- list = true,
 	-- listchars = { tab = "❯", extends = "»", precedes = "«", trail = "•" },
 
-	wildmode = "list:full", -- Show complete list of options and navigation too
+ wildmode = 'longest:full,full',
+	-- wildmode = "list:full", -- Show complete list of options and navigation too
 	binary = true, -- Don’t add empty newlines at the end of files
 
 	-- Disable backups and swap files
@@ -42,6 +43,8 @@ local options = {
 	joinspaces = false, -- dont add extra spaces when joining lines
 	smartindent = true, -- Smart indentation of new lines
 	breakindent = true,
+
+	fillchars = { eob = " " },
 
 	-- Spacing options
 	tabstop = tabsize,

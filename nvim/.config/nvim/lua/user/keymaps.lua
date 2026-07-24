@@ -101,3 +101,11 @@ vim.keymap.set(
   function() vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
   {desc = '[T]oggle Inlay [H]ints'}
 )
+
+vim.keymap.set({ "n", "v" }, "<leader>f", function()
+  require("conform").format({
+    async = true,
+    lsp_fallback = true,
+    timeout_ms = 500,
+  })
+end, { desc = "Format range or file" })

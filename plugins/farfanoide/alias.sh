@@ -6,7 +6,7 @@ alias vim='nvim'
 _mac_osx && alias ls='ls -h' || alias ls='ls -h --color=auto'
 alias d='dirs -v'
 # alias para colorcitos y giladas
-alias l='exa -l'
+alias l='eza -l'
 alias la='ls -lA'
 alias lg='la | grep -i'
 alias lr='ls -R '

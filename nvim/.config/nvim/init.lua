@@ -4,6 +4,8 @@
 vim.g.mapleader = ","
 vim.g.maplocalleader = "\\"
 
+vim.g.editorconfig = false
+
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 
@@ -17,6 +19,8 @@ vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 -- vim.opt.relativenumber = true
+
+vim.opt.winborder = "rounded"
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = "a"
@@ -118,7 +122,7 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight when yanking (copying) text",
 	group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
 	callback = function()
-		vim.highlight.on_yank()
+		vim.hl.on_yank()
 	end,
 })
 
@@ -143,25 +147,35 @@ vim.opt.rtp:prepend(lazypath)
 --
 -- NOTE: Here is where you install your plugins.
 require("lazy").setup({
+	-- {
+	-- 	"machakann/vim-sandwich",
+	-- 	config = function()
+	-- 		vim.cmd([[
+	-- 		" Sandwich mappings and whatnot
+	-- 		runtime macros/sandwich/keymap/surround.vim
+	-- 		" if you have not copied default recipes
+	-- 		let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
+	--
+	-- 		" add spaces inside bracket
+	-- 		let g:sandwich#recipes += [
+	-- 					\   {'buns': ['{ ', ' }'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['{']},
+	-- 					\   {'buns': ['[ ', ' ]'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['[']},
+	-- 					\   {'buns': ['( ', ' )'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['(']},
+	-- 					\   {'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
+	-- 					\   {'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
+	-- 					\   {'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
+	-- 					\ ]
+	-- 		]])
+	-- 	end,
+	-- },
 	{
-		"machakann/vim-sandwich",
+		"kylechui/nvim-surround",
+		version = "*", -- Use for stability; omit to use `main` branch for the latest features
+		event = "VeryLazy",
 		config = function()
-			vim.cmd([[
-			" Sandwich mappings and whatnot
-			runtime macros/sandwich/keymap/surround.vim
-			" if you have not copied default recipes
-			let g:sandwich#recipes = deepcopy(g:sandwich#default_recipes)
-
-			" add spaces inside bracket
-			let g:sandwich#recipes += [
-						\   {'buns': ['{ ', ' }'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['{']},
-						\   {'buns': ['[ ', ' ]'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['[']},
-						\   {'buns': ['( ', ' )'], 'nesting': 1, 'match_syntax': 1, 'kind': ['add', 'replace'], 'action': ['add'], 'input': ['(']},
-						\   {'buns': ['{\s*', '\s*}'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['{']},
-						\   {'buns': ['\[\s*', '\s*\]'], 'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['[']},
-						\   {'buns': ['(\s*', '\s*)'],   'nesting': 1, 'regex': 1, 'match_syntax': 1, 'kind': ['delete', 'replace', 'textobj'], 'action': ['delete'], 'input': ['(']},
-						\ ]
-			]])
+			require("nvim-surround").setup({
+				-- Configuration here, or leave empty to use defaults
+			})
 		end,
 	},
 
@@ -207,7 +221,7 @@ require("lazy").setup({
 
 			local function current_buffer_lsp()
 				local buf_ft = current_buffer_filetype()
-				local clients = vim.lsp.get_active_clients()
+				local clients = vim.lsp.get_clients()
 				if next(clients) == nil then
 					return ""
 				end
@@ -538,11 +552,9 @@ require("lazy").setup({
 	-- you do for a plugin at the top level, you can do for a dependency.
 	--
 	-- Use the `dependencies` key to specify the dependencies of a particular plugin
-
 	{ -- Fuzzy Finder (files, lsp, etc)
 		"nvim-telescope/telescope.nvim",
 		event = "VimEnter",
-		branch = "0.1.x",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
 			{ -- If encountering errors, see telescope-fzf-native README for installation instructions
@@ -843,6 +855,126 @@ require("lazy").setup({
 				-- clangd = {},
 				-- gopls = {},
 				pyright = {},
+
+				vue_ls = {},
+				vtsls = {},
+
+				-- vtsls = {
+				--   -- explicitly add default filetypes, so that we can extend
+				--     -- them in related extras
+				--     filetypes = {
+				--       "javascript",
+				--       "javascriptreact",
+				--       "javascript.jsx",
+				--       "typescript",
+				--       "typescriptreact",
+				--       "typescript.tsx",
+				--     },
+				--   settings = {
+				--     complete_function_calls = true,
+				--     vtsls = {
+				--       enableMoveToFileCodeAction = true,
+				--       autoUseWorkspaceTsdk = true,
+				--       experimental = {
+				--         maxInlayHintLength = 30,
+				--         completion = {
+				--           enableServerSideFuzzyMatch = true,
+				--         },
+				--       },
+				--     },
+				--     typescript = {
+				--       updateImportsOnFileMove = { enabled = "always" },
+				--       suggest = {
+				--         completeFunctionCalls = true,
+				--       },
+				--       inlayHints = {
+				--         enumMemberValues = { enabled = true },
+				--         functionLikeReturnTypes = { enabled = true },
+				--         parameterNames = { enabled = "literals" },
+				--         parameterTypes = { enabled = true },
+				--         propertyDeclarationTypes = { enabled = true },
+				--         variableTypes = { enabled = false },
+				--       },
+				--     },
+				--   },
+				--   -- keys = {
+				--   --   {
+				--   --     "gD",
+				--   --     function()
+				--   --       local params = vim.lsp.util.make_position_params()
+				--   --       LazyVim.lsp.execute({
+				--   --           command = "typescript.goToSourceDefinition",
+				--   --           arguments = { params.textDocument.uri, params.position },
+				--   --           open = true,
+				--   --           })
+				--   --     end,
+				--   --       desc = "Goto Source Definition",
+				--   --   },
+				--   --   {
+				--   --     "gR",
+				--   --     function()
+				--   --       LazyVim.lsp.execute({
+				--   --           command = "typescript.findAllFileReferences",
+				--   --           arguments = { vim.uri_from_bufnr(0) },
+				--   --           open = true,
+				--   --           })
+				--   --     end,
+				--   --       desc = "File References",
+				--   --   },
+				--   --   {
+				--   --     "<leader>co",
+				--   --     LazyVim.lsp.action["source.organizeImports"],
+				--   --     desc = "Organize Imports",
+				--   --   },
+				--   --   {
+				--   --     "<leader>cM",
+				--   --     LazyVim.lsp.action["source.addMissingImports.ts"],
+				--   --     desc = "Add missing imports",
+				--   --   },
+				--   --   {
+				--   --     "<leader>cu",
+				--   --     LazyVim.lsp.action["source.removeUnused.ts"],
+				--   --     desc = "Remove unused imports",
+				--   --   },
+				--   --   {
+				--   --     "<leader>cD",
+				--   --     LazyVim.lsp.action["source.fixAll.ts"],
+				--   --     desc = "Fix all diagnostics",
+				--   --   },
+				--   --   {
+				--   --     "<leader>cV",
+				--   --     function()
+				--   --       LazyVim.lsp.execute({ command = "typescript.selectTypeScriptVersion" })
+				--   --       end,
+				--   --     desc = "Select TS workspace version",
+				--   --   },
+				--   -- },
+				-- },
+				-- vtsls = {
+				-- 	enabled = true,
+				-- 	settings = {
+				-- 		vtsls = {
+				-- 			tsserver = {
+				-- 				globalPlugins = {
+				-- 					{
+				-- 						name = "@vue/typescript-plugin",
+				-- 						location = "/Users/farfanoide/.local/share/mise/installs/node/20.18.0/lib/node_modules/@vue/typescript-plugin/",
+				-- 						languages = { "vue" },
+				-- 						configNamespace = "typescript",
+				-- 					},
+				-- 				},
+				-- 			},
+				-- 		},
+				-- 	},
+				-- 	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+				-- },
+				-- vue_ls = {
+				-- 	-- you will see the same error if this line is set up wrong
+				-- 	cmd = {
+				-- 		"/Users/farfanoide/.local/share/mise/installs/node/20.18.0/lib/node_modules/@vue/language-server/bin/vue-language-server.js",
+				-- 		"--stdio",
+				-- 	},
+				-- },
 				-- rust_analyzer = {},
 				-- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
 				--
@@ -864,34 +996,34 @@ require("lazy").setup({
 				-- 	filetypes = { "vue" },
 				-- },
 				emmet_ls = {},
-				tsserver = {
-					settings = {
-						implicitProjectConfiguration = { checkJs = true },
-						typescript = { inlayHints = js_inlay_hints },
-						javascript = { inlayHints = js_inlay_hints },
-					},
-					init_options = {
-						plugins = {
-							{
-								name = "@vue/typescript-plugin",
-								location = "/Users/farfanoide/.local/share/mise/installs/node/20/lib/node_modules/@vue/typescript-plugin",
-								languages = { "javascript", "typescript", "vue" },
-							},
-						},
-					},
-					filetypes = {
-						"javascript",
-						"typescript",
-						"vue",
-					},
-
-					commands = {
-						OrganizeImports = {
-							organize_imports,
-							description = "Organize Imports",
-						},
-					},
-				},
+				-- ts_ls = {
+				-- 	init_options = {
+				-- 		plugins = {
+				-- 			{
+				-- 				name = "@vue/typescript-plugin",
+				-- 				location = "/Users/farfanoide/.local/share/mise/installs/node/20/lib/node_modules/@vue/typescript-plugin",
+				-- 				languages = { "javascript", "typescript", "vue" },
+				-- 			},
+				-- 		},
+				-- 	},
+				-- 	filetypes = {
+				-- 		"javascript",
+				-- 		"typescript",
+				-- 		"vue",
+				-- 	},
+				-- 	-- settings = {
+				-- 	-- 	implicitProjectConfiguration = { checkJs = true },
+				-- 	-- 	typescript = { inlayHints = js_inlay_hints },
+				-- 	-- 	javascript = { inlayHints = js_inlay_hints },
+				-- 	-- },
+				--
+				-- 	commands = {
+				-- 		OrganizeImports = {
+				-- 			organize_imports,
+				-- 			description = "Organize Imports",
+				-- 		},
+				-- 	},
+				-- },
 				--
 
 				lua_ls = {
@@ -923,6 +1055,7 @@ require("lazy").setup({
 			local ensure_installed = vim.tbl_keys(servers or {})
 			vim.list_extend(ensure_installed, {
 				"stylua", -- Used to format Lua code
+				"black",
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
@@ -937,10 +1070,40 @@ require("lazy").setup({
 						require("lspconfig")[server_name].setup(server)
 					end,
 				},
+				automatic_installation = true,
 			})
+
+			local vue_language_server_path =
+				"/Users/farfanoide/.local/share/mise/installs/node/20.18.0/lib/node_modules/@vue/language-server/bin/vue-language-server.js"
+			local vue_plugin = {
+				name = "@vue/typescript-plugin",
+				location = vue_language_server_path,
+				languages = { "vue" },
+				configNamespace = "typescript",
+			}
+			vim.lsp.config("vtsls", {
+				settings = {
+					vtsls = {
+						tsserver = {
+							globalPlugins = {
+								vue_plugin,
+							},
+						},
+					},
+				},
+				filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue" },
+			})
+
+			vim.lsp.enable("vue_ls")
+			vim.lsp.enable("vtsls")
 		end,
 	},
 
+	{
+		"pmizio/typescript-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "neovim/nvim-lspconfig" },
+		opts = {},
+	},
 	{ -- Autoformat
 		"stevearc/conform.nvim",
 		lazy = false,
@@ -974,11 +1137,13 @@ require("lazy").setup({
 				--
 				-- You can use a sub-list to tell conform to run *until* a formatter
 				-- is found.
-				javascript = { { "prettierd", "prettier" } },
-				typescript = { { "prettierd", "prettier" } },
+				javascript = { "prettier" },
+				typescript = { "prettier" },
 				json = { "prettier" },
 				vue = { "prettier" },
 				sh = { "shfmt" },
+				htmldjango = { "djlint" },
+				sql = { "sleek" },
 			},
 		},
 	},
@@ -1172,7 +1337,9 @@ require("lazy").setup({
 	},
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
 		build = ":TSUpdate",
+		lazy = false,
 		opts = {
 			ensure_installed = {
 				"bash",
@@ -1186,6 +1353,7 @@ require("lazy").setup({
 				"python",
 				"sql",
 				"javascript",
+				"vue",
 			},
 			-- Autoinstall languages that are not installed
 			auto_install = true,
@@ -1198,21 +1366,27 @@ require("lazy").setup({
 			},
 			indent = { enable = true, disable = { "ruby" } },
 		},
-		config = function(_, opts)
-			-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-
-			-- Prefer git instead of curl in order to improve connectivity in some environments
-			require("nvim-treesitter.install").prefer_git = true
-			---@diagnostic disable-next-line: missing-fields
-			require("nvim-treesitter.configs").setup(opts)
-
-			-- There are additional nvim-treesitter modules that you can use to interact
-			-- with nvim-treesitter. You should go explore a few and see what interests you:
-			--
-			--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-			--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-			--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
-		end,
+		-- config = function(_, opts)
+		-- 	-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
+		--
+		-- 	-- Prefer git instead of curl in order to improve connectivity in some environments
+		-- 	require("nvim-treesitter.install").prefer_git = true
+		-- 	---@diagnostic disable-next-line: missing-fields
+		-- 	require("nvim-treesitter.configs").setup(opts)
+		--
+		-- 	-- There are additional nvim-treesitter modules that you can use to interact
+		-- 	-- with nvim-treesitter. You should go explore a few and see what interests you:
+		-- 	--
+		-- 	--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
+		-- 	--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
+		-- 	--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+		-- end,
+		dependencies = {
+			{
+				"nvim-treesitter/nvim-treesitter-textobjects",
+				branch = "main",
+			},
+		},
 	},
 
 	-- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
