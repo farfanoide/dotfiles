@@ -1074,7 +1074,7 @@ require("lazy").setup({
 			})
 
 			local vue_language_server_path =
-				"/Users/farfanoide/.local/share/mise/installs/node/20.18.0/lib/node_modules/@vue/language-server/bin/vue-language-server.js"
+				vim.fn.stdpath("data") .. "/mason/packages/vue-language-server/node_modules/@vue/language-server"
 			local vue_plugin = {
 				name = "@vue/typescript-plugin",
 				location = vue_language_server_path,
