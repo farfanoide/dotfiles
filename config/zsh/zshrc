@@ -1,0 +1,77 @@
+export LANG="${LANG:-en_US.UTF-8}"
+export LC_ALL="${LC_ALL:-en_US.UTF-8}"
+
+path=(
+  "$HOME/.bin"
+  "$HOME/.local/bin"
+  /opt/homebrew/bin
+  /opt/homebrew/sbin
+  $path
+)
+typeset -U path
+
+_zsh_config_dir="${ZSH_CONFIG_DIR:-$HOME/.config/zsh}"
+
+_source_if_readable() {
+  local file="$1"
+  [[ -r "$file" ]] && source "$file"
+}
+
+_source_brew_plugin() {
+  local formula="$1"
+  local script="$2"
+
+  command -v brew >/dev/null 2>&1 || return
+  local prefix
+  prefix="$(brew --prefix "$formula" 2>/dev/null)" || return
+  _source_if_readable "$prefix/$script"
+}
+
+_source_if_readable "$_zsh_config_dir/options.zsh"
+_source_if_readable "$_zsh_config_dir/env.zsh"
+
+command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
+
+if [[ ! -o interactive ]]; then
+  unset _zsh_config_dir
+  unfunction _source_if_readable
+  unfunction _source_brew_plugin
+  return
+fi
+
+if [[ -t 0 ]]; then
+  command -v starship >/dev/null 2>&1 && eval "$(starship init zsh)"
+
+  _source_brew_plugin zsh-autosuggestions share/zsh-autosuggestions/zsh-autosuggestions.zsh
+  _source_brew_plugin zsh-syntax-highlighting share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+  _source_if_readable "$HOME/.fzf-tab/fzf-tab.plugin.zsh"
+fi
+
+if command -v brew >/dev/null 2>&1; then
+  fpath=(
+    "$HOME/.fpath"
+    "$(brew --prefix)/share/zsh/site-functions"
+    "$(brew --prefix)/share/zsh-completions"
+    $fpath
+  )
+else
+  fpath=("$HOME/.fpath" $fpath)
+fi
+typeset -U fpath
+
+if [[ -t 0 ]]; then
+  autoload -Uz compinit
+  compinit -i
+  zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+fi
+
+_source_if_readable "$_zsh_config_dir/aliases.zsh"
+_source_if_readable "$_zsh_config_dir/functions.zsh"
+[[ -t 0 ]] && _source_if_readable "$_zsh_config_dir/bindings.zsh"
+if [[ -t 0 ]] && command -v fzf >/dev/null 2>&1; then
+  source <(fzf --zsh)
+fi
+
+unset _zsh_config_dir
+unfunction _source_if_readable
+unfunction _source_brew_plugin

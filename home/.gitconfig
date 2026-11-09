@@ -1,0 +1,54 @@
+[core]
+	editor = nvim
+	fileMode = false
+	excludesfile = ~/.gitignore_global
+	autocrlf = input
+	pager = ~/.git-pager
+	compression = 0
+
+[color]
+	ui = auto
+
+[user]
+	name = Ivan Karl
+	email = ivan6258@gmail.com
+
+[apply]
+	whitespace = nowarn
+
+[push]
+	default = simple
+
+[pull]
+	rebase = false
+
+[fetch]
+	prune = true
+
+[init]
+	templatedir = ~/.git_template
+	defaultBranch = master
+
+[github]
+	user = farfanoide
+
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --
+	whodafuck = blame
+
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+
+[mergetool "sourcetree"]
+	cmd = /Applications/Sourcetree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[includeIf "gitdir:~/Develop/encode/"]
+	path = ~/.gitconfig-encode

@@ -1,0 +1,14 @@
+#!/bin/sh
+set -eu
+
+PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
+
+if ! command -v ctags >/dev/null 2>&1; then
+	exit 0
+fi
+
+tmp=".git/tags.$$"
+trap 'rm -f "$tmp"' EXIT HUP INT TERM
+
+ctags --tag-relative -Rf"$tmp" --exclude=.git --languages=-sql . >/dev/null 2>&1 || exit 0
+mv "$tmp" .git/tags

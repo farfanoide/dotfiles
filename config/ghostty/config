@@ -1,0 +1,12 @@
+font-family = "JetBrainsMonoNL NFM Regular"
+window-theme = system
+macos-titlebar-style = transparent
+font-size = 16
+adjust-cell-height = 14
+keybind = global:opt+space=toggle_quick_terminal
+window-height = 1600
+quick-terminal-position = top
+quick-terminal-size = 100%
+quick-terminal-screen = mouse
+quick-terminal-animation-duration = .1
+quick-terminal-autohide = false

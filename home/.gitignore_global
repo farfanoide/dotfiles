@@ -1,0 +1,65 @@
+# Editors
+[._]*.s[a-w][a-z]
+[._]s[a-w][a-z]
+*.un~
+Session.vim
+.netrwhist
+*.swp
+*~
+\#*\#
+/.emacs.desktop
+/.emacs.desktop.lock
+*.elc
+auto-save-list
+tramp
+.\#*
+.org-id-locations
+*_archive
+*_flymake.*
+/eshell/history
+/eshell/lastdir
+/elpa/
+*.rel
+/auto/
+
+# IDEs and metadata
+.idea/
+nbproject/
+*.sublime-project
+*.sublime-workspace
+*.iml
+.svn
+tags
+.vagrant
+.DS_Store
+._*
+
+# Language/runtime byproducts
+.composer
+.phpcomplete_extended
+.ropeproject/*
+.python-version
+pip-selfcheck.json
+*.pyc
+.tern-port
+npm-debug.log
+node_modules
+bower_components
+.venv
+
+# Local project secrets and generated files
+extras
+*.sqlite3
+*development.sh
+celerybeat-schedule.db
+environment/*.sh
+maildir
+client_secret.json
+
+# Local-only tool overrides
+.mise.local.toml
+mise.local.toml
+.rtx.toml
+
+# AI scratch files
+AGENTS.md
