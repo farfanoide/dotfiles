@@ -44,7 +44,7 @@ local function highlights()
 	}
 	local hl = vim.api.nvim_set_hl
 	hl(0, "CmpNormal", { fg = c.fg, bg = c.bg })
-	hl(0, "CmpBorder", { fg = c.magenta.base, bg = c.bg })
+	hl(0, "CmpBorder", { link = "FloatBorder" })
 	hl(0, "CmpSelection", { fg = c.fg_bright, bg = c.gray2, bold = true })
 	hl(0, "CmpItemAbbr", { fg = c.fg })
 	hl(0, "CmpItemAbbrMatch", { fg = c.cyan.base, bold = true })

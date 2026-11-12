@@ -1,4 +1,12 @@
 local tabsize = 2
+
+-- Python's default continuation indent is two levels and keeps closing
+-- delimiters aligned with the contents. Use one level and align with the opener.
+vim.g.python_indent = vim.tbl_extend("force", vim.g.python_indent or {}, {
+	open_paren = "shiftwidth()",
+	closed_paren_align_last_line = false,
+})
+
 local options = {
 	clipboard = "unnamedplus", -- Share clipboard with os
 
@@ -20,7 +28,7 @@ local options = {
 	-- list = true,
 	-- listchars = { tab = "❯", extends = "»", precedes = "«", trail = "•" },
 
- wildmode = 'longest:full,full',
+	wildmode = "longest:full,full",
 	-- wildmode = "list:full", -- Show complete list of options and navigation too
 	binary = true, -- Don’t add empty newlines at the end of files
 

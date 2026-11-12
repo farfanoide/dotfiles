@@ -469,7 +469,19 @@ require("lazy").setup({
 	--    require('Comment').setup({})
 
 	-- "gc" to comment visual regions/lines
-	{ "numToStr/Comment.nvim", opts = {} },
+	{
+		"numToStr/Comment.nvim",
+		opts = {
+			pre_hook = function(ctx)
+				-- Neovim 0.12 returns nil instead of throwing when no parser exists.
+				-- Comment.nvim only checks for errors before accessing the parser.
+				local ok, parser = pcall(vim.treesitter.get_parser, 0)
+				if not ok or not parser then
+					return require("Comment.ft").get(vim.bo.filetype, ctx.ctype) or vim.bo.commentstring
+				end
+			end,
+		},
+	},
 
 	-- Here is a more advanced example where we pass configuration
 	-- options to `gitsigns.nvim`. This is equivalent to the following Lua:
@@ -667,7 +679,7 @@ require("lazy").setup({
 		"neovim/nvim-lspconfig",
 		dependencies = {
 			-- Automatically install LSPs and related tools to stdpath for Neovim
-			{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
+			{ "williamboman/mason.nvim", opts = { ui = { border = "rounded", backdrop = 100 } } },
 			"williamboman/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 
@@ -769,7 +781,8 @@ require("lazy").setup({
 					})
 
 					-- Request parameter help after a server-advertised trigger is inserted.
-					local signature_group = vim.api.nvim_create_augroup("signature-help-" .. event.buf, { clear = true })
+					local signature_group =
+						vim.api.nvim_create_augroup("signature-help-" .. event.buf, { clear = true })
 					vim.api.nvim_create_autocmd({ "TextChangedI", "TextChangedP" }, {
 						buffer = event.buf,
 						group = signature_group,
@@ -941,7 +954,11 @@ require("lazy").setup({
 				},
 
 				vue_ls = {
-					cmd = { "vue-language-server", "--stdio", "--tsdk=" .. mise_where("npm:typescript") .. "/node_modules/typescript/lib" },
+					cmd = {
+						"vue-language-server",
+						"--stdio",
+						"--tsdk=" .. mise_where("npm:typescript") .. "/node_modules/typescript/lib",
+					},
 				},
 				vtsls = {
 					cmd = { "vtsls", "--stdio" },
@@ -1137,8 +1154,6 @@ require("lazy").setup({
 				},
 			}
 
-			require("mason").setup()
-
 			-- Mason v2 enables servers; configure them through Neovim's LSP API first.
 			for server_name, server in pairs(servers) do
 				server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
@@ -1267,6 +1282,17 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+		"windwp/nvim-autopairs",
+		event = "InsertEnter",
+		opts = {},
+	},
+	{
+		"windwp/nvim-ts-autotag",
+		event = { "BufReadPre", "BufNewFile" },
+		opts = {},
+	},
+
 	{ -- Autocompletion
 		"hrsh7th/nvim-cmp",
 		event = "InsertEnter",
@@ -1302,10 +1328,12 @@ require("lazy").setup({
 			--  into multiple repos for maintenance purposes.
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-path",
+			"windwp/nvim-autopairs",
 		},
 		config = function()
 			-- See `:help cmp`
 			local cmp = require("cmp")
+			cmp.event:on("confirm_done", require("nvim-autopairs.completion.cmp").on_confirm_done())
 			local luasnip = require("luasnip")
 			local completion_ui = require("user.completion_ui")
 			completion_ui.setup()
@@ -1408,6 +1436,7 @@ require("lazy").setup({
 		--
 		-- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
 		"folke/tokyonight.nvim",
+		lazy = false,
 		priority = 1000, -- Make sure to load this before all the other start plugins.
 		-- init = function()
 		-- 	-- Load the colorscheme here.
@@ -1427,9 +1456,6 @@ require("lazy").setup({
 			require("nordic").setup({
 				telescope = { style = "classic" },
 				on_highlight = function(highlights, palette)
-					-- Native LSP hints, hover docs, and diagnostics share these groups.
-					highlights.NormalFloat = { fg = palette.fg, bg = palette.bg }
-					highlights.FloatBorder = { fg = palette.magenta.base, bg = palette.bg }
 					-- Ctrl-X completion uses the native popup menu, not nvim-cmp.
 					highlights.Pmenu = { fg = palette.fg, bg = palette.bg }
 					highlights.PmenuBorder = { fg = palette.magenta.base, bg = palette.bg }
@@ -1440,17 +1466,8 @@ require("lazy").setup({
 					highlights.PmenuExtraSel = { link = "PmenuSel" }
 					highlights.PmenuSbar = { bg = palette.bg }
 					highlights.PmenuThumb = { bg = palette.gray3 }
-					for _, group in ipairs({
-						"TelescopeBorder",
-						"TelescopePromptBorder",
-						"TelescopeResultsBorder",
-						"TelescopePreviewBorder",
-					}) do
-						highlights[group] = { fg = palette.magenta.base, bg = palette.bg }
-					end
 				end,
 			})
-			require("nordic").load()
 		end,
 	},
 
@@ -1582,6 +1599,9 @@ require("lazy").setup({
 	-- { import = 'custom.plugins' },
 }, {
 	ui = {
+		border = "rounded",
+		-- The dimming float inherits winborder and draws a second, screen-sized box.
+		backdrop = 100,
 		-- If you are using a Nerd Font: set icons to an empty table which will use the
 		-- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
 		icons = vim.g.have_nerd_font and {} or {
@@ -1602,6 +1622,9 @@ require("lazy").setup({
 	},
 })
 
+vim.cmd.colorscheme("tokyonight-night")
+
+require("user.float_ui").setup()
 require("user.keymaps")
 require("user.options")
 require("user.rtp")

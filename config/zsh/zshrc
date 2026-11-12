@@ -11,6 +11,11 @@ path=(
 typeset -U path
 
 _zsh_config_dir="${ZSH_CONFIG_DIR:-$HOME/.config/zsh}"
+# Homebrew's executable lives in <prefix>/bin; avoid spawning brew at startup.
+_zsh_brew_prefix="${HOMEBREW_PREFIX:-}"
+if [[ -z "$_zsh_brew_prefix" && -n "${commands[brew]}" ]]; then
+  _zsh_brew_prefix="${commands[brew]:h:h}"
+fi
 
 _source_if_readable() {
   local file="$1"
@@ -21,10 +26,8 @@ _source_brew_plugin() {
   local formula="$1"
   local script="$2"
 
-  command -v brew >/dev/null 2>&1 || return
-  local prefix
-  prefix="$(brew --prefix "$formula" 2>/dev/null)" || return
-  _source_if_readable "$prefix/$script"
+  [[ -n "$_zsh_brew_prefix" ]] || return
+  _source_if_readable "$_zsh_brew_prefix/opt/$formula/$script"
 }
 
 _source_if_readable "$_zsh_config_dir/options.zsh"
@@ -33,7 +36,7 @@ _source_if_readable "$_zsh_config_dir/env.zsh"
 command -v mise >/dev/null 2>&1 && eval "$(mise activate zsh)"
 
 if [[ ! -o interactive ]]; then
-  unset _zsh_config_dir
+  unset _zsh_config_dir _zsh_brew_prefix
   unfunction _source_if_readable
   unfunction _source_brew_plugin
   return
@@ -47,16 +50,18 @@ if [[ -t 0 ]]; then
   _source_if_readable "$HOME/.fzf-tab/fzf-tab.plugin.zsh"
 fi
 
-if command -v brew >/dev/null 2>&1; then
+if [[ -n "$_zsh_brew_prefix" ]]; then
   fpath=(
     "$HOME/.fpath"
-    "$(brew --prefix)/share/zsh/site-functions"
-    "$(brew --prefix)/share/zsh-completions"
+    "$_zsh_brew_prefix/share/zsh/site-functions"
+    "$_zsh_brew_prefix/share/zsh-completions"
     $fpath
   )
 else
   fpath=("$HOME/.fpath" $fpath)
 fi
+# Register Docker completions before compinit so the dump stays consistent.
+[[ -d "$HOME/.docker/completions" ]] && fpath=("$HOME/.docker/completions" $fpath)
 typeset -U fpath
 
 if [[ -t 0 ]]; then
@@ -72,6 +77,6 @@ if [[ -t 0 ]] && command -v fzf >/dev/null 2>&1; then
   source <(fzf --zsh)
 fi
 
-unset _zsh_config_dir
+unset _zsh_config_dir _zsh_brew_prefix
 unfunction _source_if_readable
 unfunction _source_brew_plugin
