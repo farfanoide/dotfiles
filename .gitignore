@@ -1,4 +1,5 @@
 backups/*
+.[dD][sS]_[sS][tT][oO][rR][eE]
 vim/bundle/*
 vim/plugged/*
 config/nvim/plugged/*

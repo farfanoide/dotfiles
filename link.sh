@@ -11,5 +11,5 @@ fi
 cd "$ROOT_DIR"
 mkdir -p "$HOME/.config"
 
-stow --target="$HOME/.config" --verbose config
-stow --target="$HOME" --verbose home
+stow --ignore='(?i)^\.ds_store$' --target="$HOME/.config" --verbose config
+stow --ignore='(?i)^\.ds_store$' --target="$HOME" --verbose home
