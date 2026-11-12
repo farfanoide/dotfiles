@@ -16,7 +16,7 @@ ripgrep = "latest"
 fd = "latest"
 
 "npm:pyright" = "latest"
-"npm:@vue/language-server" = "latest"
+"npm:@vue/language-server" = { version = "latest", trust_policy_excludes = ["volar-service-pug@0.0.71"] }
 "npm:typescript" = "5.9.3"
 "npm:@vtsls/language-server" = "latest"
 "npm:emmet-ls" = "latest"
