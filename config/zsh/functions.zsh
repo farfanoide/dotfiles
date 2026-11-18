@@ -37,3 +37,13 @@ pm() {
 name_this() {
   echo "$(whoami)/$(basename "$PWD")"
 }
+
+wake_groot()
+{
+  wakeonlan -i 192.168.6.255 3c:52:82:71:79:38
+}
+
+wake_truenas()
+{
+  wakeonlan -i 192.168.6.255 3C:52:A1:29:6E:04
+}

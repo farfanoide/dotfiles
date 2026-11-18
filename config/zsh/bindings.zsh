@@ -1,3 +1,5 @@
+bindkey -v
+
 bindkey "^R" history-incremental-search-backward
 bindkey "^E" end-of-line
 bindkey "^A" beginning-of-line

@@ -26,6 +26,7 @@ fd = "latest"
 
 "pypi:black" = "latest"
 "pypi:ruff" = "latest"
+"pypi:zuban" = "latest"
 "pypi:djlint" = "latest"
 "pypi:djangofmt" = "latest"
 codex = "latest"

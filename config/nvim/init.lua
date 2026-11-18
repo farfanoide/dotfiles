@@ -87,6 +87,17 @@ vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 -- Diagnostic keymaps
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Go to previous [D]iagnostic message" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Go to next [D]iagnostic message" })
+for _, diagnostic in ipairs({
+	{ key = "e", label = "error", severity = vim.diagnostic.severity.ERROR },
+	{ key = "w", label = "warning", severity = vim.diagnostic.severity.WARN },
+}) do
+	vim.keymap.set("n", "]" .. diagnostic.key, function()
+		vim.diagnostic.jump({ count = vim.v.count1, severity = diagnostic.severity })
+	end, { desc = "Go to next diagnostic " .. diagnostic.label })
+	vim.keymap.set("n", "[" .. diagnostic.key, function()
+		vim.diagnostic.jump({ count = -vim.v.count1, severity = diagnostic.severity })
+	end, { desc = "Go to previous diagnostic " .. diagnostic.label })
+end
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagnostic [E]rror messages" })
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, { desc = "Open diagnostic [Q]uickfix list" })
 
@@ -812,16 +823,79 @@ require("lazy").setup({
 					if client and client.server_capabilities.documentHighlightProvider then
 						local highlight_augroup =
 							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+						vim.api.nvim_clear_autocmds({ group = highlight_augroup, buffer = event.buf })
+
+						local reference_namespace = vim.api.nvim_create_namespace("nvim.lsp.references")
+						local jump_target
+						local function at_jump_target()
+							return jump_target and vim.deep_equal(vim.api.nvim_win_get_cursor(0), jump_target)
+						end
+
+						local function jump_reference(forward)
+							local row, col = unpack(vim.api.nvim_win_get_cursor(0))
+							row = row - 1
+							local start = forward and 0 or -1
+							local finish = forward and -1 or 0
+							local marks = vim.api.nvim_buf_get_extmarks(event.buf, reference_namespace, start, finish, {
+								details = true,
+							})
+							local target
+							for _, mark in ipairs(marks) do
+								local _, line, column, details = unpack(mark)
+								local starts_after = line > row or (line == row and column > col)
+								local ends_before = details.end_row < row
+									or (details.end_row == row and details.end_col <= col)
+								if starts_after or ends_before then
+									target = target or mark
+									if (forward and starts_after) or (not forward and ends_before) then
+										target = mark
+										break
+									end
+								end
+							end
+							if not target then
+								return
+							end
+							jump_target = { target[2] + 1, target[3] }
+							vim.api.nvim_win_set_cursor(0, jump_target)
+							vim.cmd.normal({ "zv", bang = true })
+						end
+
+						map("]r", function()
+							jump_reference(true)
+						end, "Go to next highlighted reference")
+						map("[r", function()
+							jump_reference(false)
+						end, "Go to previous highlighted reference")
+
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
-							callback = vim.lsp.buf.document_highlight,
+							callback = function()
+								if not at_jump_target() then
+									vim.lsp.buf.document_highlight()
+								end
+							end,
 						})
 
 						vim.api.nvim_create_autocmd({ "CursorMoved", "CursorMovedI" }, {
 							buffer = event.buf,
 							group = highlight_augroup,
-							callback = vim.lsp.buf.clear_references,
+							callback = function()
+								if not at_jump_target() then
+									jump_target = nil
+									vim.lsp.buf.clear_references()
+								end
+							end,
+						})
+
+						vim.api.nvim_create_autocmd({ "TextChanged", "TextChangedI" }, {
+							buffer = event.buf,
+							group = highlight_augroup,
+							callback = function()
+								jump_target = nil
+								vim.lsp.buf.clear_references()
+							end,
 						})
 
 						vim.api.nvim_create_autocmd("LspDetach", {
@@ -913,32 +987,28 @@ require("lazy").setup({
 				includeInlayFunctionLikeReturnTypeHints = true,
 				includeInlayEnumMemberValueHints = true,
 			}
+			local django_lsp = require("user.django_lsp")
+			local zuban_mise_root = mise_where("pypi:zuban")
+			local zuban = zuban_mise_root and zuban_mise_root .. "/bin/zuban"
+			if zuban and vim.fn.executable(zuban) ~= 1 then
+				zuban = nil
+			end
 			local servers = {
 				-- clangd = {},
 				-- gopls = {},
 				pyright = {
-					root_dir = require("user.django_lsp").pyright_root,
+					root_dir = function(bufnr, on_dir)
+						if not zuban then
+							on_dir(django_lsp.python_root(bufnr))
+						end
+					end,
 					before_init = function(_, config)
 						local python = config.settings.python
 						if python.pythonPath or python.venvPath then
 							return
 						end
 						-- Project config files still control Pyright's import search paths.
-						local root = config.root_dir or vim.fn.getcwd()
-						local environments = { root .. "/.venv", root .. "/venv" }
-						for _, variable in ipairs({ "VIRTUAL_ENV", "CONDA_PREFIX" }) do
-							local environment = vim.env[variable]
-							if environment and environment ~= "" then
-								table.insert(environments, environment)
-							end
-						end
-						for _, environment in ipairs(environments) do
-							local interpreter = environment .. "/bin/python"
-							if vim.fn.executable(interpreter) == 1 then
-								python.pythonPath = interpreter
-								return
-							end
-						end
+						python.pythonPath = django_lsp.python_interpreter(config.root_dir or vim.fn.getcwd())
 					end,
 					settings = {
 						python = {
@@ -1160,7 +1230,7 @@ require("lazy").setup({
 				vim.lsp.config(server_name, server)
 			end
 			require("mason-lspconfig").setup({ automatic_enable = false })
-			require("user.django_lsp").setup(capabilities)
+			django_lsp.setup(capabilities, zuban)
 
 			local vue_mise_root = mise_where("npm:@vue/language-server")
 			local vue_language_server_path = first_existing_path({

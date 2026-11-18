@@ -11,21 +11,26 @@ function M.django_root(bufnr)
 	end
 end
 
-function M.zuban_root(bufnr)
-	local root = M.django_root(bufnr)
-	if root and vim.fn.executable(root .. "/.venv/bin/zuban") == 1 then
-		return root
+function M.python_root(bufnr)
+	local name = vim.api.nvim_buf_get_name(bufnr)
+	return vim.fs.root(bufnr, vim.lsp.config.pyright.root_markers)
+		or (name ~= "" and vim.fs.dirname(name))
+		or vim.fn.getcwd()
+end
+
+function M.python_interpreter(root)
+	local environments = { root .. "/.venv", root .. "/venv", vim.env.VIRTUAL_ENV or "", vim.env.CONDA_PREFIX or "" }
+	for _, environment in ipairs(environments) do
+		if environment ~= "" then
+			local interpreter = environment .. "/bin/python"
+			if vim.fn.executable(interpreter) == 1 then
+				return interpreter
+			end
+		end
 	end
 end
 
-function M.pyright_root(bufnr, on_dir)
-	if not M.zuban_root(bufnr) then
-		local root = vim.fs.root(bufnr, vim.lsp.config.pyright.root_markers)
-		on_dir(root or vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":p:h"))
-	end
-end
-
-function M.setup(capabilities)
+function M.setup(capabilities, zuban)
 	vim.api.nvim_create_user_command("DjangoCheck", function()
 		local root = M.django_root(0)
 		if not root or vim.fn.executable(root .. "/bin/check-types") ~= 1 then
@@ -76,21 +81,27 @@ function M.setup(capabilities)
 
 	vim.lsp.config("zuban", {
 		cmd = function(dispatchers, config)
-			return vim.lsp.rpc.start({ config.root_dir .. "/.venv/bin/zuban", "server" }, dispatchers, {
+			return vim.lsp.rpc.start({ zuban, "server" }, dispatchers, {
 				cwd = config.root_dir,
 			})
 		end,
 		filetypes = { "python" },
 		capabilities = capabilities,
 		root_dir = function(bufnr, on_dir)
-			local root = M.zuban_root(bufnr)
-			if root then
-				on_dir(root)
+			if zuban then
+				on_dir(M.django_root(bufnr) or M.python_root(bufnr))
 			end
 		end,
 		before_init = function(_, config)
-			config.init_options.pythonExecutable = config.root_dir .. "/.venv/bin/python"
+			config.init_options.pythonExecutable = M.python_interpreter(config.root_dir)
 		end,
+		-- on_init = function(client)
+		-- 	-- Zuban can block its request loop while resolving document highlights.
+		-- 	client.server_capabilities.documentHighlightProvider = false
+		-- end,
+		-- on_attach = function(_, bufnr)
+		-- 	require("user.python_highlights").attach(bufnr)
+		-- end,
 		init_options = {
 			typeCheckingMode = "default",
 			diagnosticMode = "open-files-only",
